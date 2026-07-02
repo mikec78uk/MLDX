@@ -102,3 +102,33 @@ Two Vercel projects pointing at this same GitHub repo
 | defender prototype | `defender` |
 
 Set `SITE_PASSWORD` on both once ready to share for usability testing.
+**This is the password-protected link for actual usability-testing
+participants.**
+
+## Quick skin preview (GitHub Pages)
+
+For a quick, no-deploy way to eyeball both skins side by side, `.github/workflows/github-pages.yml`
+builds a static export of each brand on every push to `main` and publishes
+them to GitHub Pages. Because your GitHub user site already has
+`playground.hellomike.co.uk` set as its custom domain, this repo's Pages
+site inherits it automatically:
+
+- `playground.hellomike.co.uk/MLDX/` — links to both skins
+- `playground.hellomike.co.uk/MLDX/range-rover/`
+- `playground.hellomike.co.uk/MLDX/defender/`
+
+**This mirror has no password gate** — static export can't run
+`src/proxy.ts` (no server), so it's openly viewable. Fine for your own
+quick checks; don't use it as the link you send out for testing.
+
+**One-time manual step:** in this repo's GitHub settings, go to
+**Settings → Pages → Build and deployment → Source**, and set it to
+**"GitHub Actions"**. I can't flip that setting myself (it needs an
+authenticated API call I don't have credentials for) — once it's set,
+every push to `main` deploys automatically.
+
+To build the same static export locally:
+
+```bash
+npm run build:pages   # writes dist/range-rover, dist/defender, dist/index.html
+```
