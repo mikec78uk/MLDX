@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/*
+ * Typeface stack modelled on the live landrover.co.uk asset pipeline:
+ * LandRoverWeb (display/headings) + AvenirNext (body copy).
+ *
+ * The actual woff2 files are licensed JLR assets and are not distributed
+ * in this repo. Drop the licensed files into /public/fonts/land-rover/
+ * using the filenames below to activate them locally/in production —
+ * until then the system fallback stack renders instead. See README.md.
+ */
+@font-face {
+  font-family: "LandRoverWeb-Demi";
+  src: url("/fonts/land-rover/LandRoverWeb-Demi.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LandRoverWeb-Bold";
+  src: url("/fonts/land-rover/LandRoverWeb-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AvenirNext";
+  src: url("/fonts/land-rover/AvenirNextW1G-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AvenirNext";
+  src: url("/fonts/land-rover/AvenirNextW1G-Demi.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Brand colour tokens — overridden per-brand via inline style on <html>
+   * in app/layout.tsx (see getBrand()). Values below are the range-rover
+   * defaults so the page still renders sanely without JS/SSR context. */
+  --color-ink: #141414;
+  --color-ink-soft: #4a4f54;
+  --color-paper: #ffffff;
+  --color-paper-muted: #f5f5f5;
+  --color-border: rgba(12, 18, 28, 0.16);
+  --color-overlay: rgba(12, 18, 28, 0.6);
+  --color-accent: #8a7256;
+  --color-accent-ink: #ffffff;
+
+  --font-display: "LandRoverWeb-Demi", "Helvetica Neue", Arial, sans-serif;
+  --font-display-bold: "LandRoverWeb-Bold", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "AvenirNext", "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-paper: var(--color-paper);
+  --color-paper-muted: var(--color-paper-muted);
+  --color-border: var(--color-border);
+  --color-overlay: var(--color-overlay);
+  --color-accent: var(--color-accent);
+  --color-accent-ink: var(--color-accent-ink);
+  --font-display: var(--font-display);
+  --font-display-bold: var(--font-display-bold);
+  --font-body: var(--font-body);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.eyebrow,
+.cta-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-display);
+}
