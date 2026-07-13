@@ -95,16 +95,25 @@ worth checking on any file before it goes in:
    ```bash
    npx @gltf-transform/cli metalrough source.glb source-metalrough.glb
    ```
-2. **File size** — exports from CAD/scan/marketplace sources often ship
-   30–100MB+ of uncompressed PNG textures, which is a non-starter for a
-   web viewer. Compress:
+2. **File size and GPU memory** — exports from CAD/scan/marketplace
+   sources often ship 30–100MB+ of uncompressed PNG textures, which is a
+   non-starter for a web viewer. Compress:
    ```bash
    npx @gltf-transform/cli optimize source-metalrough.glb public/models/<slug>.glb \
-     --compress draco --texture-compress webp --texture-size 2048
+     --compress draco --texture-compress webp --texture-size 1024
    ```
-   This took the Defender 110 source from 35MB to ~2.2MB with no
-   visible quality loss. Run `npx @gltf-transform/cli inspect <file>`
-   beforehand if you want to see the size/texture breakdown first.
+   `--texture-size` caps pixel dimensions, not file size — it's the
+   lever that matters most. The Defender 110 source was 35MB with ~138MB
+   of GPU-resident texture memory at a 2048px cap; that reproducibly
+   crashed the WebGL context (`THREE.WebGLRenderer: Context Lost`) on
+   the deployed page. Dropping to 1024px brought it to a 1.9MB file and
+   ~48MB of GPU memory, with no visible quality loss at the viewer's
+   actual render size, and the crash was gone. Run `npx
+   @gltf-transform/cli inspect <file>` to see the size/texture/GPU-memory
+   breakdown before deciding on a cap — sum the `gpuSize` column in its
+   TEXTURES table rather than judging by file size alone, since WebP/PNG
+   compression ratio varies a lot per texture but GPU memory is driven by
+   raw pixel dimensions.
 
 ## Password protection (Vercel)
 
