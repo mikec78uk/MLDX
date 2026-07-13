@@ -6,7 +6,9 @@ import type { NextConfig } from "next";
  * Next.js server so src/proxy.ts (password gate) keeps working there.
  */
 const isStaticExport = process.env.NEXT_STATIC_EXPORT === "true";
-const basePath = process.env.NEXT_BASE_PATH ?? "";
+// NEXT_PUBLIC_ prefix so client code (e.g. ModelViewer's asset fetches)
+// can read the same value — see src/lib/basePath.ts.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
   ...(isStaticExport && {

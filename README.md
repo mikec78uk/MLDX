@@ -77,11 +77,21 @@ supplied.
   client-side only. Animations respect `prefers-reduced-motion` via
   `gsap.matchMedia()`.
 - `src/components/three/ModelViewer.tsx` — lit, orbit-controlled canvas
-  that renders a real glTF via `useGLTF` when a model provides
-  `modelUrl` (see `src/data/models.ts`), falling back to placeholder
-  geometry otherwise. `Bounds`/`Center` (drei) auto-frame the camera
-  regardless of the source model's scale or pivot, so the rig doesn't
-  need per-model tuning.
+  that renders a real glTF when a model provides `modelUrl` (see
+  `src/data/models.ts`), falling back to placeholder geometry otherwise.
+  `Bounds`/`Center` (drei) auto-frame the camera regardless of the source
+  model's scale or pivot, so the rig doesn't need per-model tuning.
+  Loaded via a plain `GLTFLoader` + `DRACOLoader` rather than drei's
+  `useGLTF` — see the crash writeup below for why.
+- `src/components/three/ModelViewerLoader.tsx` — wraps `ModelViewer` in
+  `next/dynamic(..., { ssr: false })`. Needed because `output: "export"`
+  prerenders client components to HTML at build time; a plain import
+  would still work fine on Vercel but breaks the static export path.
+- `src/lib/basePath.ts` — `withBasePath()`. Next's `basePath` (used by
+  the GitHub Pages export, see below) only rewrites `next/link` and
+  `next/image` automatically — any other absolute-path string (an asset
+  URL handed to a Three.js loader, a `fetch()`, a CSS `url()`) needs this
+  applied manually or it 404s under a non-root basePath.
 
 ### Adding a real vehicle model
 
@@ -95,25 +105,35 @@ worth checking on any file before it goes in:
    ```bash
    npx @gltf-transform/cli metalrough source.glb source-metalrough.glb
    ```
-2. **File size and GPU memory** — exports from CAD/scan/marketplace
-   sources often ship 30–100MB+ of uncompressed PNG textures, which is a
-   non-starter for a web viewer. Compress:
+2. **File size** — exports from CAD/scan/marketplace sources often ship
+   30–100MB+ of uncompressed PNG textures, which is unnecessary weight
+   for a web viewer. Compress:
    ```bash
    npx @gltf-transform/cli optimize source-metalrough.glb public/models/<slug>.glb \
      --compress draco --texture-compress webp --texture-size 1024
    ```
-   `--texture-size` caps pixel dimensions, not file size — it's the
-   lever that matters most. The Defender 110 source was 35MB with ~138MB
-   of GPU-resident texture memory at a 2048px cap; that reproducibly
-   crashed the WebGL context (`THREE.WebGLRenderer: Context Lost`) on
-   the deployed page. Dropping to 1024px brought it to a 1.9MB file and
-   ~48MB of GPU memory, with no visible quality loss at the viewer's
-   actual render size, and the crash was gone. Run `npx
-   @gltf-transform/cli inspect <file>` to see the size/texture/GPU-memory
-   breakdown before deciding on a cap — sum the `gpuSize` column in its
-   TEXTURES table rather than judging by file size alone, since WebP/PNG
-   compression ratio varies a lot per texture but GPU memory is driven by
-   raw pixel dimensions.
+   This took the Defender 110 source from 35MB to ~1.9MB with no visible
+   quality loss. `--texture-size` caps pixel dimensions (the lever that
+   matters most for GPU memory, not just file size) — run `npx
+   @gltf-transform/cli inspect <file>` and sum the `gpuSize` column in
+   its TEXTURES table if you want to check the budget on a much bigger
+   model before shipping it.
+
+**A note on debugging this the hard way:** the Defender 110 model
+initially crashed the WebGL context (`THREE.WebGLRenderer: Context
+Lost`) specifically on the deployed GitHub Pages build, while working
+fine in `next dev`. That looked exactly like a GPU-memory problem (the
+2048px-capped export did carry ~138MB of GPU-resident texture memory),
+but cutting it to 1024px/~48MB *didn't* fix it — the real cause was
+`modelUrl` being a bare `/models/<slug>.glb` string with no basePath
+prefix, so it 404'd under GitHub Pages' `/MLDX/<brand>/` path. Under
+`useGLTF`, that 404 didn't surface as a normal error — it manifested as
+a repeated-remount WebGL crash instead. Switching to a plain
+`GLTFLoader` turned it into a clean, catchable error, which is what
+actually revealed the missing basePath prefix. If a similar viewer bug
+ever looks GPU-related but is specific to one deployment target and not
+`next dev`, check the asset URL/basePath before assuming it's a memory
+budget issue.
 
 ## Password protection (Vercel)
 

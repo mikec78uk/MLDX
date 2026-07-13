@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   Bounds,
@@ -8,8 +8,15 @@ import {
   ContactShadows,
   Environment,
   OrbitControls,
-  useGLTF,
+  useBounds,
 } from "@react-three/drei";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import type { Group } from "three";
+import { withBasePath } from "@/lib/basePath";
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
 
 /**
  * Stand-in for a real vehicle model. Swap the geometry below for a glTF of
@@ -49,7 +56,29 @@ function PlaceholderVehicle({ accent }: { accent: string }) {
 
 /** Real vehicle glTF, centered regardless of its source pivot/scale. */
 function LoadedVehicle({ url }: { url: string }) {
-  const { scene } = useGLTF(url);
+  const [scene, setScene] = useState<Group | null>(null);
+  const bounds = useBounds();
+
+  useEffect(() => {
+    let cancelled = false;
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.load(withBasePath(url), (gltf) => {
+      if (!cancelled) setScene(gltf.scene);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [url]);
+
+  useEffect(() => {
+    // Bounds' initial fit happens before this async load resolves, so it
+    // frames an empty box — refit once the model is actually in the scene.
+    if (scene) bounds.refresh().fit();
+  }, [scene, bounds]);
+
+  if (!scene) return null;
+
   return (
     <Center>
       <primitive object={scene} />

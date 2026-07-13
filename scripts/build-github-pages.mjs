@@ -34,7 +34,7 @@ function buildBrand(brand) {
       ...process.env,
       NEXT_STATIC_EXPORT: "true",
       NEXT_PUBLIC_BRAND: brand.id,
-      NEXT_BASE_PATH: `/MLDX/${brand.id}`,
+      NEXT_PUBLIC_BASE_PATH: `/MLDX/${brand.id}`,
     },
   });
   cpSync(outDir, path.join(distDir, brand.id), { recursive: true });

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getBrand } from "@/lib/brand";
 import { getModel, getModels } from "@/data/models";
-import { ModelViewer } from "@/components/three/ModelViewer";
+import { ModelViewer } from "@/components/three/ModelViewerLoader";
 
 const brand = getBrand();
 
