@@ -2,7 +2,14 @@
 
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
+import {
+  Bounds,
+  Center,
+  ContactShadows,
+  Environment,
+  OrbitControls,
+  useGLTF,
+} from "@react-three/drei";
 
 /**
  * Stand-in for a real vehicle model. Swap the geometry below for a glTF of
@@ -40,18 +47,43 @@ function PlaceholderVehicle({ accent }: { accent: string }) {
   );
 }
 
-export function ModelViewer({ accent = "#8a7256" }: { accent?: string }) {
+/** Real vehicle glTF, centered regardless of its source pivot/scale. */
+function LoadedVehicle({ url }: { url: string }) {
+  const { scene } = useGLTF(url);
+  return (
+    <Center>
+      <primitive object={scene} />
+    </Center>
+  );
+}
+
+export function ModelViewer({
+  accent = "#8a7256",
+  modelUrl,
+}: {
+  accent?: string;
+  modelUrl?: string;
+}) {
   return (
     <div className="h-[420px] w-full overflow-hidden rounded-sm bg-[var(--color-paper-muted)] sm:h-[520px]">
       <Canvas shadows camera={{ position: [3.5, 1.8, 4], fov: 40 }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.6} />
           <directionalLight position={[4, 6, 4]} intensity={1.4} castShadow />
-          <PlaceholderVehicle accent={accent} />
+          {/* Bounds re-frames the camera to fit whatever's loaded, since a
+              real glTF's scale/origin won't match the placeholder's. */}
+          <Bounds fit clip observe margin={1.3}>
+            {modelUrl ? (
+              <LoadedVehicle url={modelUrl} />
+            ) : (
+              <PlaceholderVehicle accent={accent} />
+            )}
+          </Bounds>
           <ContactShadows position={[0, -0.75, 0]} opacity={0.5} scale={8} blur={2.4} far={2} />
           <Environment preset="city" />
         </Suspense>
         <OrbitControls
+          makeDefault
           enablePan={false}
           enableZoom={false}
           autoRotate

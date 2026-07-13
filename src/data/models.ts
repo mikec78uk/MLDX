@@ -5,6 +5,8 @@ export interface ModelSummary {
   name: string;
   summary: string;
   priceFrom: string;
+  /** Path to a real glTF (.glb) under /public. Falls back to placeholder geometry when unset. */
+  modelUrl?: string;
 }
 
 /**
@@ -51,6 +53,7 @@ const modelsByBrand: Record<BrandId, ModelSummary[]> = {
       name: "Defender 110",
       summary: "The most versatile Defender.",
       priceFrom: "£62,000",
+      modelUrl: "/models/defender-110.glb",
     },
     {
       slug: "defender-130",

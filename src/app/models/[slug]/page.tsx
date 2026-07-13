@@ -45,10 +45,11 @@ export default async function ModelDetailPage({
       </p>
 
       <div className="mt-10">
-        <ModelViewer accent={brand.colors.accent} />
+        <ModelViewer accent={brand.colors.accent} modelUrl={model.modelUrl} />
         <p className="mt-3 text-xs text-[var(--color-ink-soft)]">
-          Drag to rotate. Placeholder geometry — swap for the real {model.name}{" "}
-          model once 3D assets are supplied.
+          {model.modelUrl
+            ? "Drag to rotate."
+            : `Drag to rotate. Placeholder geometry — swap for the real ${model.name} model once 3D assets are supplied.`}
         </p>
       </div>
 

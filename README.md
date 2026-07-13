@@ -76,10 +76,35 @@ supplied.
 - `src/lib/gsap/registerPlugins.ts` — registers GSAP's ScrollTrigger once,
   client-side only. Animations respect `prefers-reduced-motion` via
   `gsap.matchMedia()`.
-- `src/components/three/ModelViewer.tsx` — placeholder vehicle geometry
-  in a lit, orbit-controlled canvas. Swap the placeholder mesh for a real
-  glTF (`useGLTF` from `@react-three/drei`) once per-model 3D assets are
-  available; the rig (lighting, shadows, controls) stays as-is.
+- `src/components/three/ModelViewer.tsx` — lit, orbit-controlled canvas
+  that renders a real glTF via `useGLTF` when a model provides
+  `modelUrl` (see `src/data/models.ts`), falling back to placeholder
+  geometry otherwise. `Bounds`/`Center` (drei) auto-frame the camera
+  regardless of the source model's scale or pivot, so the rig doesn't
+  need per-model tuning.
+
+### Adding a real vehicle model
+
+Drop the `.glb` in `public/models/<slug>.glb` and set `modelUrl:
+"/models/<slug>.glb"` on that model in `src/data/models.ts`. Two things
+worth checking on any file before it goes in:
+
+1. **Material workflow** — if `gltf-transform inspect` or the browser
+   console shows `KHR_materials_pbrSpecularGlossiness`, modern three.js
+   can't render it (textures come through blank/white). Convert it first:
+   ```bash
+   npx @gltf-transform/cli metalrough source.glb source-metalrough.glb
+   ```
+2. **File size** — exports from CAD/scan/marketplace sources often ship
+   30–100MB+ of uncompressed PNG textures, which is a non-starter for a
+   web viewer. Compress:
+   ```bash
+   npx @gltf-transform/cli optimize source-metalrough.glb public/models/<slug>.glb \
+     --compress draco --texture-compress webp --texture-size 2048
+   ```
+   This took the Defender 110 source from 35MB to ~2.2MB with no
+   visible quality loss. Run `npx @gltf-transform/cli inspect <file>`
+   beforehand if you want to see the size/texture breakdown first.
 
 ## Password protection (Vercel)
 
