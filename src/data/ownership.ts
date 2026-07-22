@@ -114,118 +114,103 @@ const assistance: CardLink[] = [
   },
 ];
 
-const ownershipByBrand: Record<BrandId, OwnershipContent> = {
+/**
+ * Everything that isn't an unavoidable brand-specific fact. Defender is the
+ * one brand being actively iterated on right now — Range Rover mirrors this
+ * copy verbatim (see `overridesByBrand` below) until it gets its own
+ * finalisation pass, so a Defender wording change never needs a matching
+ * manual edit on the Range Rover side.
+ */
+const sharedCopy = {
+  lookup: {
+    heading: "Find support for your vehicle",
+    inputLabel: "Registration",
+    inputPlaceholder: "Enter your reg",
+    ctaLabel: "Find my Vehicle",
+    quickActions: [
+      { label: "Book MOT or Service" },
+      { label: "Explore Service Plans" },
+      { label: "Explore Warranty Options" },
+    ],
+    notFoundMessage:
+      "We couldn't find a vehicle matching that registration. Double-check the plate and try again.",
+  },
+  securityNotice: {
+    title: "Complimentary Security Update Available",
+    description: "Book your update using our online tool.",
+  },
+  popularActions: [
+    { label: "Book an MOT or Service" },
+    { label: "Buy Service Plan" },
+    { label: "Extend Warranty" },
+    { label: "Activate your InControl Account" },
+  ],
+  aboutVehicle: [
+    { label: "Managing Infotainment" },
+    { label: "Available Subscriptions" },
+    { label: "View Accessories" },
+  ],
+  loginPrompt:
+    "to view personalised information such as warranty, service history and connected services.",
+  remoteApp: {
+    description:
+      "Check vehicle status, manage subscriptions and access connected features with the Remote App.",
+    learnMoreLabel: "Learn more",
+    qrValue: "/ownership",
+  },
+  financePromo: {
+    title: "0% Finance on servicing, maintenance and accessories",
+    description:
+      "Spread the cost of servicing, maintenance, tyres and accessories over up to nine months with 0% finance. Choose a flexible payment plan, with nothing to pay for up to 40 days.*",
+    ctaLabel: "Learn more",
+  },
+};
+
+/** The handful of facts that can't be mirrored — real names, real assets. */
+interface BrandOverrides {
+  vehicle: OwnershipContent["vehicle"];
+  remoteAppName: string;
+  retailerName: string;
+}
+
+const overridesByBrand: Record<BrandId, BrandOverrides> = {
   defender: {
-    lookup: {
-      heading: "Find support for your vehicle",
-      inputLabel: "Registration",
-      inputPlaceholder: "Enter your reg",
-      ctaLabel: "Find my Vehicle",
-      quickActions: [
-        { label: "Book MOT or Service" },
-        { label: "Explore Service Plans" },
-        { label: "Explore Warranty Options" },
-      ],
-      notFoundMessage:
-        "We couldn't find a vehicle matching that registration. Double-check the plate and try again.",
-    },
     vehicle: {
       name: "Defender 110",
       ownershipRange: "2020 - Present",
       modelUrl: "/models/defender-110.glb",
     },
-    securityNotice: {
-      title: "Complimentary Security Update Available",
-      description: "Book your update using our online tool.",
-    },
-    popularActions: [
-      { label: "Book an MOT or Service" },
-      { label: "Buy Service Plan" },
-      { label: "Extend Warranty" },
-      { label: "Activate your InControl Account" },
-    ],
-    aboutVehicle: [
-      { label: "Managing Infotainment" },
-      { label: "Available Subscriptions" },
-      { label: "View Accessories" },
-    ],
-    loginPrompt:
-      "to view personalised information such as warranty, service history and connected services.",
-    remoteApp: {
-      name: "Land Rover Remote",
-      description:
-        "Check vehicle status, manage subscriptions and access connected features with the Remote App.",
-      learnMoreLabel: "Learn more",
-      qrValue: "/ownership",
-    },
-    assistance,
-    exploreCards,
-    financePromo: {
-      title: "0% Finance on servicing, maintenance and accessories",
-      description:
-        "Spread the cost of servicing, maintenance, tyres and accessories over up to nine months with 0% finance. Choose a flexible payment plan, with nothing to pay for up to 40 days.*",
-      ctaLabel: "Learn more",
-      disclaimer:
-        "*Subject to status and terms. Available through participating Land Rover Retailers.",
-    },
+    remoteAppName: "Land Rover Remote",
+    retailerName: "Land Rover",
   },
   "range-rover": {
-    lookup: {
-      heading: "Find support for your vehicle",
-      inputLabel: "Registration",
-      inputPlaceholder: "Enter your reg",
-      ctaLabel: "Find my Vehicle",
-      quickActions: [
-        { label: "Book MOT or Service" },
-        { label: "Explore Service Plans" },
-        { label: "Explore Warranty Options" },
-      ],
-      notFoundMessage:
-        "We couldn't find a vehicle matching that registration. Double-check the plate and try again.",
-    },
+    // Mirrors Defender until Range Rover gets its own finalisation pass.
     vehicle: {
-      name: "Range Rover",
-      ownershipRange: "2022 - Present",
+      name: "Defender 110",
+      ownershipRange: "2020 - Present",
+      modelUrl: "/models/defender-110.glb",
     },
-    securityNotice: {
-      title: "Complimentary Security Update Available",
-      description: "Book your update using our online tool.",
-    },
-    popularActions: [
-      { label: "Book an MOT or Service" },
-      { label: "Buy Service Plan" },
-      { label: "Extend Warranty" },
-      { label: "Activate your InControl Account" },
-    ],
-    aboutVehicle: [
-      { label: "Managing Infotainment" },
-      { label: "Available Subscriptions" },
-      { label: "View Accessories" },
-    ],
-    loginPrompt:
-      "to view personalised information such as warranty, service history and connected services.",
-    remoteApp: {
-      name: "Range Rover Remote",
-      description:
-        "Check vehicle status, manage subscriptions and access connected features with the Remote App.",
-      learnMoreLabel: "Learn more",
-      qrValue: "/ownership",
-    },
-    assistance,
-    exploreCards,
-    financePromo: {
-      title: "0% Finance on servicing, maintenance and accessories",
-      description:
-        "Spread the cost of servicing, maintenance, tyres and accessories over up to nine months with 0% finance. Choose a flexible payment plan, with nothing to pay for up to 40 days.*",
-      ctaLabel: "Learn more",
-      disclaimer:
-        "*Subject to status and terms. Available through participating Range Rover Retailers.",
-    },
+    remoteAppName: "Land Rover Remote",
+    retailerName: "Land Rover",
   },
 };
 
 export function getOwnershipContent(brandId: BrandId): OwnershipContent {
-  return ownershipByBrand[brandId];
+  const overrides = overridesByBrand[brandId];
+  return {
+    ...sharedCopy,
+    vehicle: overrides.vehicle,
+    remoteApp: {
+      ...sharedCopy.remoteApp,
+      name: overrides.remoteAppName,
+    },
+    assistance,
+    exploreCards,
+    financePromo: {
+      ...sharedCopy.financePromo,
+      disclaimer: `*Subject to status and terms. Available through participating ${overrides.retailerName} Retailers.`,
+    },
+  };
 }
 
 export function getAllOwnershipCards(brandId: BrandId): CardLink[] {
