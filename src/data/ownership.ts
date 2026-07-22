@@ -28,6 +28,8 @@ export interface OwnershipContent {
     name: string;
     ownershipRange: string;
     modelUrl?: string;
+    /** Static cutout shot, preferred over the 3D viewer when set. */
+    image?: string;
   };
   securityNotice: {
     title: string;
@@ -180,6 +182,7 @@ const overridesByBrand: Record<BrandId, BrandOverrides> = {
       name: "Defender 110",
       ownershipRange: "2020 - Present",
       modelUrl: "/models/defender-110.glb",
+      image: "/ownership/vehicle-defender-110.png",
     },
     remoteAppName: "Land Rover Remote",
     retailerName: "Land Rover",

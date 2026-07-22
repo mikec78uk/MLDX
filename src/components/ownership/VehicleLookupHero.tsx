@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useSyncExternalStore, type FormEvent } from "react";
 import type { BrandConfig } from "@/lib/brand";
 import type { OwnershipContent } from "@/data/ownership";
@@ -62,7 +63,7 @@ export function VehicleLookupHero({
 
   if (!isFound) {
     return (
-      <section className="relative flex min-h-[560px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] lg:h-[60vh] lg:min-h-[560px]">
+      <section className="relative min-h-[560px] overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] lg:h-[60vh] lg:min-h-[560px]">
         {content.heroBackground && (
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -77,7 +78,7 @@ export function VehicleLookupHero({
           aria-hidden
         />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 pt-12 sm:flex-row sm:items-start sm:justify-between">
+        <div className="absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 pt-12 sm:flex-row sm:items-start sm:justify-between">
           <h1 className="text-4xl sm:text-5xl">Ownership</h1>
           <div className="flex flex-wrap gap-3">
             {content.lookup.quickActions.map((action) => (
@@ -92,7 +93,7 @@ export function VehicleLookupHero({
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 items-center px-6 py-10">
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl items-center px-6">
           <div className="max-w-lg">
             <h2 className="text-xl text-white/90">{content.lookup.heading}</h2>
             <form
@@ -137,10 +138,22 @@ export function VehicleLookupHero({
 
         {lookup && (
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
-            <ModelViewer
-              accent={brand.colors.accent}
-              modelUrl={content.vehicle.modelUrl}
-            />
+            {content.vehicle.image ? (
+              <div className="relative h-[420px] w-full overflow-hidden rounded-sm bg-[var(--color-paper-muted)] sm:h-[520px]">
+                <Image
+                  src={withBasePath(content.vehicle.image)}
+                  alt={content.vehicle.name}
+                  fill
+                  className="object-contain p-6"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              </div>
+            ) : (
+              <ModelViewer
+                accent={brand.colors.accent}
+                modelUrl={content.vehicle.modelUrl}
+              />
+            )}
 
             <div>
               <p className="eyebrow text-xs text-[var(--color-ink-soft)]">
