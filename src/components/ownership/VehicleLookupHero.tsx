@@ -62,7 +62,7 @@ export function VehicleLookupHero({
 
   if (!isFound) {
     return (
-      <section className="relative flex min-h-[560px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]">
+      <section className="relative flex min-h-[560px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] lg:h-[60vh] lg:min-h-[560px]">
         {content.heroBackground && (
           <div
             className="absolute inset-0 bg-cover bg-center"
