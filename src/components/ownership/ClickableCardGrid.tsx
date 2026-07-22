@@ -5,10 +5,13 @@ export function ClickableCardGrid({
   title,
   cards,
   columns = 3,
+  variant = "compact",
 }: {
   title: string;
   cards: CardLink[];
   columns?: 2 | 3;
+  /** "tile" is the larger, centered, dark treatment for feature-level cards. */
+  variant?: "compact" | "tile";
 }) {
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
@@ -18,28 +21,47 @@ export function ClickableCardGrid({
           columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"
         }`}
       >
-        {cards.map((card) => (
-          <Link
-            key={card.slug}
-            href={`/ownership/${card.slug}`}
-            className="group flex items-center justify-between gap-4 border border-[var(--color-border)] p-6 transition-colors hover:border-[var(--color-ink)]"
-          >
-            <div>
-              <p className="text-base">{card.title}</p>
-              {card.summary && (
-                <p className="mt-2 text-sm text-[var(--color-ink-soft)]">
-                  {card.summary}
-                </p>
-              )}
-            </div>
-            <span
-              aria-hidden
-              className="shrink-0 text-[var(--color-ink-soft)] transition-transform group-hover:translate-x-0.5"
+        {cards.map((card) =>
+          variant === "tile" ? (
+            <Link
+              key={card.slug}
+              href={`/ownership/${card.slug}`}
+              className="group flex min-h-[240px] flex-col items-center justify-center gap-4 bg-[var(--color-ink)] p-8 text-center text-[var(--color-paper)] transition-opacity hover:opacity-90 sm:min-h-[280px]"
             >
-              &rsaquo;
-            </span>
-          </Link>
-        ))}
+              <p className="text-2xl sm:text-3xl">{card.title}</p>
+              <span className="cta-label text-xs underline underline-offset-4">
+                Discover more{" "}
+                <span
+                  aria-hidden
+                  className="inline-block transition-transform group-hover:translate-x-0.5"
+                >
+                  &rsaquo;
+                </span>
+              </span>
+            </Link>
+          ) : (
+            <Link
+              key={card.slug}
+              href={`/ownership/${card.slug}`}
+              className="group flex items-center justify-between gap-4 border border-[var(--color-border)] p-6 transition-colors hover:border-[var(--color-ink)]"
+            >
+              <div>
+                <p className="text-base">{card.title}</p>
+                {card.summary && (
+                  <p className="mt-2 text-sm text-[var(--color-ink-soft)]">
+                    {card.summary}
+                  </p>
+                )}
+              </div>
+              <span
+                aria-hidden
+                className="shrink-0 text-[var(--color-ink-soft)] transition-transform group-hover:translate-x-0.5"
+              >
+                &rsaquo;
+              </span>
+            </Link>
+          ),
+        )}
       </div>
     </section>
   );

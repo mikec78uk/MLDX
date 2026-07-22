@@ -16,20 +16,18 @@ export default function OwnershipPage() {
 
   return (
     <div>
-      <div className="mx-auto max-w-6xl px-6 pt-16">
-        <h1 className="text-4xl sm:text-5xl">Ownership</h1>
-      </div>
-
-      <div className="mt-8">
-        <VehicleLookupHero brand={brand} content={content} />
-      </div>
+      <VehicleLookupHero brand={brand} content={content} />
 
       <ClickableCardGrid
         title="Need Assistance"
         cards={content.assistance}
         columns={2}
       />
-      <ClickableCardGrid title="Explore Ownership" cards={content.exploreCards} />
+      <ClickableCardGrid
+        title="Explore Ownership"
+        cards={content.exploreCards}
+        variant="tile"
+      />
       <FinancePromo promo={content.financePromo} />
     </div>
   );

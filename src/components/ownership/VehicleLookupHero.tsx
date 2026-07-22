@@ -58,22 +58,27 @@ export function VehicleLookupHero({
   }
 
   const isFound = lookup?.status === "found";
-  const showForm = !isFound;
 
-  return (
-    <section className="relative overflow-hidden bg-[var(--color-paper-muted)]">
-      {showForm && content.heroBackground && (
+  if (!isFound) {
+    return (
+      <section className="relative flex min-h-[560px] items-end overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]">
+        {content.heroBackground && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${content.heroBackground})` }}
+            aria-hidden
+          />
+        )}
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${content.heroBackground})` }}
+          className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/70"
           aria-hidden
         />
-      )}
 
-      <div className="relative mx-auto max-w-6xl px-6 py-16">
-        {showForm && (
-          <div className="max-w-lg">
-            <h2 className="text-2xl">{content.lookup.heading}</h2>
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-16">
+          <h1 className="text-4xl sm:text-5xl">Ownership</h1>
+
+          <div className="mt-8 max-w-lg">
+            <h2 className="text-xl text-white/90">{content.lookup.heading}</h2>
             <form
               onSubmit={handleSubmit}
               className="mt-6 flex flex-col gap-3 sm:flex-row"
@@ -87,7 +92,7 @@ export function VehicleLookupHero({
                 value={regInput}
                 onChange={(event) => setRegInput(event.target.value)}
                 placeholder={content.lookup.inputPlaceholder}
-                className="flex-1 border border-[var(--color-ink)] bg-[var(--color-paper)] px-4 py-3 text-sm uppercase tracking-wide placeholder:normal-case placeholder:text-[var(--color-ink-soft)]"
+                className="flex-1 border border-white/40 bg-white/10 px-4 py-3 text-sm uppercase tracking-wide text-white placeholder:normal-case placeholder:text-white/60"
               />
               <button
                 type="submit"
@@ -98,7 +103,7 @@ export function VehicleLookupHero({
             </form>
 
             {lookup?.status === "not-found" && (
-              <p className="mt-3 text-sm text-red-700">
+              <p className="mt-3 text-sm text-red-300">
                 {content.lookup.notFoundMessage}
               </p>
             )}
@@ -110,8 +115,8 @@ export function VehicleLookupHero({
                   type="button"
                   className={
                     index === 0
-                      ? "cta-label bg-[var(--color-ink)] px-5 py-2.5 text-xs text-[var(--color-paper)]"
-                      : "cta-label border border-[var(--color-ink)] px-5 py-2.5 text-xs"
+                      ? "cta-label bg-[var(--color-paper)] px-5 py-2.5 text-xs text-[var(--color-ink)]"
+                      : "cta-label border border-white/50 px-5 py-2.5 text-xs text-white"
                   }
                 >
                   {action.label}
@@ -119,10 +124,18 @@ export function VehicleLookupHero({
               ))}
             </div>
           </div>
-        )}
+        </div>
+      </section>
+    );
+  }
 
-        {isFound && lookup && (
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+  return (
+    <section className="bg-[var(--color-paper-muted)]">
+      <div className="mx-auto max-w-6xl px-6 py-16">
+        <h1 className="text-4xl sm:text-5xl">Ownership</h1>
+
+        {lookup && (
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
             <ModelViewer
               accent={brand.colors.accent}
               modelUrl={content.vehicle.modelUrl}
