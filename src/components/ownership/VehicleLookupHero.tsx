@@ -61,7 +61,7 @@ export function VehicleLookupHero({
 
   if (!isFound) {
     return (
-      <section className="relative flex min-h-[560px] items-end overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]">
+      <section className="relative flex min-h-[640px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] sm:min-h-[80vh]">
         {content.heroBackground && (
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -74,10 +74,23 @@ export function VehicleLookupHero({
           aria-hidden
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-16">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 pt-12 sm:flex-row sm:items-start sm:justify-between">
           <h1 className="text-4xl sm:text-5xl">Ownership</h1>
+          <div className="flex flex-wrap gap-3">
+            {content.lookup.quickActions.map((action) => (
+              <button
+                key={action.label}
+                type="button"
+                className="cta-label border border-white/25 bg-white/10 px-5 py-2.5 text-xs text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                {action.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-          <div className="mt-8 max-w-lg">
+        <div className="relative z-10 mx-auto mt-auto w-full max-w-6xl px-6 pb-16">
+          <div className="max-w-lg">
             <h2 className="text-xl text-white/90">{content.lookup.heading}</h2>
             <form
               onSubmit={handleSubmit}
@@ -107,18 +120,6 @@ export function VehicleLookupHero({
                 {content.lookup.notFoundMessage}
               </p>
             )}
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {content.lookup.quickActions.map((action) => (
-                <button
-                  key={action.label}
-                  type="button"
-                  className="cta-label border border-white/25 bg-white/10 px-5 py-2.5 text-xs text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20"
-                >
-                  {action.label}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </section>
