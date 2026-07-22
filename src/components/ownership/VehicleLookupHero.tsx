@@ -6,7 +6,7 @@ import type { OwnershipContent } from "@/data/ownership";
 import { withBasePath } from "@/lib/basePath";
 import { ModelViewer } from "@/components/three/ModelViewerLoader";
 import { QrPromo } from "./QrPromo";
-import { PencilIcon, WarningIcon } from "./icons";
+import { ArrowRightIcon, PencilIcon, WarningIcon } from "./icons";
 import {
   getLookupSnapshot,
   getServerLookupSnapshot,
@@ -108,12 +108,13 @@ export function VehicleLookupHero({
                 value={regInput}
                 onChange={(event) => setRegInput(event.target.value)}
                 placeholder={content.lookup.inputPlaceholder}
-                className="flex-1 border border-white/40 bg-white/10 px-4 py-3 text-sm uppercase tracking-wide text-white placeholder:normal-case placeholder:text-white/60"
+                className="w-[200px] border border-white/40 bg-white/10 px-4 py-3 text-sm uppercase tracking-wide text-white placeholder:normal-case placeholder:text-white/60"
               />
               <button
                 type="submit"
-                className="cta-label whitespace-nowrap bg-[var(--color-accent)] px-6 py-3 text-xs text-[var(--color-accent-ink)] transition-opacity hover:opacity-90"
+                className="cta-label flex items-center justify-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
               >
+                <ArrowRightIcon />
                 {content.lookup.ctaLabel}
               </button>
             </form>
