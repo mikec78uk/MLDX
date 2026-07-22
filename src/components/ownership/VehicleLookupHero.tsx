@@ -63,7 +63,7 @@ export function VehicleLookupHero({
 
   if (!isFound) {
     return (
-      <section className="relative -mt-16 min-h-[560px] overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] lg:h-[60vh] lg:min-h-[560px]">
+      <section className="relative -mt-16 min-h-[720px] overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] sm:min-h-[640px] lg:h-[60vh] lg:min-h-[560px]">
         {content.heroBackground && (
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -78,7 +78,7 @@ export function VehicleLookupHero({
           aria-hidden
         />
 
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-6">
+        <div className="absolute inset-0 z-10 mx-auto flex w-full max-w-6xl items-center px-6">
           <div className="max-w-lg">
             <h1 className="text-4xl sm:text-5xl">Owners</h1>
             <h2 className="mt-4 text-xl text-white/90">
