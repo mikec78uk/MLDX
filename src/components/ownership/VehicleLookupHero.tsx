@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore, type FormEvent } from "react";
 import type { BrandConfig } from "@/lib/brand";
 import type { OwnershipContent } from "@/data/ownership";
+import { withBasePath } from "@/lib/basePath";
 import { ModelViewer } from "@/components/three/ModelViewerLoader";
 import { QrPromo } from "./QrPromo";
 import { PencilIcon, WarningIcon } from "./icons";
@@ -61,11 +62,13 @@ export function VehicleLookupHero({
 
   if (!isFound) {
     return (
-      <section className="relative flex min-h-[640px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] sm:min-h-[80vh]">
+      <section className="relative flex min-h-[560px] flex-col overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]">
         {content.heroBackground && (
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${content.heroBackground})` }}
+            style={{
+              backgroundImage: `url(${withBasePath(content.heroBackground)})`,
+            }}
             aria-hidden
           />
         )}
@@ -89,7 +92,7 @@ export function VehicleLookupHero({
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto mt-auto w-full max-w-6xl px-6 pb-16">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 items-center px-6 py-10">
           <div className="max-w-lg">
             <h2 className="text-xl text-white/90">{content.lookup.heading}</h2>
             <form

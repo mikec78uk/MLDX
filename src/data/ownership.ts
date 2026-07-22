@@ -171,6 +171,7 @@ interface BrandOverrides {
   vehicle: OwnershipContent["vehicle"];
   remoteAppName: string;
   retailerName: string;
+  heroBackground?: string;
 }
 
 const overridesByBrand: Record<BrandId, BrandOverrides> = {
@@ -182,6 +183,7 @@ const overridesByBrand: Record<BrandId, BrandOverrides> = {
     },
     remoteAppName: "Land Rover Remote",
     retailerName: "Land Rover",
+    heroBackground: "/ownership/hero-defender.avif",
   },
   "range-rover": {
     // Mirrors Defender until Range Rover gets its own finalisation pass.
@@ -199,6 +201,7 @@ export function getOwnershipContent(brandId: BrandId): OwnershipContent {
   const overrides = overridesByBrand[brandId];
   return {
     ...sharedCopy,
+    heroBackground: overrides.heroBackground,
     vehicle: overrides.vehicle,
     remoteApp: {
       ...sharedCopy.remoteApp,
