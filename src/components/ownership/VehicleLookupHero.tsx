@@ -109,15 +109,11 @@ export function VehicleLookupHero({
             )}
 
             <div className="mt-8 flex flex-wrap gap-3">
-              {content.lookup.quickActions.map((action, index) => (
+              {content.lookup.quickActions.map((action) => (
                 <button
                   key={action.label}
                   type="button"
-                  className={
-                    index === 0
-                      ? "cta-label bg-[var(--color-paper)] px-5 py-2.5 text-xs text-[var(--color-ink)]"
-                      : "cta-label border border-white/50 px-5 py-2.5 text-xs text-white"
-                  }
+                  className="cta-label border border-white/25 bg-white/10 px-5 py-2.5 text-xs text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20"
                 >
                   {action.label}
                 </button>
