@@ -1,4 +1,5 @@
 import type { OwnershipContent } from "@/data/ownership";
+import { withBasePath } from "@/lib/basePath";
 
 export function FinancePromo({
   promo,
@@ -11,7 +12,9 @@ export function FinancePromo({
         <div
           className="aspect-[4/3] w-full bg-[var(--color-paper-muted)] bg-cover bg-center"
           style={
-            promo.image ? { backgroundImage: `url(${promo.image})` } : undefined
+            promo.image
+              ? { backgroundImage: `url(${withBasePath(promo.image)})` }
+              : undefined
           }
           aria-hidden
         />
