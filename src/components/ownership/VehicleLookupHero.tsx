@@ -175,9 +175,12 @@ export function VehicleLookupHero({
                 </button>
               </p>
 
-              <div className="mt-6 flex items-start gap-3 border border-amber-200 bg-amber-50 px-4 py-3 text-amber-900">
+              <button
+                type="button"
+                className="mt-6 flex w-full items-start gap-3 border border-amber-200 bg-amber-50 px-4 py-3 text-left text-amber-900 transition-colors hover:border-amber-300 hover:bg-amber-100"
+              >
                 <WarningIcon />
-                <div>
+                <div className="flex-1">
                   <p className="text-sm font-medium">
                     {content.securityNotice.title}
                   </p>
@@ -185,7 +188,10 @@ export function VehicleLookupHero({
                     {content.securityNotice.description}
                   </p>
                 </div>
-              </div>
+                <span aria-hidden className="mt-0.5 text-amber-700">
+                  &rsaquo;
+                </span>
+              </button>
 
               <div className="mt-8 grid gap-8 sm:grid-cols-2">
                 <div>
