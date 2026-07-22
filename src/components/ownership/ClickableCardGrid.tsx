@@ -10,7 +10,7 @@ export function ClickableCardGrid({
   title: string;
   cards: CardLink[];
   columns?: 2 | 3;
-  /** "tile" is the larger, centered, dark treatment for feature-level cards. */
+  /** "tile" is the larger, centered treatment for feature-level cards. */
   variant?: "compact" | "tile";
 }) {
   return (
@@ -26,10 +26,10 @@ export function ClickableCardGrid({
             <Link
               key={card.slug}
               href={`/ownership/${card.slug}`}
-              className="group flex min-h-[240px] flex-col items-center justify-center gap-4 bg-[var(--color-ink)] p-8 text-center text-[var(--color-paper)] transition-opacity hover:opacity-90 sm:min-h-[280px]"
+              className="group flex min-h-[240px] flex-col items-center justify-center gap-4 border border-transparent bg-[var(--color-paper-muted)] p-8 text-center transition-colors hover:border-[var(--color-ink)] sm:min-h-[280px]"
             >
               <p className="text-2xl sm:text-3xl">{card.title}</p>
-              <span className="cta-label text-xs underline underline-offset-4">
+              <span className="cta-label text-xs text-[var(--color-ink-soft)] underline underline-offset-4">
                 Discover more{" "}
                 <span
                   aria-hidden
