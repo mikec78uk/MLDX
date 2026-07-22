@@ -27,6 +27,7 @@ export default function OwnershipPage() {
         title="Explore Ownership"
         cards={content.exploreCards}
         variant="tile"
+        paddingTop={false}
       />
       <FinancePromo promo={content.financePromo} />
     </div>

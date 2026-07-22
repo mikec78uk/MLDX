@@ -6,15 +6,20 @@ export function ClickableCardGrid({
   cards,
   columns = 3,
   variant = "compact",
+  paddingTop = true,
 }: {
   title: string;
   cards: CardLink[];
   columns?: 2 | 3;
   /** "tile" is the larger, centered treatment for feature-level cards. */
   variant?: "compact" | "tile";
+  /** Set false when the section directly follows another with its own bottom padding. */
+  paddingTop?: boolean;
 }) {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <section
+      className={`mx-auto max-w-6xl px-6 pb-16 ${paddingTop ? "pt-16" : "pt-0"}`}
+    >
       <h2 className="text-2xl">{title}</h2>
       <div
         className={`mt-8 grid gap-6 ${
