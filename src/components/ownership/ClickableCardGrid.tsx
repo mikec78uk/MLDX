@@ -26,9 +26,9 @@ export function ClickableCardGrid({
             <Link
               key={card.slug}
               href={`/ownership/${card.slug}`}
-              className="group flex min-h-[240px] flex-col items-center justify-center gap-4 border border-transparent bg-[var(--color-paper-muted)] p-8 text-center transition-colors hover:border-[var(--color-ink)] sm:min-h-[280px]"
+              className="group flex min-h-[160px] flex-col items-center justify-center gap-3 border border-transparent bg-[var(--color-paper-muted)] p-6 text-center transition-colors hover:border-[var(--color-ink)] sm:min-h-[180px]"
             >
-              <p className="text-2xl sm:text-3xl">{card.title}</p>
+              <p className="text-xl sm:text-2xl">{card.title}</p>
               <span className="cta-label text-xs text-[var(--color-ink-soft)] underline underline-offset-4">
                 Discover more{" "}
                 <span
