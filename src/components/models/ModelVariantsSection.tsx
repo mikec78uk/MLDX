@@ -23,8 +23,17 @@ export function ModelVariantsSection({
   variants: ModelVariantsData;
 }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const openVariant = variants.variants.find((variant) => variant.slug === openSlug);
-  const openFullSpecs = openVariant ? getFullSpecs(modelSlug, openVariant.slug) : undefined;
+  // Keeps showing the last-opened variant's content while the flyout
+  // slides closed — the flyout stays permanently mounted (see below) so
+  // its CSS transition has a "before" state to animate from, which means
+  // its content can't just disappear the instant openSlug clears.
+  const [displayedSlug, setDisplayedSlug] = useState<string | null>(null);
+  if (openSlug && openSlug !== displayedSlug) {
+    setDisplayedSlug(openSlug);
+  }
+  const displayedVariant =
+    variants.variants.find((variant) => variant.slug === displayedSlug) ??
+    variants.variants[0];
 
   return (
     <section className="border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]">
@@ -117,13 +126,13 @@ export function ModelVariantsSection({
         )}
       </div>
 
-      {openVariant && openFullSpecs && (
+      {variants.hasData && displayedVariant && (
         <SpecsFlyout
-          open={Boolean(openVariant)}
+          open={Boolean(openSlug)}
           onClose={() => setOpenSlug(null)}
-          variantName={openVariant.name}
-          variantImage={openVariant.image}
-          fullSpecs={openFullSpecs}
+          variantName={displayedVariant.name}
+          variantImage={displayedVariant.image}
+          fullSpecs={getFullSpecs(modelSlug, displayedVariant.slug)}
         />
       )}
     </section>
