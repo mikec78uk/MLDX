@@ -14,6 +14,9 @@ export function OverviewSection({
   brandShortName: string;
 }) {
   const hero = getModelHero(model.slug);
+  // Separate from hasData on purpose — see the darkOverview doc comment in
+  // modelHero.ts. Only Defender 110 opts into this today.
+  const dark = hero.darkOverview === true;
 
   return (
     <>
@@ -26,7 +29,11 @@ export function OverviewSection({
         />
       )}
 
-      <section className="mx-auto max-w-5xl px-6 py-16">
+      <section
+        className={`mx-auto max-w-5xl px-6 py-16 ${
+          dark ? "bg-[var(--color-ink)] text-[var(--color-paper)]" : ""
+        }`}
+      >
         {!hero.hasData && (
           <>
             <p className="eyebrow text-xs text-[var(--color-ink-soft)]">
@@ -40,20 +47,28 @@ export function OverviewSection({
         )}
 
         {hero.hasData && (
-          <p className="eyebrow text-xs text-[var(--color-ink-soft)]">
+          <p
+            className={`eyebrow text-xs ${dark ? "text-white/60" : "text-[var(--color-ink-soft)]"}`}
+          >
             Explore in 3D
           </p>
         )}
         <div className={hero.hasData ? "mt-4" : "mt-10"}>
           <ModelViewer accent={accent} modelUrl={model.modelUrl} />
-          <p className="mt-3 text-xs text-[var(--color-ink-soft)]">
+          <p
+            className={`mt-3 text-xs ${dark ? "text-white/60" : "text-[var(--color-ink-soft)]"}`}
+          >
             {model.modelUrl
               ? "Drag to rotate."
               : `Drag to rotate. Placeholder geometry — swap for the real ${model.name} model once 3D assets are supplied.`}
           </p>
         </div>
 
-        <dl className="mt-12 grid max-w-md grid-cols-2 gap-6 border-t border-[var(--color-border)] pt-6">
+        <dl
+          className={`mt-12 grid max-w-md grid-cols-2 gap-6 border-t pt-6 ${
+            dark ? "border-white/15" : "border-[var(--color-border)]"
+          }`}
+        >
           {!hero.hasData && (
             <div>
               <dt className="eyebrow text-xs text-[var(--color-ink-soft)]">
@@ -63,7 +78,9 @@ export function OverviewSection({
             </div>
           )}
           <div>
-            <dt className="eyebrow text-xs text-[var(--color-ink-soft)]">
+            <dt
+              className={`eyebrow text-xs ${dark ? "text-white/60" : "text-[var(--color-ink-soft)]"}`}
+            >
               Ownership
             </dt>
             <dd className="mt-1 text-lg">
@@ -74,14 +91,22 @@ export function OverviewSection({
           </div>
         </dl>
 
-        <p className="mt-12 max-w-lg text-sm text-[var(--color-ink-soft)]">
+        <p
+          className={`mt-12 max-w-lg text-sm ${dark ? "text-white/60" : "text-[var(--color-ink-soft)]"}`}
+        >
           Full storytelling content for this model — lifestyle imagery, feature
           highlights, films — lands in a later content pass.
         </p>
 
         {hero.representativeExample && (
-          <p className="mt-6 max-w-3xl text-xs text-[var(--color-ink-soft)]">
-            <strong className="font-semibold">Representative example:</strong>{" "}
+          <p
+            className={`mt-6 max-w-3xl text-xs ${dark ? "text-white/50" : "text-[var(--color-ink-soft)]"}`}
+          >
+            <strong
+              className={`font-semibold ${dark ? "text-white/70" : "text-[var(--color-ink)]"}`}
+            >
+              Representative example:
+            </strong>{" "}
             {hero.representativeExample}
           </p>
         )}

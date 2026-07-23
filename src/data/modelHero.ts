@@ -15,12 +15,21 @@ export interface ModelHero {
   financeSummary?: string;
   representativeExample?: string;
   hotspot?: ModelHeroHotspot;
+  /**
+   * Opts the overview content below the hero into a dark theme. A separate
+   * flag from hasData on purpose — this is a per-model styling choice (e.g.
+   * illustrating that a flagship/adventure model can read darker than a
+   * standard one), not something every model with real hero content should
+   * automatically inherit.
+   */
+  darkOverview?: boolean;
 }
 
 const EMPTY_HERO: ModelHero = { hasData: false };
 
 const defender110Hero: ModelHero = {
   hasData: true,
+  darkOverview: true,
   backgroundImage: "/models/hero-defender-110.avif",
   tagline: "The ultimate all-rounder",
   priceFrom: "£64,315",
