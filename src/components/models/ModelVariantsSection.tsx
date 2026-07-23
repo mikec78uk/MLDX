@@ -27,7 +27,7 @@ export function ModelVariantsSection({
   const openFullSpecs = openVariant ? getFullSpecs(modelSlug, openVariant.slug) : undefined;
 
   return (
-    <section className="border-t border-[var(--color-border)]">
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]">
       <div className="mx-auto max-w-6xl px-6 py-16">
         <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Models</p>
         <h2 className="mt-3 text-3xl sm:text-4xl">{modelName} Model Variants</h2>
@@ -42,7 +42,7 @@ export function ModelVariantsSection({
               {variants.variants.map((variant) => (
                 <div
                   key={variant.slug}
-                  className="flex flex-col gap-4 border border-[var(--color-border)] p-6 sm:p-8"
+                  className="flex flex-col gap-4 border border-[var(--color-border)] bg-[var(--color-paper)] p-6 sm:p-8"
                 >
                   <div className="relative aspect-[640/360] w-full bg-[var(--color-paper-muted)]">
                     <Image
@@ -99,7 +99,7 @@ export function ModelVariantsSection({
               ))}
             </div>
 
-            <div className="mt-16 border border-[var(--color-border)] bg-[var(--color-paper-muted)] px-6 py-16 text-center">
+            <div className="mt-16 border border-[var(--color-border)] bg-[var(--color-paper)] px-6 py-16 text-center">
               <h3 className="text-2xl sm:text-3xl">Find your Defender</h3>
               <p className="mx-auto mt-3 max-w-md text-sm text-[var(--color-ink-soft)]">
                 Tell us what matters to you, and we&rsquo;ll help you discover
