@@ -27,5 +27,11 @@ export default async function ModelVariantsPage({
   if (!model) notFound();
 
   const variants = getModelVariants(slug);
-  return <ModelVariantsSection modelName={model.name} variants={variants} />;
+  return (
+    <ModelVariantsSection
+      modelName={model.name}
+      modelSlug={slug}
+      variants={variants}
+    />
+  );
 }

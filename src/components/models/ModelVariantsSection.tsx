@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
 import type { ModelVariantsData } from "@/data/modelVariants";
+import { getFullSpecs } from "@/data/modelFullSpecs";
 import { ArrowRightIcon } from "@/components/icons";
 import { SpecsFlyout } from "@/components/models/SpecsFlyout";
 
@@ -14,13 +15,16 @@ import { SpecsFlyout } from "@/components/models/SpecsFlyout";
  */
 export function ModelVariantsSection({
   modelName,
+  modelSlug,
   variants,
 }: {
   modelName: string;
+  modelSlug: string;
   variants: ModelVariantsData;
 }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const openVariant = variants.variants.find((variant) => variant.slug === openSlug);
+  const openFullSpecs = openVariant ? getFullSpecs(modelSlug, openVariant.slug) : undefined;
 
   return (
     <section className="border-t border-[var(--color-border)]">
@@ -113,11 +117,13 @@ export function ModelVariantsSection({
         )}
       </div>
 
-      {openVariant && (
+      {openVariant && openFullSpecs && (
         <SpecsFlyout
           open={Boolean(openVariant)}
           onClose={() => setOpenSlug(null)}
-          title={openVariant.name}
+          variantName={openVariant.name}
+          variantImage={openVariant.image}
+          fullSpecs={openFullSpecs}
         />
       )}
     </section>
