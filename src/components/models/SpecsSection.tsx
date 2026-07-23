@@ -8,10 +8,7 @@ export function SpecsSection({
   specs: ModelSpecs;
 }) {
   return (
-    <section
-      id="specs"
-      className="scroll-mt-32 border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]"
-    >
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]">
       <div className="mx-auto max-w-5xl px-6 py-16">
         <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Specs</p>
         <h2 className="mt-3 text-3xl sm:text-4xl">Models and specifications</h2>

@@ -1,6 +1,6 @@
 export function CompareSection({ modelName }: { modelName: string }) {
   return (
-    <section id="compare" className="scroll-mt-32 border-t border-[var(--color-border)]">
+    <section className="border-t border-[var(--color-border)]">
       <div className="mx-auto max-w-5xl px-6 py-16">
         <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Compare</p>
         <h2 className="mt-3 text-3xl sm:text-4xl">

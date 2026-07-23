@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRightIcon } from "@/components/icons";
 
 interface NavSection {
-  id: string;
+  path: string;
   label: string;
 }
 
 const SECTIONS: NavSection[] = [
-  { id: "overview", label: "Overview" },
-  { id: "specs", label: "Specs" },
-  { id: "compare", label: "Compare" },
+  { path: "", label: "Overview" },
+  { path: "/specs", label: "Specs" },
+  { path: "/compare", label: "Compare" },
 ];
 
 /**
@@ -22,56 +23,15 @@ const SECTIONS: NavSection[] = [
  */
 export function ModelStickyNav({
   modelName,
+  modelSlug,
   inStockAvailable,
 }: {
   modelName: string;
+  modelSlug: string;
   inStockAvailable: boolean;
 }) {
-  const [activeId, setActiveId] = useState<string>(SECTIONS[0].id);
-
-  useEffect(() => {
-    const elements = SECTIONS.map((section) => ({
-      id: section.id,
-      el: document.getElementById(section.id),
-    })).filter(
-      (entry): entry is { id: string; el: HTMLElement } => entry.el !== null,
-    );
-    if (elements.length === 0) return;
-
-    // Active section is the last one whose top has scrolled up past the
-    // two stacked sticky bars — a fixed-offset check, not a proportional
-    // "middle of viewport" one, so it holds regardless of viewport height
-    // or how tall a given section's content is.
-    const OFFSET = 140;
-
-    function updateActive() {
-      // Scrolled to the foot of the page: the last section may be too
-      // short for its top to ever cross OFFSET, so force it active.
-      const atBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 1;
-      if (atBottom) {
-        setActiveId(elements[elements.length - 1].id);
-        return;
-      }
-
-      let current = elements[0].id;
-      for (const { id, el } of elements) {
-        if (el.getBoundingClientRect().top <= OFFSET) {
-          current = id;
-        }
-      }
-      setActiveId(current);
-    }
-
-    updateActive();
-    window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateActive);
-    return () => {
-      window.removeEventListener("scroll", updateActive);
-      window.removeEventListener("resize", updateActive);
-    };
-  }, []);
+  const pathname = usePathname();
+  const basePath = `/models/${modelSlug}`;
 
   return (
     <div className="sticky top-16 z-40 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur">
@@ -81,19 +41,23 @@ export function ModelStickyNav({
             {modelName}
           </span>
           <nav className="flex items-center gap-6">
-            {SECTIONS.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className={`cta-label border-b-2 pb-1 text-xs transition-colors ${
-                  activeId === section.id
-                    ? "border-[var(--color-accent)] text-[var(--color-ink)]"
-                    : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
-                }`}
-              >
-                {section.label}
-              </a>
-            ))}
+            {SECTIONS.map((section) => {
+              const href = `${basePath}${section.path}`;
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={section.path}
+                  href={href}
+                  className={`cta-label border-b-2 pb-1 text-xs transition-colors ${
+                    isActive
+                      ? "border-[var(--color-accent)] text-[var(--color-ink)]"
+                      : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
+                  {section.label}
+                </Link>
+              );
+            })}
             <button
               type="button"
               className="cta-label flex items-center gap-2 whitespace-nowrap border-b-2 border-transparent pb-1 text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"

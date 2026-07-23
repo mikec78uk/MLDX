@@ -10,10 +10,7 @@ export function OverviewSection({
   accent: string;
 }) {
   return (
-    <section
-      id="overview"
-      className="mx-auto max-w-5xl scroll-mt-32 px-6 py-16"
-    >
+    <section className="mx-auto max-w-5xl px-6 py-16">
       <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Overview</p>
       <h1 className="mt-3 text-4xl sm:text-5xl">{model.name}</h1>
       <p className="mt-3 max-w-lg text-[var(--color-ink-soft)]">
