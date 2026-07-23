@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSyncExternalStore } from "react";
 import { ArrowRightIcon } from "@/components/icons";
+import {
+  getHeaderHiddenSnapshot,
+  getServerHeaderHiddenSnapshot,
+  subscribeToHeaderHidden,
+} from "@/lib/header/visibility";
 
 interface NavSection {
   path: string;
@@ -32,9 +38,20 @@ export function ModelStickyNav({
 }) {
   const pathname = usePathname();
   const basePath = `/models/${modelSlug}`;
+  // The site header hides on scroll-down; slide up by its height too so
+  // this bar closes the gap instead of leaving a blank strip above it.
+  const headerHidden = useSyncExternalStore(
+    subscribeToHeaderHidden,
+    getHeaderHiddenSnapshot,
+    getServerHeaderHiddenSnapshot,
+  );
 
   return (
-    <div className="sticky top-16 z-40 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur">
+    <div
+      className={`sticky top-16 z-40 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur transition-transform duration-300 motion-reduce:transition-none ${
+        headerHidden ? "-translate-y-16" : "translate-y-0"
+      }`}
+    >
       <div className="mx-auto flex max-w-6xl flex-col gap-y-3 px-6 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-x-8">
         <div className="flex flex-col gap-y-3 lg:flex-row lg:items-center lg:gap-x-8">
           <span className="font-[family-name:var(--font-display-bold)] text-base uppercase tracking-tight">

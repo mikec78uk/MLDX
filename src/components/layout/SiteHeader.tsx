@@ -9,6 +9,7 @@ import {
   getServerLookupSnapshot,
   subscribeToLookup,
 } from "@/lib/ownership/session";
+import { setHeaderHidden } from "@/lib/header/visibility";
 
 const NAV_LINKS = [
   { href: "/models", label: "Models" },
@@ -17,6 +18,11 @@ const NAV_LINKS = [
 
 /** How far you need to scroll before the header solidifies. */
 const SCROLL_THRESHOLD = 80;
+
+/** Always shown below this scroll depth, regardless of direction. */
+const REVEAL_OFFSET = 80;
+/** Ignore sub-pixel/jitter scroll deltas so it doesn't flicker. */
+const HIDE_DELTA = 8;
 
 export function SiteHeader({ brand }: { brand: BrandConfig }) {
   const pathname = usePathname();
@@ -31,6 +37,7 @@ export function SiteHeader({ brand }: { brand: BrandConfig }) {
     getServerLookupSnapshot,
   );
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const hasTransparentHero = pathname === "/ownership" && lookup?.status !== "found";
 
@@ -44,11 +51,47 @@ export function SiteHeader({ brand }: { brand: BrandConfig }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [hasTransparentHero]);
 
+  // Hides on scroll-down, reappears on scroll-up — independent of the
+  // transparent-hero colour logic above, so it applies on every page.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let isHidden = false;
+
+    function apply(next: boolean) {
+      if (next === isHidden) return;
+      isHidden = next;
+      setHidden(next);
+      setHeaderHidden(next);
+    }
+
+    function onScroll() {
+      const currentY = window.scrollY;
+      const delta = currentY - lastY;
+      if (currentY <= REVEAL_OFFSET) {
+        apply(false);
+      } else if (delta > HIDE_DELTA) {
+        apply(true);
+      } else if (delta < -HIDE_DELTA) {
+        apply(false);
+      }
+      lastY = currentY;
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      setHeaderHidden(false);
+    };
+  }, []);
+
   const transparent = hasTransparentHero && !scrolled;
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+      className={`sticky top-0 z-50 border-b transition-[color,background-color,border-color,transform] duration-300 motion-reduce:transition-none ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      } ${
         transparent
           ? "border-white/15 bg-transparent"
           : "border-[var(--color-border)] bg-[var(--color-paper)]/90 backdrop-blur"
