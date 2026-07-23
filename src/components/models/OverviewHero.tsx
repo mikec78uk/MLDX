@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap/registerPlugins";
 import { withBasePath } from "@/lib/basePath";
 import type { ModelHero } from "@/data/modelHero";
 import { ArrowRightIcon } from "@/components/icons";
+import { HeroHotspot } from "@/components/models/HeroHotspot";
 
 /**
  * "Build your <brand>" and "Get a personalised quote" have no real
@@ -15,10 +16,12 @@ import { ArrowRightIcon } from "@/components/icons";
  */
 export function OverviewHero({
   modelName,
+  modelSlug,
   brandShortName,
   hero,
 }: {
   modelName: string;
+  modelSlug: string;
   brandShortName: string;
   hero: ModelHero;
 }) {
@@ -72,6 +75,13 @@ export function OverviewHero({
         className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-transparent"
         aria-hidden
       />
+
+      {hero.hotspot && (
+        <HeroHotspot
+          hotspot={hero.hotspot}
+          specsHref={`/models/${modelSlug}/specs`}
+        />
+      )}
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
         <div className="max-w-md">

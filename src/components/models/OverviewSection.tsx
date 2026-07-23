@@ -20,6 +20,7 @@ export function OverviewSection({
       {hero.hasData && (
         <OverviewHero
           modelName={model.name}
+          modelSlug={model.slug}
           brandShortName={brandShortName}
           hero={hero}
         />
