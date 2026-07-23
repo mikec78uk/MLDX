@@ -17,7 +17,7 @@ interface NavSection {
 
 const SECTIONS: NavSection[] = [
   { path: "", label: "Overview" },
-  { path: "/specs", label: "Specs" },
+  { path: "/specs", label: "Models" },
   { path: "/compare", label: "Compare" },
 ];
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBrand } from "@/lib/brand";
 import { getModel } from "@/data/models";
+import { getModelSpecs } from "@/data/modelSpecs";
 import { CompareSection } from "@/components/models/CompareSection";
 
 const brand = getBrand();
@@ -27,5 +28,6 @@ export default async function ModelComparePage({
   const model = getModel(brand.id, slug);
   if (!model) notFound();
 
-  return <CompareSection modelName={model.name} />;
+  const specs = getModelSpecs(slug);
+  return <CompareSection modelName={model.name} specs={specs} />;
 }
