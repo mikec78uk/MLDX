@@ -7,7 +7,8 @@ import type { OwnershipContent } from "@/data/ownership";
 import { withBasePath } from "@/lib/basePath";
 import { ModelViewer } from "@/components/three/ModelViewerLoader";
 import { QrPromo } from "./QrPromo";
-import { ArrowRightIcon, PencilIcon, WarningIcon } from "./icons";
+import { ArrowRightIcon } from "@/components/icons";
+import { PencilIcon, WarningIcon } from "./icons";
 import {
   getLookupSnapshot,
   getServerLookupSnapshot,
