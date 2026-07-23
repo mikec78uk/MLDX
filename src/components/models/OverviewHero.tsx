@@ -75,6 +75,14 @@ export function OverviewHero({
         className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-transparent"
         aria-hidden
       />
+      {/* Fades the photo into whatever the section below uses, so the hero
+          doesn't end on a hard edge. */}
+      <div
+        className={`absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-b from-transparent ${
+          hero.darkOverview ? "to-[var(--color-ink)]" : "to-[var(--color-paper)]"
+        }`}
+        aria-hidden
+      />
 
       {hero.hotspot && (
         <HeroHotspot
