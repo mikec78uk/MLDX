@@ -25,7 +25,7 @@ const SECTIONS: NavSection[] = [
 const SCROLL_THRESHOLD = 80;
 
 /**
- * In-Stock, Test drive and Configure have no real destinations yet (they're
+ * Available Cars, Test drive and Configure have no real destinations yet (they're
  * meant to link out to separate tools/sites per the brief) — rendered as
  * real-looking but inert controls until those are supplied, matching the
  * pattern already used for undetermined links on the ownership page.
@@ -117,7 +117,7 @@ export function ModelStickyNav({
                   : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
               }`}
             >
-              In-Stock
+              Available Cars
               {inStockAvailable && (
                 <span
                   aria-hidden
