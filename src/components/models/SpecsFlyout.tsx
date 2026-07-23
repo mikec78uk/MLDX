@@ -157,7 +157,7 @@ export function SpecsFlyout({
         aria-hidden
         onClick={onClose}
         className={
-          "fixed inset-0 z-40 bg-[var(--color-overlay)] transition-[opacity,visibility] duration-1000 motion-reduce:transition-none " +
+          "fixed inset-0 z-40 bg-[var(--color-overlay)] transition-[opacity,visibility] duration-500 motion-reduce:transition-none " +
           (open ? "visible opacity-100" : "invisible opacity-0")
         }
       />
@@ -167,7 +167,7 @@ export function SpecsFlyout({
         aria-modal="true"
         aria-label={variantName}
         className={
-          "fixed inset-0 z-50 flex flex-col bg-[var(--color-paper)] transition-[translate,visibility] duration-1000 ease-out motion-reduce:transition-none " +
+          "fixed inset-0 z-50 flex flex-col bg-[var(--color-paper)] transition-[translate,visibility] duration-500 ease-out motion-reduce:transition-none " +
           (open ? "visible translate-y-0" : "invisible translate-y-full")
         }
       >
