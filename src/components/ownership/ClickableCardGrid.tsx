@@ -35,7 +35,7 @@ export function ClickableCardGrid({
             >
               <p className="text-xl sm:text-2xl">{card.title}</p>
               <span className="cta-label text-xs text-[var(--color-ink-soft)] underline underline-offset-4">
-                Discover more{" "}
+                Explore{" "}
                 <span
                   aria-hidden
                   className="inline-block transition-transform group-hover:translate-x-0.5"
