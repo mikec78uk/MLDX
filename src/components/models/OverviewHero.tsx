@@ -60,7 +60,7 @@ export function OverviewHero({
   return (
     <section
       ref={containerRef}
-      className="relative flex h-[70vh] min-h-[520px] items-center overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]"
+      className="relative -mt-[60px] flex h-[88vh] min-h-[640px] items-center overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]"
     >
       {hero.backgroundImage && (
         <div

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getBrand } from "@/lib/brand";
 import { getModel, getModels } from "@/data/models";
+import { getModelHero } from "@/data/modelHero";
 import { ModelStickyNav } from "@/components/models/ModelStickyNav";
 
 const brand = getBrand();
@@ -19,6 +20,7 @@ export default async function ModelLayout({
   const { slug } = await params;
   const model = getModel(brand.id, slug);
   if (!model) notFound();
+  const hero = getModelHero(slug);
 
   return (
     <div>
@@ -26,6 +28,7 @@ export default async function ModelLayout({
         modelName={model.name}
         modelSlug={model.slug}
         inStockAvailable
+        overviewHasHero={hero.hasData}
       />
       {children}
     </div>
