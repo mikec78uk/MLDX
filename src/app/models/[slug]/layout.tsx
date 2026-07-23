@@ -21,7 +21,7 @@ export default async function ModelLayout({
   if (!model) notFound();
 
   return (
-    <div>
+    <div className="bg-[var(--color-paper-muted)]">
       <ModelStickyNav
         modelName={model.name}
         modelSlug={model.slug}
