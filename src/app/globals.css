@@ -57,6 +57,11 @@
   --font-display: "LandRoverWeb-Demi", "Helvetica Neue", Arial, sans-serif;
   --font-display-bold: "LandRoverWeb-Bold", "Helvetica Neue", Arial, sans-serif;
   --font-body: "AvenirNext", "Helvetica Neue", Arial, sans-serif;
+
+  /* Total SiteHeader height (utility bar + main bar) — the nav menu, the
+   * hide-on-scroll transform, and every page-level sticky bar measure
+   * themselves off this one value. See src/lib/header/constants.ts. */
+  --header-height: 105px;
 }
 
 @theme inline {

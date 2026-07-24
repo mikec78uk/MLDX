@@ -48,8 +48,8 @@ export function ModelStickyNav({
 
   return (
     <div
-      className={`sticky top-16 z-40 transition-transform duration-300 motion-reduce:transition-none ${
-        headerHidden ? "-translate-y-16" : "translate-y-0"
+      className={`sticky top-[var(--header-height)] z-40 transition-transform duration-300 motion-reduce:transition-none ${
+        headerHidden ? "translate-y-[calc(var(--header-height)*-1)]" : "translate-y-0"
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 pt-3">
