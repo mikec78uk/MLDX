@@ -23,63 +23,50 @@ export interface AvailableVehiclesData {
 const EMPTY: AvailableVehiclesData = { hasData: false, vehicles: [] };
 
 /**
- * Placeholder dealer-stock listings for the "Available Cars" carousel teaser
- * on the model overview page. Reuses the same product photography as the
- * Models tab (src/data/modelVariants.ts) since no dealer-stock photography
- * exists yet.
+ * Dealer-stock listings for the "Available Cars" carousel teaser on the
+ * model overview page. Content and photography sourced from the user's
+ * Figma mockup (fileKey xC9svLeoUtl9O7Bl329BcF, node 13:2).
  */
 const defender110: AvailableVehiclesData = {
   hasData: true,
   vehicles: [
     {
-      slug: "x-dynamic-hse-new",
-      image: "/models/variants/defender-110-x-dynamic-hse.png",
+      slug: "hard-top-x-dynamic-hse-new",
+      image: "/models/available-cars/vehicle-1.png",
       condition: "New",
-      name: "Defender 110 X-Dynamic HSE",
+      name: "Defender 110 Hard Top X-Dynamic HSE",
       engine: "D350 Diesel Mild Hybrid",
       priceLabel: "On The Road Price (VAT Included)",
-      price: "£74,270",
+      price: "£71,720",
       fuelType: "Diesel",
-      collection: "Collection in 5 days",
+      collection: "Collection 5 days",
       dealer: "Lookers Land Rover, West London",
     },
     {
-      slug: "vertex-preowned",
-      image: "/models/variants/defender-110-vertex.png",
+      slug: "xs-edition-preowned",
+      image: "/models/available-cars/vehicle-2.png",
       condition: "Pre-Owned",
-      name: "Defender 110 Vertex Edition",
+      name: "Defender 110 XS Edition",
       engine: "P400 Automatic Petrol",
       priceLabel: "Purchase Price",
       price: "£55,699",
       fuelType: "Petrol",
-      collection: "Collection in 5 days",
+      collection: "Collection 5 days",
       mileage: "28,927 miles",
       dealer: "Stratstone Land Rover, Tonbridge",
     },
     {
       slug: "x-preowned",
-      image: "/models/variants/defender-110-x.png",
+      image: "/models/available-cars/vehicle-3.png",
       condition: "Pre-Owned",
       name: "Defender 110 X",
       engine: "P400 Automatic Petrol",
       priceLabel: "Purchase Price",
       price: "£52,000",
       fuelType: "Petrol",
-      collection: "Collection in 5 days",
+      collection: "Collection 5 days",
       mileage: "30,803 miles",
       dealer: "Group 1 Land Rover, Sidcup",
-    },
-    {
-      slug: "trophy-black-new",
-      image: "/models/variants/defender-110-trophy-black.png",
-      condition: "New",
-      name: "Defender 110 Trophy Edition",
-      engine: "P400 Automatic Petrol",
-      priceLabel: "On The Road Price (VAT Included)",
-      price: "£97,900",
-      fuelType: "Petrol",
-      collection: "Collection in 7 days",
-      dealer: "Land Rover Solihull",
     },
   ],
 };

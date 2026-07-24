@@ -17,9 +17,11 @@ const FILTERS: Array<"All" | VehicleCondition> = ["All", "New", "Pre-Owned"];
  * used for undetermined links elsewhere.
  *
  * The card row breaks out of the page's max-w container to bleed edge to
- * edge (relative/left-1/2/-translate-x-1/2 full-bleed trick), and cards are
- * sized so a sliver of the next one peeks in on mobile — a visual cue that
- * the row scrolls.
+ * edge via a negative-margin full-bleed (mx-[calc(50%-50vw)], which avoids
+ * the horizontal-scrollbar-overflow bug that a fixed `w-screen` width can
+ * introduce), then re-applies the page's own left inset so the first card
+ * lines up with the heading text above it. Cards are sized so a sliver of
+ * the next one peeks in on mobile — a visual cue that the row scrolls.
  */
 export function AvailableVehiclesCarousel({
   modelName,
@@ -65,23 +67,24 @@ export function AvailableVehiclesCarousel({
         ))}
       </div>
 
-      <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2">
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:px-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden">
+      <div className="mx-[calc(50%-50vw)] mt-6">
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto py-1 pr-6 pl-6 [scrollbar-width:none] sm:pl-[max(1.5rem,calc((100%-64rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden">
           {visible.map((vehicle) => (
             <article
               key={vehicle.slug}
               className="w-[80vw] shrink-0 snap-start rounded-[5px] bg-white/[0.06] p-5 sm:w-[300px]"
             >
-              <div className="relative aspect-[283/159] w-full overflow-hidden rounded-[4px] bg-white/5">
+              <span className="inline-block rounded-full bg-[#e7eaee] px-3 py-1 text-[11px] text-[var(--color-ink)]">
+                {vehicle.condition}
+              </span>
+
+              <div className="relative mt-3 aspect-[283/159] w-full overflow-hidden rounded-[4px] bg-white/5">
                 <Image
                   src={withBasePath(vehicle.image)}
                   alt={vehicle.name}
                   fill
                   className="object-cover"
                 />
-                <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[11px] text-[var(--color-ink)]">
-                  {vehicle.condition}
-                </span>
               </div>
 
               <p className="mt-4 text-lg text-white/90">{vehicle.name}</p>
@@ -94,12 +97,38 @@ export function AvailableVehiclesCarousel({
                 <p className="mt-1 text-xl text-white">{vehicle.price}</p>
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/15 pt-4 text-xs text-white/60">
-                <span className="rounded-full bg-white/10 px-3 py-1">
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/15 pt-4 text-xs text-white/60">
+                <span className="flex items-center gap-1.5">
+                  <img
+                    src={withBasePath("/models/available-cars/icon-fuel.svg")}
+                    alt=""
+                    aria-hidden
+                    className="h-[14px] w-[13px] opacity-70"
+                  />
                   {vehicle.fuelType}
                 </span>
-                <span>{vehicle.collection}</span>
-                {vehicle.mileage && <span>{vehicle.mileage}</span>}
+                <span className="flex items-center gap-1.5">
+                  <img
+                    src={withBasePath("/models/available-cars/icon-key.svg")}
+                    alt=""
+                    aria-hidden
+                    className="h-[18px] w-[13px] opacity-70"
+                  />
+                  {vehicle.collection}
+                </span>
+                {vehicle.mileage && (
+                  <span className="flex items-center gap-1.5">
+                    <img
+                      src={withBasePath(
+                        "/models/available-cars/icon-mileage.svg",
+                      )}
+                      alt=""
+                      aria-hidden
+                      className="h-[10px] w-[13px] opacity-70"
+                    />
+                    {vehicle.mileage}
+                  </span>
+                )}
               </div>
 
               <button
@@ -117,7 +146,7 @@ export function AvailableVehiclesCarousel({
             <div
               className="absolute inset-0 bg-cover bg-center opacity-40"
               style={{
-                backgroundImage: `url(${withBasePath("/ownership/vehicle-defender-110.png")})`,
+                backgroundImage: `url(${withBasePath("/models/available-cars/promo-background.png")})`,
               }}
               aria-hidden
             />
