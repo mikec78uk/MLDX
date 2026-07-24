@@ -2,7 +2,9 @@ import Link from "next/link";
 import type { ModelSummary } from "@/data/models";
 import { ModelViewer } from "@/components/three/ModelViewerLoader";
 import { getModelHero } from "@/data/modelHero";
+import { getAvailableVehicles } from "@/data/availableVehicles";
 import { OverviewHero } from "@/components/models/OverviewHero";
+import { AvailableVehiclesCarousel } from "@/components/models/AvailableVehiclesCarousel";
 
 export function OverviewSection({
   model,
@@ -14,6 +16,7 @@ export function OverviewSection({
   brandShortName: string;
 }) {
   const hero = getModelHero(model.slug);
+  const vehicles = getAvailableVehicles(model.slug);
   // Separate from hasData on purpose — see the darkOverview doc comment in
   // modelHero.ts. Only Defender 110 opts into this today.
   const dark = hero.darkOverview === true;
@@ -101,6 +104,8 @@ export function OverviewSection({
             Full storytelling content for this model — lifestyle imagery,
             feature highlights, films — lands in a later content pass.
           </p>
+
+          <AvailableVehiclesCarousel modelName={model.name} vehicles={vehicles} />
 
           {hero.representativeExample && (
             <p
