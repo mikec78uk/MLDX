@@ -187,19 +187,47 @@ export function NavigationMenu({
         <div className="overflow-y-auto border-r border-[var(--color-border)] px-7 py-10">
           {activeSection.kind === "models" && (
             <ul className="flex flex-col gap-4">
-              {activeSection.items.map((item) => (
-                <li key={item.key} className="nav-item-row">
-                  <button
-                    type="button"
-                    onMouseEnter={() => setActiveModelKey(item.key)}
-                    onFocus={() => setActiveModelKey(item.key)}
-                    className={`flex w-full items-center gap-4 border p-3 text-left transition-colors ${
-                      activeModelKey === item.key
-                        ? "border-[var(--color-ink)]"
-                        : "border-[var(--color-border)] hover:border-[var(--color-ink)]"
-                    }`}
-                  >
-                    {item.image && (
+              {activeSection.items.map((item) => {
+                // Items with no image aren't a vehicle to preview in
+                // column 3 (there's nothing to show) — they're an action
+                // like "Help Me Choose", so clicking navigates immediately
+                // instead of following the hover-then-Explore pattern.
+                if (!item.image) {
+                  const className =
+                    "flex w-full items-center gap-4 border border-[var(--color-border)] p-3 text-left transition-colors hover:border-[var(--color-ink)]";
+                  const content = (
+                    <>
+                      <span className="flex-1 text-sm">{item.name}</span>
+                      <ChevronIcon direction="right" className="h-2 w-3.5 shrink-0" />
+                    </>
+                  );
+                  return (
+                    <li key={item.key} className="nav-item-row">
+                      {item.href ? (
+                        <Link href={item.href} className={className}>
+                          {content}
+                        </Link>
+                      ) : (
+                        <span className={`${className} text-[var(--color-ink-soft)]`}>
+                          {content}
+                        </span>
+                      )}
+                    </li>
+                  );
+                }
+
+                return (
+                  <li key={item.key} className="nav-item-row">
+                    <button
+                      type="button"
+                      onMouseEnter={() => setActiveModelKey(item.key)}
+                      onFocus={() => setActiveModelKey(item.key)}
+                      className={`flex w-full items-center gap-4 border p-3 text-left transition-colors ${
+                        activeModelKey === item.key
+                          ? "border-[var(--color-ink)]"
+                          : "border-[var(--color-border)] hover:border-[var(--color-ink)]"
+                      }`}
+                    >
                       <span className="relative h-[45px] w-[80px] shrink-0 overflow-hidden bg-[var(--color-paper)]">
                         <Image
                           src={withBasePath(item.image)}
@@ -208,21 +236,21 @@ export function NavigationMenu({
                           className="object-cover"
                         />
                       </span>
-                    )}
-                    <span className="flex-1">
-                      <span className="block text-sm">{item.name}</span>
-                      {item.priceLabel && (
-                        <span className="mt-1 block text-xs text-[var(--color-ink-soft)]">
-                          {item.priceLabel}
-                        </span>
+                      <span className="flex-1">
+                        <span className="block text-sm">{item.name}</span>
+                        {item.priceLabel && (
+                          <span className="mt-1 block text-xs text-[var(--color-ink-soft)]">
+                            {item.priceLabel}
+                          </span>
+                        )}
+                      </span>
+                      {activeModelKey === item.key && (
+                        <ChevronIcon direction="right" className="h-2 w-3.5 shrink-0" />
                       )}
-                    </span>
-                    {activeModelKey === item.key && (
-                      <ChevronIcon direction="right" className="h-2 w-3.5 shrink-0" />
-                    )}
-                  </button>
-                </li>
-              ))}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
 
