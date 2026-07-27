@@ -1,7 +1,8 @@
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
-import { ArrowRightIcon } from "@/components/icons";
+import { ArrowRightIcon, ChevronIcon } from "@/components/icons";
 import { STEPS, type Answers, type Recommendation } from "@/data/helpMeChoose";
 
 const MODEL_IMAGE: Record<string, string> = {
@@ -73,6 +74,13 @@ export function RecommendationView({
 }) {
   const { model, runnerUp, heroSpecBlurb, whyModelParagraph, alsoConsiderBlurb, trim } = recommendation;
   const image = MODEL_IMAGE[model.slug] ?? PLACEHOLDER_MODEL_IMAGE;
+  const highlightsRef = useRef<HTMLDivElement>(null);
+
+  function scrollHighlights(direction: 1 | -1) {
+    const el = highlightsRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.85, behavior: "smooth" });
+  }
 
   return (
     <div className="bg-[var(--color-paper-muted)]">
@@ -139,14 +147,16 @@ export function RecommendationView({
             <div className="mt-4 flex flex-wrap items-center gap-6">
               <button
                 type="button"
-                className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
+                className="cta-label inline-flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
               >
+                <ArrowRightIcon />
                 Save suggestion
               </button>
               <button
                 type="button"
-                className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
+                className="cta-label inline-flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
               >
+                <ArrowRightIcon />
                 Email my suggestion
               </button>
             </div>
@@ -167,9 +177,12 @@ export function RecommendationView({
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Why this model / why this engine */}
-        <div className={`mt-16 grid gap-10 ${trim ? "sm:grid-cols-2" : ""}`}>
+      {/* Why this model / why this engine — full-width strip, matching
+          the Figma reference's distinct background band behind this text. */}
+      <div className="bg-[var(--color-border)] py-16">
+        <div className={`px-6 grid gap-10 ${trim ? "sm:grid-cols-2" : ""}`}>
           <div>
             <h2 className="text-2xl sm:text-3xl">Why the {model.name}</h2>
             <p className="mt-4 text-[var(--color-ink-soft)]">{whyModelParagraph}</p>
@@ -181,22 +194,47 @@ export function RecommendationView({
             </div>
           )}
         </div>
+      </div>
 
-        {/* Highlights */}
-        <div className="mt-16">
-          <h2 className="text-2xl sm:text-3xl">Highlights</h2>
-          {trim ? (
-            <div className="mt-6 grid gap-8 sm:grid-cols-3">
-              {trim.highlights.map((highlight) => (
-                <div
-                  key={highlight.title}
-                  className="flex flex-col bg-[var(--color-paper)] shadow-[0_8px_24px_rgba(20,20,20,0.08)]"
+      {/* Highlights — full-bleed white band with an oversized, horizontally
+          scrollable carousel (matching the Figma reference's overflow +
+          arrow controls) rather than a fixed 3-column grid. */}
+      <div className="bg-[var(--color-paper)] py-16">
+        <div className="px-6">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-2xl sm:text-3xl">Highlights</h2>
+            {trim && (
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  aria-label="Previous highlight"
+                  onClick={() => scrollHighlights(-1)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] transition-colors hover:border-[var(--color-ink)]"
                 >
-                  <div className="aspect-[16/10] w-full bg-[var(--color-paper-muted)]" />
-                  <div className="p-5">
-                    <p className="text-lg">{highlight.title}</p>
-                    <p className="mt-2 text-sm text-[var(--color-ink-soft)]">{highlight.body}</p>
-                  </div>
+                  <ChevronIcon direction="left" className="h-2.5 w-2" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next highlight"
+                  onClick={() => scrollHighlights(1)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+                >
+                  <ChevronIcon direction="right" className="h-2.5 w-2" />
+                </button>
+              </div>
+            )}
+          </div>
+
+          {trim ? (
+            <div
+              ref={highlightsRef}
+              className="mt-6 flex snap-x snap-mandatory gap-8 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {trim.highlights.map((highlight) => (
+                <div key={highlight.title} className="w-[85%] shrink-0 snap-start sm:w-[440px]">
+                  <div className="aspect-[16/9] w-full bg-[var(--color-paper-muted)]" />
+                  <p className="mt-5 text-lg">{highlight.title}</p>
+                  <p className="mt-2 text-sm text-[var(--color-ink-soft)]">{highlight.body}</p>
                 </div>
               ))}
             </div>
@@ -205,47 +243,60 @@ export function RecommendationView({
               Full feature highlights for this model are coming in a later content pass.
             </p>
           )}
-        </div>
 
-        <div className="mt-10">
-          <Link
-            href={`/models/${model.slug}`}
-            className="cta-label inline-flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
-          >
-            <ArrowRightIcon />
-            Explore {model.name}
-          </Link>
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={`/models/${model.slug}`}
+              className="cta-label inline-flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
+            >
+              <ArrowRightIcon />
+              Explore {model.name}
+            </Link>
+          </div>
         </div>
+      </div>
 
-        {/* Make it yours — promo band, matching ModelVariantsSection's banner treatment */}
-        <div className="mt-16 bg-[var(--color-paper)] px-6 py-16 text-center shadow-[0_8px_24px_rgba(20,20,20,0.08)]">
+      {/* Make it yours — full-bleed promo band with a background image,
+          reusing the same lifestyle shot used for the "build your own"
+          promo card elsewhere in the models section. */}
+      <div className="relative overflow-hidden py-24 text-center text-white">
+        <Image
+          src={withBasePath("/models/available-cars/promo-background.png")}
+          alt=""
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/55" aria-hidden />
+        <div className="relative px-6">
           <h2 className="text-4xl sm:text-6xl">
             Make it <span className="font-[family-name:var(--font-display)] italic">yours</span>
           </h2>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button
               type="button"
-              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
+              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3.5 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
             >
               Configure this {model.name}
             </button>
             <button
               type="button"
-              className="cta-label flex items-center gap-2 whitespace-nowrap border border-[var(--color-ink)] px-6 py-3.5 text-xs transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+              className="cta-label flex items-center gap-2 whitespace-nowrap border border-white/60 px-6 py-3.5 text-xs text-white transition-colors hover:bg-white hover:text-[var(--color-ink)]"
             >
               View available vehicles
             </button>
             <button
               type="button"
-              className="cta-label flex items-center gap-2 whitespace-nowrap border border-[var(--color-ink)] px-6 py-3.5 text-xs transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+              className="cta-label flex items-center gap-2 whitespace-nowrap border border-white/60 px-6 py-3.5 text-xs text-white transition-colors hover:bg-white hover:text-[var(--color-ink)]"
             >
               Book a test drive
             </button>
           </div>
         </div>
+      </div>
 
+      <div className="px-6 py-16">
         {/* Also Consider */}
-        <div className="mt-10 grid gap-10 bg-[var(--color-paper)] p-10 shadow-[0_8px_24px_rgba(20,20,20,0.08)] lg:grid-cols-[2fr_3fr] lg:items-center">
+        <div className="grid gap-10 bg-[var(--color-paper)] p-10 shadow-[0_8px_24px_rgba(20,20,20,0.08)] lg:grid-cols-[2fr_3fr] lg:items-center">
           <div>
             <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Also consider</p>
             <h2 className="mt-3 text-3xl sm:text-4xl">{runnerUp.name}</h2>
