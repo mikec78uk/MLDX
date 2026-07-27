@@ -112,7 +112,8 @@ export function SiteHeader() {
               : "border-[var(--color-border)] bg-[var(--color-paper)]"
           }`}
         >
-          <div className="flex w-full items-center justify-between px-7 py-2.5">
+          {/* Desktop (lg+): bordered Menu pill, centered wordmark, icons right */}
+          <div className="hidden w-full items-center justify-between px-7 py-2.5 lg:flex">
             <button
               type="button"
               onClick={() => setMenuOpen((value) => !value)}
@@ -156,6 +157,51 @@ export function SiteHeader() {
                 type="button"
                 aria-label="Sign in"
                 className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink)]"}`}
+              >
+                <UserIcon className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile (below lg): wordmark left, plain icon row right — no pill, no labels */}
+          <div className="flex w-full items-center justify-between px-6 py-[15px] lg:hidden">
+            <Link
+              href="/"
+              className={`font-[family-name:var(--font-display-bold)] text-lg tracking-tight uppercase ${
+                transparent ? "text-white" : "text-[var(--color-ink)]"
+              }`}
+            >
+              {brand.shortName}
+            </Link>
+
+            <div className="flex items-center gap-5">
+              <button
+                type="button"
+                onClick={() => setMenuOpen((value) => !value)}
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink-soft)]"}`}
+              >
+                {menuOpen ? <CloseIcon className="h-4 w-4" /> : <MenuIcon className="h-4 w-5" />}
+              </button>
+              <button
+                type="button"
+                aria-label="Search"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink-soft)]"}`}
+              >
+                <SearchIcon className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Find a dealer"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink-soft)]"}`}
+              >
+                <LocationIcon className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Sign in"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink-soft)]"}`}
               >
                 <UserIcon className="h-4 w-4" />
               </button>
