@@ -333,7 +333,7 @@ export function NavigationMenu({
             activeSection.image && (
               <div
                 key={activeSection.key}
-                className="nav-detail-panel relative -my-10 -mr-10 ml-0 h-[calc(100%+5rem)] w-[calc(100%+2.5rem)]"
+                className="nav-detail-panel relative -m-10 h-[calc(100%+5rem)] w-[calc(100%+5rem)]"
               >
                 <Image
                   src={withBasePath(activeSection.image)}
