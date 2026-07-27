@@ -32,6 +32,8 @@ export type NavSection =
  */
 const PLACEHOLDER_MODEL_IMAGE = "/models/variants/defender-110-x.png";
 
+// Temporary: these also link to Defender 110 (see getNavigation()) since
+// it's the only model with real page content built out so far.
 const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
   {
     key: "defender-octa",
@@ -39,6 +41,7 @@ const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
     image: PLACEHOLDER_MODEL_IMAGE,
     priceLabel: "From £147,245",
     description: "Extreme performance, engineered for the world's toughest terrain.",
+    href: "/models/defender-110",
   },
   {
     key: "defender-hard-top",
@@ -46,12 +49,14 @@ const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
     image: PLACEHOLDER_MODEL_IMAGE,
     priceLabel: "Finance Available",
     description: "Commercial capability with five- and six-seat configurations.",
+    href: "/models/defender-110",
   },
   {
     key: "classic-defender",
     name: "Classic Defender",
     image: PLACEHOLDER_MODEL_IMAGE,
     description: "Bespoke restoration of the original Defender, reborn.",
+    href: "/models/defender-110",
   },
   {
     key: "help-me-choose",
@@ -96,6 +101,9 @@ const BUY_ITEMS: NavLinkItem[] = [
 ];
 
 export function getNavigation(): NavSection[] {
+  // Temporary: every model option links to Defender 110 regardless of
+  // which model it represents, per explicit request — it's the only
+  // model with real page content built out so far.
   const modelItems: NavModelItem[] = getModels().map((model) => ({
     key: model.slug,
     name: model.name,
@@ -104,7 +112,7 @@ export function getNavigation(): NavSection[] {
         ? "/models/available-cars/vehicle-1.png"
         : PLACEHOLDER_MODEL_IMAGE,
     priceLabel: `From ${model.priceFrom}`,
-    href: `/models/${model.slug}`,
+    href: "/models/defender-110",
     description: model.summary,
   }));
 

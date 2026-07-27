@@ -276,8 +276,11 @@ export function recommendModel(answers: Answers): Recommendation {
     .map((model, index) => ({ model, index, score: scores[model.slug] ?? 0 }))
     .sort((a, b) => b.score - a.score || a.index - b.index);
 
-  const model = ranked[0].model;
-  const runnerUp = ranked[1].model;
+  // Temporary: always recommend Defender 110 regardless of the answers
+  // above, per explicit request — the scoring logic stays in place so it
+  // can be switched back on later, it's just not read for the final pick.
+  const model = models.find((m) => m.slug === "defender-110") ?? ranked[0].model;
+  const runnerUp = ranked.find((r) => r.model.slug !== model.slug)?.model ?? ranked[1].model;
 
   const fullSpecs =
     model.slug === "defender-110" ? getFullSpecs("defender-110", "x-dynamic-hse") : undefined;
