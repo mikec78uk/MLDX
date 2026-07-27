@@ -186,7 +186,7 @@ export function NavigationMenu({
           </nav>
         </div>
 
-        <div className="overflow-y-auto border-r border-[var(--color-border)] px-7 py-10">
+        <div className="overflow-y-auto px-7 py-10">
           {activeSection.kind === "models" && (
             <ul className="flex flex-col gap-4">
               {activeSection.items.map((item) => {
