@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { brand } from "@/lib/brand";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { FloatingChatButton } from "@/components/layout/FloatingChatButton";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <FloatingChatButton />
       </body>
     </html>
   );
