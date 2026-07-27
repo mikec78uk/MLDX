@@ -57,6 +57,7 @@ const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
     key: "help-me-choose",
     name: "Help Me Choose",
     description: "Answer a few questions and we'll recommend your ideal Defender.",
+    href: "/help-me-choose",
   },
 ];
 
