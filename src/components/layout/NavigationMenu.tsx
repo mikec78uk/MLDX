@@ -158,9 +158,11 @@ export function NavigationMenu({
         open ? "visible opacity-100" : "invisible opacity-0"
       }`}
     >
-      {/* Desktop: 3 columns */}
-      <div className="hidden h-full lg:grid lg:grid-cols-[332px_372px_1fr]">
-        <div className="overflow-y-auto bg-[var(--color-paper-muted)] px-7 py-10">
+      {/* Desktop: 3 columns — centered to the same max-w-6xl the header uses,
+          so column 1 lines up with the Menu button instead of the raw
+          viewport edge (which would only coincidentally match below ~1200px). */}
+      <div className="mx-auto hidden h-full max-w-6xl lg:grid lg:grid-cols-[332px_372px_1fr]">
+        <div className="overflow-y-auto bg-[var(--color-paper-muted)] py-10 pl-6 pr-7">
           <nav className="flex flex-col gap-5">
             {sections.map((section) => (
               <button
