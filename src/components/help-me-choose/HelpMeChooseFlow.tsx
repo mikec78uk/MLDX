@@ -40,6 +40,14 @@ function selectedKeysFor(step: QuestionStep, answers: Answers): string[] {
   }
 }
 
+/** Whether the current step has enough of a selection to enable Continue. */
+function hasSelection(step: QuestionStep, answers: Answers): boolean {
+  if (step.subQuestions) {
+    return answers.carry.length > 0 || answers.tow !== undefined || answers.drive.length > 0;
+  }
+  return selectedKeysFor(step, answers).length > 0;
+}
+
 function applyToggle(step: QuestionStep, answers: Answers, key: string): Answers {
   switch (step.id) {
     case "usage":
@@ -122,6 +130,7 @@ export function HelpMeChooseFlow() {
   const step = STEPS[stepIndex];
   const isLastStep = stepIndex === STEPS.length - 1;
   const leadingModelName = recommendModel(answers).model.name;
+  const canContinue = hasSelection(step, answers);
 
   function goNext() {
     if (returningToResults) {
@@ -280,7 +289,12 @@ export function HelpMeChooseFlow() {
         <button
           type="button"
           onClick={goNext}
-          className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
+          disabled={!canContinue}
+          className={`cta-label flex items-center gap-2 whitespace-nowrap px-6 py-3 text-xs transition-opacity ${
+            canContinue
+              ? "bg-[var(--color-paper)] text-[var(--color-ink)] hover:opacity-90"
+              : "cursor-not-allowed bg-[var(--color-paper)]/30 text-[var(--color-paper)]/50"
+          }`}
         >
           {returningToResults ? "Back to results" : isLastStep ? "View Your Defender" : "Continue"}
           <ArrowRightIcon />
