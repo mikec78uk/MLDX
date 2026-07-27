@@ -168,22 +168,31 @@ export const INTERSTITIAL_MESSAGES = [
   "Your Defender is ready.",
 ];
 
+export interface HighlightCard {
+  title: string;
+  body: string;
+}
+
 export interface Recommendation {
   model: ModelSummary;
   runnerUp: ModelSummary;
-  /** Single paragraph, mirrors the Figma "Why it matches" copy. */
-  whyItMatches: string;
+  /** Short trim-character blurb shown under the price in the hero (Figma's "Why it matches:" line) — falls back to model.summary when there's no trim data. */
+  heroSpecBlurb: string;
+  /** Longer paragraph under the "Why {model}" heading — compares against the other two models. */
+  whyModelParagraph: string;
   /** Short one-liner for the "Also Consider" cross-sell card. */
   alsoConsiderBlurb: string;
   /** Real trim/engine content, only populated for defender-110 today — see modelFullSpecs.ts. */
   trim?: {
     engine: string;
+    alsoAvailableAs?: string;
     onTheRoadPrice: string;
-    keyFeatures: string[];
+    whyEngineParagraph: string;
+    highlights: HighlightCard[];
   };
 }
 
-const WHY_IT_MATCHES: Record<string, string> = {
+const WHY_MODEL_PARAGRAPH: Record<string, string> = {
   "defender-90":
     "Defender 90 is your strongest match — a compact, manoeuvrable footprint suited to how you plan to use it, without giving up genuine all-terrain capability. It's easier to manoeuvre day-to-day than Defender 110 or Defender 130, while still covering everything you've told us matters.",
   "defender-110":
@@ -197,6 +206,26 @@ const ALSO_CONSIDER_BLURB: Record<string, string> = {
   "defender-110": "If you want the most versatile all-rounder in the range.",
   "defender-130": "If you regularly carry more people or need extra luggage space.",
 };
+
+/** Real, only for defender-110 X-Dynamic HSE — reproduced from the Figma design. */
+const DEFENDER_110_SPEC_BLURB =
+  "A refined, adventure-ready specification combining distinctive exterior details, premium cabin materials and technology suited to both everyday journeys and more demanding trips.";
+const DEFENDER_110_ENGINE_PARAGRAPH =
+  "A strong balance of range, efficiency and torque for mixed journeys and confident capability.";
+const DEFENDER_110_HIGHLIGHTS: HighlightCard[] = [
+  {
+    title: "Unstoppable. Anywhere.",
+    body: "Go from road, to mud, to snow, to anywhere. Terrain Response 2 automatically adjusts Defender's settings for optimum power and traction. The Adaptive Off-Road Cruise Control option keeps the pace on any surface.",
+  },
+  {
+    title: "Confidence at every turn",
+    body: "Stay focused on long drives with the Driver Attention Monitor. A camera monitors drowsiness and alerts drivers for peace of mind on longer adventures.",
+  },
+  {
+    title: "Move mountains",
+    body: "Haul everything from trailers to horse boxes, up to 3,500 kg — Advanced Tow Assist takes care of the counter steer. Pull through any challenge with the ability to winch up to 4,536 kg.",
+  },
+];
 
 /**
  * A prototype heuristic, not a real configurator algorithm — scores the
@@ -256,13 +285,19 @@ export function recommendModel(answers: Answers): Recommendation {
   return {
     model,
     runnerUp,
-    whyItMatches: WHY_IT_MATCHES[model.slug] ?? model.summary,
+    heroSpecBlurb: fullSpecs?.hasData ? DEFENDER_110_SPEC_BLURB : model.summary,
+    whyModelParagraph: WHY_MODEL_PARAGRAPH[model.slug] ?? model.summary,
     alsoConsiderBlurb: ALSO_CONSIDER_BLURB[runnerUp.slug] ?? runnerUp.summary,
     trim: fullSpecs?.hasData
       ? {
           engine: fullSpecs.engines[0],
+          alsoAvailableAs:
+            fullSpecs.engines.length > 1
+              ? `Also available as ${fullSpecs.engines.slice(1).join(" and ")}`
+              : undefined,
           onTheRoadPrice: fullSpecs.onTheRoadPrice,
-          keyFeatures: fullSpecs.keyFeatures,
+          whyEngineParagraph: DEFENDER_110_ENGINE_PARAGRAPH,
+          highlights: DEFENDER_110_HIGHLIGHTS,
         }
       : undefined,
   };

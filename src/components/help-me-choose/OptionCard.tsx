@@ -23,15 +23,19 @@ export function OptionCard({
       type="button"
       onClick={onToggle}
       aria-pressed={selected}
-      className={`flex w-full flex-col gap-3 border p-4 text-left transition-colors ${
+      className={`flex w-full flex-col gap-3 border p-4 text-left transition-all duration-200 ${
         selected
-          ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)]"
-          : "border-[var(--color-border)] hover:border-[var(--color-ink)]"
+          ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] shadow-[0_12px_28px_rgba(20,20,20,0.25)]"
+          : "border-[var(--color-border)] bg-[var(--color-paper)] shadow-[0_2px_6px_rgba(20,20,20,0.06)] hover:-translate-y-0.5 hover:border-[var(--color-ink)] hover:shadow-[0_10px_24px_rgba(20,20,20,0.12)]"
       }`}
     >
       {showImage && (
         <div
-          className={`aspect-[16/9] w-full ${selected ? "bg-white/10" : "bg-[var(--color-paper-muted)]"}`}
+          className={`aspect-[16/9] w-full bg-gradient-to-br ${
+            selected
+              ? "from-white/15 to-white/5"
+              : "from-[var(--color-paper-muted)] to-[var(--color-border)]/40"
+          }`}
         />
       )}
       <div className="flex items-start justify-between gap-3">

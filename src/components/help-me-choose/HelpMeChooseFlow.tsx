@@ -167,8 +167,8 @@ export function HelpMeChooseFlow() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-var(--header-height))] flex-col">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-8">
+    <div className="flex min-h-[calc(100vh-var(--header-height))] flex-col bg-[var(--color-paper-muted)]">
+      <div className="mx-auto w-full max-w-5xl bg-[var(--color-paper)] px-6 pt-8 pb-6 shadow-[0_2px_12px_rgba(20,20,20,0.05)]">
         <div className="flex items-center justify-between">
           <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Find your Defender</p>
           <p className="text-xs text-[var(--color-ink-soft)]">
@@ -260,7 +260,7 @@ export function HelpMeChooseFlow() {
         </div>
       </div>
 
-      <div className="sticky bottom-0 z-20 flex items-center justify-between gap-4 bg-[var(--color-ink)] py-4 pl-6 pr-20 text-[var(--color-paper)] sm:pr-24">
+      <div className="sticky bottom-0 z-20 flex items-center justify-between gap-4 bg-[var(--color-ink)] py-4 pl-6 pr-20 text-[var(--color-paper)] shadow-[0_-8px_24px_rgba(20,20,20,0.15)] sm:pr-24">
         {stepIndex === 0 ? (
           <Link href="/models" className="cta-label flex items-center gap-2 whitespace-nowrap text-xs">
             ← Exit
