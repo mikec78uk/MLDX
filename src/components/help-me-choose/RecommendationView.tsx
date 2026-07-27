@@ -77,9 +77,10 @@ export function RecommendationView({
   return (
     <div className="bg-[var(--color-paper-muted)]">
       <div className="px-6 py-16">
-        {/* Hero: match summary + image, side by side on larger screens */}
+        {/* Hero: image leads on mobile (matching the reference mobile
+            layout), text leads on desktop's side-by-side treatment. */}
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="lg:max-w-lg">
+          <div className="order-2 lg:order-none lg:max-w-lg">
             <div className="flex items-center justify-between gap-4">
               <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Your best match</p>
               <button
@@ -102,8 +103,19 @@ export function RecommendationView({
             <p className="mt-2 text-[var(--color-ink-soft)]">{heroSpecBlurb}</p>
           </div>
 
-          <div className="relative aspect-[16/10] w-full bg-[var(--color-paper)] shadow-[0_16px_40px_rgba(20,20,20,0.12)]">
-            <Image src={withBasePath(image)} alt={model.name} fill className="object-cover" />
+          <div className="order-1 lg:order-none">
+            <div className="relative aspect-[16/10] w-full bg-[var(--color-paper)] shadow-[0_16px_40px_rgba(20,20,20,0.12)]">
+              <Image src={withBasePath(image)} alt={model.name} fill className="object-cover" />
+            </div>
+            {/* Additional gallery shots aren't photographed yet — these
+                stay as placeholders until real imagery is available. Sits
+                directly on the page's own muted background, so it needs
+                --color-border (not --color-paper-muted) to actually show up. */}
+            <div className="mt-4 grid grid-cols-[3fr_2fr] gap-4">
+              <div className="aspect-[319/199] w-full bg-[var(--color-border)]" />
+              <div className="aspect-[210/199] w-full bg-[var(--color-border)]" />
+              <div className="col-span-2 aspect-[550/293] w-full bg-[var(--color-border)]" />
+            </div>
           </div>
         </div>
 
@@ -233,16 +245,21 @@ export function RecommendationView({
         </div>
 
         {/* Also Consider */}
-        <div className="mt-10 bg-[var(--color-paper)] p-10 shadow-[0_8px_24px_rgba(20,20,20,0.08)]">
-          <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Also consider</p>
-          <h2 className="mt-3 text-3xl sm:text-4xl">{runnerUp.name}</h2>
-          <p className="mt-3 max-w-md text-[var(--color-ink-soft)]">{alsoConsiderBlurb}</p>
-          <Link
-            href={`/models/${runnerUp.slug}/compare`}
-            className="cta-label mt-6 inline-flex items-center gap-2 whitespace-nowrap border border-[var(--color-ink)] px-5 py-3 text-xs transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
-          >
-            Compare models
-          </Link>
+        <div className="mt-10 grid gap-10 bg-[var(--color-paper)] p-10 shadow-[0_8px_24px_rgba(20,20,20,0.08)] lg:grid-cols-[2fr_3fr] lg:items-center">
+          <div>
+            <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Also consider</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl">{runnerUp.name}</h2>
+            <p className="mt-3 max-w-md text-[var(--color-ink-soft)]">{alsoConsiderBlurb}</p>
+            <Link
+              href={`/models/${runnerUp.slug}/compare`}
+              className="cta-label mt-6 inline-flex items-center gap-2 whitespace-nowrap border border-[var(--color-ink)] px-5 py-3 text-xs transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+            >
+              Compare models
+            </Link>
+          </div>
+          {/* Runner-up isn't photographed for this flow yet — placeholder
+              until real imagery is available. */}
+          <div className="aspect-[646/407] w-full bg-[var(--color-paper-muted)]" />
         </div>
       </div>
     </div>
