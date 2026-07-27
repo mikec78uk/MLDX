@@ -68,6 +68,22 @@ export function NavigationMenu({
   const [activeModelKey, setActiveModelKey] = useState(defaultModelKey);
   const [mobileStep, setMobileStep] = useState<"sections" | "items">("sections");
 
+  // Hover intent: switching column 2/3's preview the instant the pointer
+  // crosses a row makes it hard to actually reach the item you want (moving
+  // diagonally toward it flickers through every row in between). Only
+  // commit to a hover after the pointer rests on a row briefly; a quick
+  // pass-through gets cancelled instead of triggering a switch. Keyboard
+  // focus stays instant (below), so tabbing through isn't delayed.
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function hoverIntent(callback: () => void) {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(callback, 150);
+  }
+  function cancelHoverIntent() {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+  }
+  useEffect(() => cancelHoverIntent, []);
+
   // Reset to the default state every time the menu opens — the "adjust
   // state during render" pattern (see SpecsFlyout/ModelVariantsSection)
   // rather than useEffect, since this repo's lint config forbids
@@ -168,7 +184,8 @@ export function NavigationMenu({
               <button
                 key={section.key}
                 type="button"
-                onMouseEnter={() => setActiveSectionKey(section.key)}
+                onMouseEnter={() => hoverIntent(() => setActiveSectionKey(section.key))}
+                onMouseLeave={cancelHoverIntent}
                 onFocus={() => setActiveSectionKey(section.key)}
                 className={`nav-section-item flex items-center justify-between gap-3 border-l-2 py-0.5 pl-3 text-left text-sm transition-colors ${
                   activeSectionKey === section.key
@@ -222,7 +239,8 @@ export function NavigationMenu({
                   <li key={item.key} className="nav-item-row">
                     <button
                       type="button"
-                      onMouseEnter={() => setActiveModelKey(item.key)}
+                      onMouseEnter={() => hoverIntent(() => setActiveModelKey(item.key))}
+                      onMouseLeave={cancelHoverIntent}
                       onFocus={() => setActiveModelKey(item.key)}
                       className={`flex w-full items-center gap-4 border p-3 text-left transition-colors ${
                         activeModelKey === item.key
