@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
 import type { ModelVariantsData } from "@/data/modelVariants";
@@ -9,9 +10,10 @@ import { ArrowRightIcon } from "@/components/icons";
 import { SpecsFlyout } from "@/components/models/SpecsFlyout";
 
 /**
- * "See full specs" opens the flyout shell; "Build and order" has no real
- * destination yet — rendered as a real-looking but inert control, matching
- * the pattern already used for undetermined links elsewhere.
+ * "See full specs" opens the flyout shell and "Start exploring" links to
+ * the Help Me Choose flow; "Build and order" has no real destination yet —
+ * rendered as a real-looking but inert control, matching the pattern
+ * already used for undetermined links elsewhere.
  */
 export function ModelVariantsSection({
   modelName,
@@ -114,13 +116,13 @@ export function ModelVariantsSection({
                 Tell us what matters to you, and we&rsquo;ll help you discover
                 the Defender that best fits your life.
               </p>
-              <button
-                type="button"
+              <Link
+                href="/help-me-choose"
                 className="cta-label mt-6 inline-flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-4 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
               >
                 <ArrowRightIcon />
                 Start exploring
-              </button>
+              </Link>
             </div>
           </>
         )}
