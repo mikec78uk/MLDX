@@ -82,6 +82,19 @@ export function LocationIcon({ className = "h-4 w-4" }: { className?: string }) 
   );
 }
 
+export function SearchIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 15.2499 15.2499" fill="none" aria-hidden className={className}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.96465 11.0253C8.91775 11.8448 7.59925 12.3333 6.16667 12.3333C2.76091 12.3333 0 9.57242 0 6.16667C0 2.76091 2.76091 0 6.16667 0C9.57242 0 12.3333 2.76091 12.3333 6.16667C12.3333 7.59925 11.8448 8.91775 11.0253 9.96465L15.0302 13.9696C15.3231 14.2625 15.3231 14.7374 15.0302 15.0302C14.7374 15.3231 14.2625 15.3231 13.9696 15.0302L9.96465 11.0253ZM1.5 6.16667C1.5 3.58934 3.58934 1.5 6.16667 1.5C8.744 1.5 10.8333 3.58934 10.8333 6.16667C10.8333 7.44764 10.3172 8.60807 9.48159 9.45134C9.47642 9.45622 9.47131 9.46119 9.46625 9.46625C9.46119 9.47131 9.45622 9.47642 9.45134 9.48159C8.60807 10.3172 7.44764 10.8333 6.16667 10.8333C3.58934 10.8333 1.5 8.744 1.5 6.16667Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export function UserIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg viewBox="0 0 13.602 17" fill="none" aria-hidden className={className}>

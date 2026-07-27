@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <Hero />
 
-      <section className="mx-auto max-w-4xl px-6 py-20">
+      <section className="px-6 py-20">
         <div className="flex items-baseline justify-between">
           <h2 className="text-3xl sm:text-4xl">The range</h2>
           <Link href="/models" className="cta-label text-xs">
@@ -26,7 +26,7 @@ export default function Home() {
       </section>
 
       <section className="border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]">
-        <div className="mx-auto max-w-4xl px-6 py-20">
+        <div className="px-6 py-20">
           <h2 className="text-3xl sm:text-4xl">Ownership, simplified</h2>
           <p className="mt-4 max-w-lg text-[var(--color-ink-soft)]">
             From servicing to warranty and finance, see what it takes to

@@ -52,7 +52,7 @@ export function ModelStickyNav({
         headerHidden ? "translate-y-[calc(var(--header-height)*-1)]" : "translate-y-0"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-6 pt-3">
+      <div className="px-6 pt-3">
         <div className="flex flex-col gap-y-3 rounded-[5px] bg-[var(--color-paper)] px-6 py-3 text-[var(--color-ink)] shadow-[0_8px_24px_rgba(20,20,20,0.12)] lg:flex-row lg:items-center lg:justify-between lg:gap-x-8">
           <div className="flex flex-col gap-y-3 lg:flex-row lg:items-center lg:gap-x-8">
             <span className="font-[family-name:var(--font-display-bold)] text-base uppercase tracking-tight">

@@ -91,7 +91,7 @@ export function OverviewHero({
         />
       )}
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+      <div className="relative z-10 w-full px-6">
         <div className="max-w-md">
           <h1 className="overview-hero-title text-4xl sm:text-5xl">
             {modelName}

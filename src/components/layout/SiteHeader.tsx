@@ -13,10 +13,10 @@ import { setHeaderHidden } from "@/lib/header/visibility";
 import { getNavigation } from "@/data/navigation";
 import { NavigationMenu } from "@/components/layout/NavigationMenu";
 import {
-  ArrowRightIcon,
   CloseIcon,
   LocationIcon,
   MenuIcon,
+  SearchIcon,
   UserIcon,
 } from "@/components/icons";
 
@@ -29,9 +29,9 @@ const REVEAL_OFFSET = 80;
 const HIDE_DELTA = 8;
 
 /**
- * "Find a Dealer", "Sign In" and "Configure Yours" have no real
- * destinations yet — rendered as real-looking but inert controls, matching
- * the pattern already used for undetermined links elsewhere.
+ * "Search", "Find a Dealer" and "Sign In" have no real destinations yet —
+ * rendered as real-looking but inert controls, matching the pattern
+ * already used for undetermined links elsewhere.
  */
 export function SiteHeader() {
   const pathname = usePathname();
@@ -109,45 +109,16 @@ export function SiteHeader() {
           className={`border-b transition-colors duration-300 ${
             transparent
               ? "border-white/15 bg-transparent"
-              : "border-[var(--color-border)] bg-[var(--color-paper-muted)]"
-          }`}
-        >
-          <div className="mx-auto flex h-[29px] max-w-6xl items-center justify-end gap-6 px-6">
-            <button
-              type="button"
-              className={`cta-label flex items-center gap-1.5 whitespace-nowrap text-[11px] transition-opacity hover:opacity-70 ${
-                transparent ? "text-white" : "text-[var(--color-ink)]"
-              }`}
-            >
-              <LocationIcon className="h-3.5 w-3.5" />
-              Find a Dealer
-            </button>
-            <button
-              type="button"
-              className={`cta-label flex items-center gap-1.5 whitespace-nowrap text-[11px] transition-opacity hover:opacity-70 ${
-                transparent ? "text-white" : "text-[var(--color-ink)]"
-              }`}
-            >
-              <UserIcon className="h-3.5 w-3.5" />
-              Sign In
-            </button>
-          </div>
-        </div>
-
-        <div
-          className={`border-b transition-colors duration-300 ${
-            transparent
-              ? "border-white/15 bg-transparent"
               : "border-[var(--color-border)] bg-[var(--color-paper)]"
           }`}
         >
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <div className="flex w-full items-center justify-between px-7 py-2.5">
             <button
               type="button"
               onClick={() => setMenuOpen((value) => !value)}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className={`cta-label flex items-center gap-2.5 whitespace-nowrap border px-3 py-2 text-xs transition-colors ${
+              className={`cta-label flex items-center gap-2.5 whitespace-nowrap rounded-full border px-3.5 py-2.5 text-xs transition-colors ${
                 transparent
                   ? "border-white/40 text-white"
                   : "border-[var(--color-border)] text-[var(--color-ink)]"
@@ -166,14 +137,29 @@ export function SiteHeader() {
               {brand.shortName}
             </Link>
 
-            <button
-              type="button"
-              aria-label="Configure yours"
-              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-3 py-2 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90 sm:px-4"
-            >
-              <span className="hidden sm:inline">Configure Yours</span>
-              <ArrowRightIcon />
-            </button>
+            <div className="flex items-center gap-5">
+              <button
+                type="button"
+                aria-label="Search"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink)]"}`}
+              >
+                <SearchIcon className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Find a dealer"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink)]"}`}
+              >
+                <LocationIcon className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="Sign in"
+                className={`transition-opacity hover:opacity-70 ${transparent ? "text-white" : "text-[var(--color-ink)]"}`}
+              >
+                <UserIcon className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       </header>

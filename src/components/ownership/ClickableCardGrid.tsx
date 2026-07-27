@@ -18,7 +18,7 @@ export function ClickableCardGrid({
 }) {
   return (
     <section
-      className={`mx-auto max-w-6xl px-6 pb-16 ${paddingTop ? "pt-16" : "pt-0"}`}
+      className={`px-6 pb-16 ${paddingTop ? "pt-16" : "pt-0"}`}
     >
       <h2 className="text-2xl">{title}</h2>
       <div

@@ -76,7 +76,7 @@ export function RecommendationView({
 
   return (
     <div className="bg-[var(--color-paper-muted)]">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="px-6 py-16">
         {/* Hero: match summary + image, side by side on larger screens */}
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div className="lg:max-w-lg">

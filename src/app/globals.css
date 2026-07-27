@@ -62,7 +62,7 @@
   /* Total SiteHeader height (utility bar + main bar) — the nav menu, the
    * hide-on-scroll transform, and every page-level sticky bar measure
    * themselves off this one value. See src/lib/header/constants.ts. */
-  --header-height: 105px;
+  --header-height: 59px;
 }
 
 @theme inline {

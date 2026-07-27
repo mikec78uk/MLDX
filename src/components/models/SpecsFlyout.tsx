@@ -172,7 +172,7 @@ export function SpecsFlyout({
         }
       >
         <div className="shrink-0 border-b border-[var(--color-border)] shadow-[0_8px_32px_rgba(52,58,63,0.05)]">
-          <div className="mx-auto flex max-w-6xl items-start justify-between px-6 pt-4">
+          <div className="flex items-start justify-between px-6 pt-4">
             <span />
             <button
               type="button"
@@ -184,7 +184,7 @@ export function SpecsFlyout({
           </div>
 
           <div
-            className={`mx-auto flex max-w-6xl flex-col gap-4 px-6 transition-[padding] duration-300 sm:flex-row sm:items-center ${
+            className={`flex flex-col gap-4 px-6 transition-[padding] duration-300 sm:flex-row sm:items-center ${
               condensed ? "pb-4 pt-2" : "pb-6 pt-2"
             }`}
           >
@@ -254,7 +254,7 @@ export function SpecsFlyout({
             </div>
           </div>
 
-          <nav className="mx-auto flex max-w-6xl gap-3 overflow-x-auto px-6 pb-4">
+          <nav className="flex gap-3 overflow-x-auto px-6 pb-4">
             {SECTIONS.map((section) => (
               <button
                 key={section.id}
@@ -273,7 +273,7 @@ export function SpecsFlyout({
         </div>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-6xl px-6 py-10">
+          <div className="px-6 py-10">
             {!fullSpecs.hasData ? (
               <p className="text-[var(--color-ink-soft)]">
                 Full specifications for {variantName} are coming soon.

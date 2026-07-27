@@ -28,7 +28,7 @@ export default async function OwnershipDetailPage({
   if (!card) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
+    <div className="px-6 py-16">
       <Link
         href="/ownership"
         className="cta-label text-xs text-[var(--color-ink-soft)]"

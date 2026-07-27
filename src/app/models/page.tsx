@@ -11,7 +11,7 @@ export default function ModelsPage() {
   const models = getModels();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-20">
+    <div className="px-6 py-20">
       <p className="eyebrow text-xs text-[var(--color-ink-soft)]">
         The range
       </p>

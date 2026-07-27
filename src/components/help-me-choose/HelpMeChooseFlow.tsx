@@ -168,7 +168,7 @@ export function HelpMeChooseFlow() {
 
   return (
     <div className="flex min-h-[calc(100vh-var(--header-height))] flex-col bg-[var(--color-paper-muted)]">
-      <div className="mx-auto w-full max-w-5xl bg-[var(--color-paper)] px-6 pt-8 pb-6 shadow-[0_2px_12px_rgba(20,20,20,0.05)]">
+      <div className="w-full bg-[var(--color-paper)] px-6 pt-8 pb-6 shadow-[0_2px_12px_rgba(20,20,20,0.05)]">
         <div className="flex items-center justify-between">
           <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Find your Defender</p>
           <p className="text-xs text-[var(--color-ink-soft)]">
@@ -190,13 +190,13 @@ export function HelpMeChooseFlow() {
       </div>
 
       <div className="flex-1 px-6 py-10">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="text-center">
           <p className="eyebrow text-xs text-[var(--color-ink-soft)]">{step.eyebrow}</p>
           <h1 className="mt-3 text-3xl sm:text-4xl">{step.heading}</h1>
           <p className="mt-3 text-[var(--color-ink-soft)]">{step.helper}</p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-5xl">
+        <div className="mt-10">
           {step.subQuestions ? (
             <div className="flex flex-col gap-10">
               {step.subQuestions.map((sub) => {

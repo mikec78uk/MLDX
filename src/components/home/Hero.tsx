@@ -45,7 +45,7 @@ export function Hero() {
         className="hero-media absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/70"
         aria-hidden
       />
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-16">
+      <div className="relative z-10 w-full px-6 pb-16">
         <p className="hero-eyebrow eyebrow text-xs text-white/70">
           Model exploration
         </p>

@@ -37,7 +37,7 @@ export function OverviewSection({
           dark ? "bg-[var(--color-ink)] text-[var(--color-paper)]" : ""
         }
       >
-        <div className="mx-auto max-w-5xl px-6 py-16">
+        <div className="px-6 py-16">
           {!hero.hasData && (
             <>
               <p className="eyebrow text-xs text-[var(--color-ink-soft)]">

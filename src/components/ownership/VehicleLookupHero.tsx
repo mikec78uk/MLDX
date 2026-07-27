@@ -77,7 +77,7 @@ export function VehicleLookupHero({
           aria-hidden
         />
 
-        <div className="absolute inset-0 z-10 mx-auto flex w-full max-w-6xl items-center px-6">
+        <div className="absolute inset-0 z-10 flex w-full items-center px-6">
           <div className="max-w-lg">
             <h1 className="text-4xl sm:text-5xl">Owners</h1>
             <h2 className="mt-4 text-xl text-white/90">
@@ -115,7 +115,7 @@ export function VehicleLookupHero({
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-6xl px-6 pb-10">
+        <div className="absolute inset-x-0 bottom-0 z-10 w-full px-6 pb-10">
           <div className="flex flex-wrap gap-3">
             {content.lookup.quickActions.map((action) => (
               <button
@@ -134,7 +134,7 @@ export function VehicleLookupHero({
 
   return (
     <section className="bg-[var(--color-paper-muted)]">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="px-6 py-16">
         <h1 className="text-4xl sm:text-5xl">Ownership</h1>
 
         {lookup && (

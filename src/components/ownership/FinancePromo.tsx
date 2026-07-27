@@ -8,7 +8,7 @@ export function FinancePromo({
 }) {
   return (
     <section className="border-t border-[var(--color-border)]">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
+      <div className="grid gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
         <div
           className="aspect-[4/3] w-full bg-[var(--color-paper-muted)] bg-cover bg-center"
           style={

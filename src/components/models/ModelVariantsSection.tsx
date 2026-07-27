@@ -37,7 +37,7 @@ export function ModelVariantsSection({
 
   return (
     <section className="bg-[var(--color-paper-muted)]">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="px-6 py-16">
         <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Models</p>
         <h2 className="mt-3 text-3xl sm:text-4xl">{modelName} Model Variants</h2>
 
