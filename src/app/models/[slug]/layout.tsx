@@ -1,12 +1,9 @@
 import { notFound } from "next/navigation";
-import { getBrand } from "@/lib/brand";
 import { getModel, getModels } from "@/data/models";
 import { ModelStickyNav } from "@/components/models/ModelStickyNav";
 
-const brand = getBrand();
-
 export function generateStaticParams() {
-  return getModels(brand.id).map((model) => ({ slug: model.slug }));
+  return getModels().map((model) => ({ slug: model.slug }));
 }
 
 export default async function ModelLayout({
@@ -17,7 +14,7 @@ export default async function ModelLayout({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const model = getModel(brand.id, slug);
+  const model = getModel(slug);
   if (!model) notFound();
 
   return (

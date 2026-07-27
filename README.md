@@ -1,8 +1,8 @@
 # MLDX Prototype
 
-A usability-testing prototype for **Range Rover**, reskinned for **Land Rover
-Defender**, covering model exploration and ownership details. No car
-configurator — that's explicitly out of scope.
+A usability-testing prototype for **Land Rover Defender**, covering model
+exploration and ownership details. No car configurator — that's explicitly
+out of scope.
 
 Built with Next.js (App Router, TypeScript, Tailwind CSS v4), GSAP for
 scroll/entrance motion, and Three.js (via React Three Fiber) for an
@@ -18,35 +18,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Brand system: one codebase, two skins
+## Brand tokens
 
-The client's reskin approach is **70% core functionality / 20% content /
-10% localisation** — meaning Range Rover and Defender share the same
-components, layouts and interactions, and differ mainly in content and
-brand tokens. This repo implements that as a single codebase with a brand
-config layer rather than duplicated folders or branches:
-
-- [`src/lib/brand/`](src/lib/brand) — `BrandConfig` type plus one file per
-  brand (`range-rover.ts`, `defender.ts`) holding colour tokens, fonts,
-  copy and logo references.
-- [`src/lib/brand/index.ts`](src/lib/brand/index.ts) — `getBrand()` reads
-  `NEXT_PUBLIC_BRAND` (`range-rover` | `defender`) and resolves the active
-  config. Defaults to `range-rover`.
-- [`src/app/layout.tsx`](src/app/layout.tsx) — injects the active brand's
-  colours as CSS custom properties on `<html>`, so every component just
-  references `var(--color-*)` / `var(--font-*)` and never hardcodes a
-  brand value.
-- [`src/data/`](src/data) — per-brand content (models, ownership copy).
-  This is where the "20%" content differences and eventual localisation
-  strings should live.
-
-**In practice this means two separate deployments from the same repo**,
-one per brand, distinguished only by the `NEXT_PUBLIC_BRAND` env var (see
-`.env.example`). To preview the other skin locally:
-
-```bash
-NEXT_PUBLIC_BRAND=defender npm run dev
-```
+- [`src/lib/brand.ts`](src/lib/brand.ts) — the single source of truth for
+  brand copy (name, tagline, description) and colour tokens.
+- [`src/app/globals.css`](src/app/globals.css) — defines the same colours
+  as CSS custom properties (`--color-*`), so components reference
+  `var(--color-*)` / `var(--font-*)` rather than hardcoding a value
+  directly. Keep the two in sync if a colour changes.
+- [`src/data/`](src/data) — model and ownership content.
 
 ## Style guide
 
@@ -63,10 +43,7 @@ activate them. Until then, the site falls back to Helvetica
 Neue/Arial, matching the real site's own fallback stack, so it still
 renders sensibly.
 
-Brand accent colours: Defender's `#ff7f00` is verified from the live
-site's CSS. Range Rover's accent (`#8a7256`) is a placeholder — swap it
-for the approved brand hex in `src/lib/brand/range-rover.ts` once
-supplied.
+Brand accent colour `#ff7f00` is verified from the live site's CSS.
 
 ## Structure
 
@@ -126,7 +103,7 @@ fine in `next dev`. That looked exactly like a GPU-memory problem (the
 2048px-capped export did carry ~138MB of GPU-resident texture memory),
 but cutting it to 1024px/~48MB *didn't* fix it — the real cause was
 `modelUrl` being a bare `/models/<slug>.glb` string with no basePath
-prefix, so it 404'd under GitHub Pages' `/MLDX/<brand>/` path. Under
+prefix, so it 404'd under GitHub Pages' `/MLDX/` path. Under
 `useGLTF`, that 404 didn't surface as a normal error — it manifested as
 a repeated-remount WebGL crash instead. Switching to a plain
 `GLTFLoader` turned it into a clean, catchable error, which is what
@@ -146,30 +123,22 @@ environment variables on the Vercel project:
 
 ## Deployment
 
-Two Vercel projects pointing at this same GitHub repo
-([mikec78uk/MLDX](https://github.com/mikec78uk/MLDX)), each with its own
-`NEXT_PUBLIC_BRAND` env var:
+A single Vercel project pointing at this GitHub repo
+([mikec78uk/MLDX](https://github.com/mikec78uk/MLDX)) runs the full
+Next.js server.
 
-| Vercel project | `NEXT_PUBLIC_BRAND` |
-| --- | --- |
-| range-rover prototype | `range-rover` |
-| defender prototype | `defender` |
+Set `SITE_PASSWORD` once ready to share for usability testing. **This is
+the password-protected link for actual usability-testing participants.**
 
-Set `SITE_PASSWORD` on both once ready to share for usability testing.
-**This is the password-protected link for actual usability-testing
-participants.**
+## Quick preview (GitHub Pages)
 
-## Quick skin preview (GitHub Pages)
-
-For a quick, no-deploy way to eyeball both skins side by side, `.github/workflows/github-pages.yml`
-builds a static export of each brand on every push to `main` and publishes
-them to GitHub Pages. Because your GitHub user site already has
+For a quick, no-deploy way to eyeball the site, `.github/workflows/github-pages.yml`
+builds a static export on every push to `main` and publishes it to GitHub
+Pages. Because your GitHub user site already has
 `playground.hellomike.co.uk` set as its custom domain, this repo's Pages
 site inherits it automatically:
 
-- `playground.hellomike.co.uk/MLDX/` — links to both skins
-- `playground.hellomike.co.uk/MLDX/range-rover/`
-- `playground.hellomike.co.uk/MLDX/defender/`
+- `playground.hellomike.co.uk/MLDX/`
 
 **This mirror has no password gate** — static export can't run
 `src/proxy.ts` (no server), so it's openly viewable. Fine for your own
@@ -184,5 +153,5 @@ every push to `main` deploys automatically.
 To build the same static export locally:
 
 ```bash
-npm run build:pages   # writes dist/range-rover, dist/defender, dist/index.html
+npm run build:pages   # writes dist/
 ```

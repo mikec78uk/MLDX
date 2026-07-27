@@ -1,6 +1,6 @@
-import type { BrandConfig } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 
-export function SiteFooter({ brand }: { brand: BrandConfig }) {
+export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-[var(--color-border)] bg-[var(--color-paper-muted)]">
       <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-[var(--color-ink-soft)]">

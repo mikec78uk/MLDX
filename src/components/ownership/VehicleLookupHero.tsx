@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useSyncExternalStore, type FormEvent } from "react";
-import type { BrandConfig } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import type { OwnershipContent } from "@/data/ownership";
 import { withBasePath } from "@/lib/basePath";
 import { ModelViewer } from "@/components/three/ModelViewerLoader";
@@ -32,10 +32,8 @@ function InertRow({ label }: { label: string }) {
 }
 
 export function VehicleLookupHero({
-  brand,
   content,
 }: {
-  brand: BrandConfig;
   content: OwnershipContent;
 }) {
   // sessionStorage is an external store — useSyncExternalStore reads it

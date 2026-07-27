@@ -1,4 +1,3 @@
-import type { BrandId } from "@/lib/brand";
 import { getModels } from "@/data/models";
 
 export interface NavModelItem {
@@ -62,9 +61,8 @@ const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
 ];
 
 /**
- * Ownership sub-items are brand-agnostic (src/data/ownership.ts content is
- * intentionally identical across brands) — only two of the five requested
- * labels have a real page today; the rest are inert.
+ * Only two of the five requested Ownership labels have a real page today;
+ * the rest are inert.
  */
 const OWNERSHIP_ITEMS: NavLinkItem[] = [
   { key: "all-ownership", label: "All Ownership", href: "/ownership" },
@@ -90,8 +88,8 @@ const BUY_ITEMS: NavLinkItem[] = [
   { key: "offers-and-finance", label: "Offers and Finance" },
 ];
 
-export function getNavigation(brandId: BrandId, brandName: string): NavSection[] {
-  const modelItems: NavModelItem[] = getModels(brandId).map((model) => ({
+export function getNavigation(): NavSection[] {
+  const modelItems: NavModelItem[] = getModels().map((model) => ({
     key: model.slug,
     name: model.name,
     image:
@@ -103,15 +101,13 @@ export function getNavigation(brandId: BrandId, brandName: string): NavSection[]
     description: model.summary,
   }));
 
-  if (brandId === "defender") {
-    modelItems.push(...DEFENDER_ONLY_MODEL_ITEMS);
-  }
+  modelItems.push(...DEFENDER_ONLY_MODEL_ITEMS);
 
   return [
     { key: "explore-models", label: "Explore Models", kind: "models", items: modelItems },
     {
       key: "world",
-      label: brandId === "defender" ? "The World of Defender" : `The World of ${brandName}`,
+      label: "The World of Defender",
       kind: "none",
       image: "/models/available-cars/promo-background.png",
     },

@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getBrand } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import { getAllOwnershipCards, getOwnershipCard } from "@/data/ownership";
 
-const brand = getBrand();
-
 export function generateStaticParams() {
-  return getAllOwnershipCards(brand.id).map((card) => ({ slug: card.slug }));
+  return getAllOwnershipCards().map((card) => ({ slug: card.slug }));
 }
 
 export async function generateMetadata({
@@ -16,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const card = getOwnershipCard(brand.id, slug);
+  const card = getOwnershipCard(slug);
   return { title: card ? `${card.title} | ${brand.name}` : brand.name };
 }
 
@@ -26,7 +24,7 @@ export default async function OwnershipDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const card = getOwnershipCard(brand.id, slug);
+  const card = getOwnershipCard(slug);
   if (!card) notFound();
 
   return (

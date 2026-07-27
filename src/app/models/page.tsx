@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { getBrand } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import { getModels } from "@/data/models";
 import { ModelCard } from "@/components/models/ModelCard";
-
-const brand = getBrand();
 
 export const metadata: Metadata = {
   title: `Models | ${brand.name}`,
 };
 
 export default function ModelsPage() {
-  const models = getModels(brand.id);
+  const models = getModels();
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-20">

@@ -1,16 +1,28 @@
-import type { BrandConfig } from "./types";
+export interface BrandColors {
+  ink: string;
+  inkSoft: string;
+  paper: string;
+  paperMuted: string;
+  border: string;
+  overlay: string;
+  accent: string;
+  accentInk: string;
+}
 
-export const defender: BrandConfig = {
-  id: "defender",
+export interface BrandConfig {
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  colors: BrandColors;
+}
+
+export const brand: BrandConfig = {
   name: "Land Rover Defender",
   shortName: "Defender",
   tagline: "Embrace the impossible",
   description:
     "Explore the Defender family and everything that comes with ownership.",
-  logo: {
-    src: "/brands/defender/logo.svg",
-    alt: "Land Rover Defender",
-  },
   colors: {
     ink: "#141414",
     inkSoft: "#4a4f54",
@@ -21,9 +33,5 @@ export const defender: BrandConfig = {
     // Verified against the live landrover.co.uk/defender stylesheet.
     accent: "#ff7f00",
     accentInk: "#141414",
-  },
-  fonts: {
-    display: "var(--font-display)",
-    body: "var(--font-body)",
   },
 };

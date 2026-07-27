@@ -1,17 +1,15 @@
 import Link from "next/link";
-import { getBrand } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import { getModels } from "@/data/models";
 import { Hero } from "@/components/home/Hero";
 import { ModelCard } from "@/components/models/ModelCard";
 
-const brand = getBrand();
-
 export default function Home() {
-  const featuredModels = getModels(brand.id).slice(0, 3);
+  const featuredModels = getModels().slice(0, 3);
 
   return (
     <>
-      <Hero brand={brand} />
+      <Hero />
 
       <section className="mx-auto max-w-4xl px-6 py-20">
         <div className="flex items-baseline justify-between">

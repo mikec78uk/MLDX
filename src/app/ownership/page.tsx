@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
-import { getBrand } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import { getOwnershipContent } from "@/data/ownership";
 import { VehicleLookupHero } from "@/components/ownership/VehicleLookupHero";
 import { ClickableCardGrid } from "@/components/ownership/ClickableCardGrid";
 import { FinancePromo } from "@/components/ownership/FinancePromo";
-
-const brand = getBrand();
 
 export const metadata: Metadata = {
   title: `Ownership | ${brand.name}`,
 };
 
 export default function OwnershipPage() {
-  const content = getOwnershipContent(brand.id);
+  const content = getOwnershipContent();
 
   return (
     <div>
-      <VehicleLookupHero brand={brand} content={content} />
+      <VehicleLookupHero content={content} />
 
       <ClickableCardGrid
         title="Need Assistance"

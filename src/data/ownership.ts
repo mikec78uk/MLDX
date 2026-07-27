@@ -1,5 +1,3 @@
-import type { BrandId } from "@/lib/brand";
-
 export interface InertLink {
   label: string;
 }
@@ -116,13 +114,6 @@ const assistance: CardLink[] = [
   },
 ];
 
-/**
- * Everything that isn't an unavoidable brand-specific fact. Defender is the
- * one brand being actively iterated on right now — Range Rover mirrors this
- * copy verbatim (see `overridesByBrand` below) until it gets its own
- * finalisation pass, so a Defender wording change never needs a matching
- * manual edit on the Range Rover side.
- */
 const sharedCopy = {
   lookup: {
     heading: "Find support for your vehicle",
@@ -168,68 +159,40 @@ const sharedCopy = {
   },
 };
 
-/** The handful of facts that can't be mirrored — real names, real assets. */
-interface BrandOverrides {
-  vehicle: OwnershipContent["vehicle"];
-  remoteAppName: string;
-  retailerName: string;
-  heroBackground?: string;
-  financeImage?: string;
-}
-
-const overridesByBrand: Record<BrandId, BrandOverrides> = {
-  defender: {
-    vehicle: {
-      name: "Defender 110",
-      ownershipRange: "2020 - Present",
-      modelUrl: "/models/defender-110.glb",
-      image: "/ownership/vehicle-defender-110.png",
-    },
-    remoteAppName: "Land Rover Remote",
-    retailerName: "Land Rover",
-    heroBackground: "/ownership/hero-defender.avif",
-    financeImage: "/ownership/finance-defender.avif",
-  },
-  "range-rover": {
-    // Mirrors Defender until Range Rover gets its own finalisation pass.
-    vehicle: {
-      name: "Defender 110",
-      ownershipRange: "2020 - Present",
-      modelUrl: "/models/defender-110.glb",
-    },
-    remoteAppName: "Land Rover Remote",
-    retailerName: "Land Rover",
-  },
+const vehicle: OwnershipContent["vehicle"] = {
+  name: "Defender 110",
+  ownershipRange: "2020 - Present",
+  modelUrl: "/models/defender-110.glb",
+  image: "/ownership/vehicle-defender-110.png",
 };
 
-export function getOwnershipContent(brandId: BrandId): OwnershipContent {
-  const overrides = overridesByBrand[brandId];
+const REMOTE_APP_NAME = "Land Rover Remote";
+const RETAILER_NAME = "Land Rover";
+
+export function getOwnershipContent(): OwnershipContent {
   return {
     ...sharedCopy,
-    heroBackground: overrides.heroBackground,
-    vehicle: overrides.vehicle,
+    heroBackground: "/ownership/hero-defender.avif",
+    vehicle,
     remoteApp: {
       ...sharedCopy.remoteApp,
-      name: overrides.remoteAppName,
+      name: REMOTE_APP_NAME,
     },
     assistance,
     exploreCards,
     financePromo: {
       ...sharedCopy.financePromo,
-      disclaimer: `*Subject to status and terms. Available through participating ${overrides.retailerName} Retailers.`,
-      image: overrides.financeImage,
+      disclaimer: `*Subject to status and terms. Available through participating ${RETAILER_NAME} Retailers.`,
+      image: "/ownership/finance-defender.avif",
     },
   };
 }
 
-export function getAllOwnershipCards(brandId: BrandId): CardLink[] {
-  const content = getOwnershipContent(brandId);
+export function getAllOwnershipCards(): CardLink[] {
+  const content = getOwnershipContent();
   return [...content.assistance, ...content.exploreCards];
 }
 
-export function getOwnershipCard(
-  brandId: BrandId,
-  slug: string,
-): CardLink | undefined {
-  return getAllOwnershipCards(brandId).find((card) => card.slug === slug);
+export function getOwnershipCard(slug: string): CardLink | undefined {
+  return getAllOwnershipCards().find((card) => card.slug === slug);
 }

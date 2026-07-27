@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import type { BrandConfig } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 import {
   getLookupSnapshot,
   getServerLookupSnapshot,
@@ -33,7 +33,7 @@ const HIDE_DELTA = 8;
  * destinations yet — rendered as real-looking but inert controls, matching
  * the pattern already used for undetermined links elsewhere.
  */
-export function SiteHeader({ brand }: { brand: BrandConfig }) {
+export function SiteHeader() {
   const pathname = usePathname();
   // Coupling the shared header to the ownership lookup store is a
   // deliberate one-off: the ownership hero is the only place the header
@@ -96,7 +96,7 @@ export function SiteHeader({ brand }: { brand: BrandConfig }) {
   }, []);
 
   const transparent = hasTransparentHero && !scrolled && !menuOpen;
-  const navigation = getNavigation(brand.id, brand.name);
+  const navigation = getNavigation();
 
   return (
     <>

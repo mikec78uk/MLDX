@@ -2,13 +2,13 @@
 
 # MLDX Prototype
 
-Usability-testing prototype for Range Rover (reskinned for Defender):
-model exploration + ownership details only, no configurator.
+Usability-testing prototype for Land Rover Defender: model exploration +
+ownership details only, no configurator.
 
-- Brand system lives in `src/lib/brand/` — never hardcode brand colours,
-  copy, or names in components. Read from `getBrand()` / CSS vars
-  (`var(--color-*)`, `var(--font-*)`) instead. See README.md for the full
-  brand architecture.
+- Brand copy/colours live in `src/lib/brand.ts` — never hardcode brand
+  colours, copy, or names directly in components. Import `brand` from
+  `@/lib/brand`, or reference the CSS vars (`var(--color-*)`,
+  `var(--font-*)`) for styling.
 - GSAP: register plugins via `src/lib/gsap/registerPlugins.ts`, animate
   with `@gsap/react`'s `useGSAP` hook, and gate motion behind
   `gsap.matchMedia("(prefers-reduced-motion: no-preference)")`.

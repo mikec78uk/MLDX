@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/registerPlugins";
-import type { BrandConfig } from "@/lib/brand";
+import { brand } from "@/lib/brand";
 
-export function Hero({ brand }: { brand: BrandConfig }) {
+export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
