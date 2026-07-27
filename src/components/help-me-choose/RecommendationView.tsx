@@ -144,7 +144,7 @@ export function RecommendationView({
               ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-6">
+            <div className="mt-4 flex flex-col items-start gap-3">
               <button
                 type="button"
                 className="cta-label inline-flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
@@ -259,7 +259,7 @@ export function RecommendationView({
       {/* Make it yours — full-bleed promo band with a background image,
           reusing the same lifestyle shot used for the "build your own"
           promo card elsewhere in the models section. */}
-      <div className="relative overflow-hidden py-24 text-center text-white">
+      <div className="relative overflow-hidden py-24 text-white">
         <Image
           src={withBasePath("/models/available-cars/promo-background.png")}
           alt=""
@@ -268,10 +268,11 @@ export function RecommendationView({
         />
         <div className="absolute inset-0 bg-black/55" aria-hidden />
         <div className="relative px-6">
-          <h2 className="text-4xl sm:text-6xl">
-            Make it <span className="font-[family-name:var(--font-display)] italic">yours</span>
+          <h2 className="text-6xl leading-[0.95] sm:text-8xl">
+            <span className="block">Make it</span>
+            <span className="block font-[family-name:var(--font-display)] italic">yours</span>
           </h2>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <button
               type="button"
               className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3.5 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
