@@ -101,6 +101,55 @@ export function RecommendationView({
             <p className="mt-4 text-lg">{trim?.onTheRoadPrice ?? `From ${model.priceFrom}`}</p>
             <p className="mt-6 text-sm font-semibold">Why it matches:</p>
             <p className="mt-2 text-[var(--color-ink-soft)]">{heroSpecBlurb}</p>
+
+            {/* Your answers, editable — sits directly under "Why it
+                matches" in the same text column, not as a separate
+                full-width section below the hero. */}
+            <div className="mt-8 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+              {summaryChips(answers).map((category) => (
+                <div key={category.label} className="flex items-center justify-between gap-4 py-4">
+                  <div>
+                    <p className="eyebrow text-xs text-[var(--color-ink-soft)]">{category.label}</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {category.values.length > 0 ? (
+                        category.values.map((value) => (
+                          <span
+                            key={value}
+                            className="cta-label rounded-full bg-[var(--color-paper)] px-3 py-1 text-[11px] tracking-[0.05em] text-[var(--color-ink-soft)] shadow-[0_1px_2px_rgba(20,20,20,0.08)]"
+                          >
+                            {value}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-xs text-[var(--color-ink-soft)]">No preference given</span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => onEditStep(category.stepIndex)}
+                    className="cta-label shrink-0 text-xs underline underline-offset-4 transition-colors hover:text-[var(--color-ink-soft)]"
+                  >
+                    Edit
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-6">
+              <button
+                type="button"
+                className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
+              >
+                Save suggestion
+              </button>
+              <button
+                type="button"
+                className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
+              >
+                Email my suggestion
+              </button>
+            </div>
           </div>
 
           <div className="order-1 lg:order-none">
@@ -116,55 +165,6 @@ export function RecommendationView({
               <div className="aspect-[210/199] w-full bg-[var(--color-border)]" />
               <div className="col-span-2 aspect-[550/293] w-full bg-[var(--color-border)]" />
             </div>
-          </div>
-        </div>
-
-        {/* Your answers, editable */}
-        <div className="mx-auto mt-16 max-w-2xl">
-          <div className="divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
-            {summaryChips(answers).map((category) => (
-              <div key={category.label} className="flex items-center justify-between gap-4 py-4">
-                <div>
-                  <p className="eyebrow text-xs text-[var(--color-ink-soft)]">{category.label}</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {category.values.length > 0 ? (
-                      category.values.map((value) => (
-                        <span
-                          key={value}
-                          className="cta-label rounded-full bg-[var(--color-paper)] px-3 py-1 text-[11px] tracking-[0.05em] text-[var(--color-ink-soft)] shadow-[0_1px_2px_rgba(20,20,20,0.08)]"
-                        >
-                          {value}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-xs text-[var(--color-ink-soft)]">No preference given</span>
-                    )}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => onEditStep(category.stepIndex)}
-                  className="cta-label shrink-0 text-xs underline underline-offset-4 transition-colors hover:text-[var(--color-ink-soft)]"
-                >
-                  Edit
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center gap-6">
-            <button
-              type="button"
-              className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
-            >
-              Save suggestion
-            </button>
-            <button
-              type="button"
-              className="cta-label text-xs text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)]"
-            >
-              Email my suggestion
-            </button>
           </div>
         </div>
 
