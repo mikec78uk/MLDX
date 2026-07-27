@@ -291,7 +291,7 @@ export function NavigationMenu({
         <div className="overflow-y-auto bg-[var(--color-paper-muted)] px-10 py-10">
           {activeSection.kind === "models" ? (
             activeModel && (
-            <div key={activeModel.key} className="nav-detail-panel max-w-md">
+            <div key={activeModel.key} className="nav-detail-panel mx-auto max-w-md text-center">
               <p className="font-[family-name:var(--font-display-bold)] text-lg uppercase tracking-tight">
                 {activeModel.name}
               </p>
@@ -310,7 +310,7 @@ export function NavigationMenu({
                   />
                 </div>
               )}
-              <div className="mt-6 flex flex-wrap items-center gap-4">
+              <div className="mt-6 flex justify-center">
                 {activeModel.href ? (
                   <Link
                     href={activeModel.href}
@@ -329,7 +329,7 @@ export function NavigationMenu({
                   </button>
                 )}
               </div>
-              <div className="mt-4 flex flex-wrap items-center gap-6">
+              <div className="mt-4 flex flex-col items-center gap-3">
                 <button
                   type="button"
                   className="cta-label flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink)] transition-opacity hover:opacity-70"

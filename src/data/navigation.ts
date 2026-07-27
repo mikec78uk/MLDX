@@ -59,6 +59,12 @@ const DEFENDER_ONLY_MODEL_ITEMS: NavModelItem[] = [
     description: "Answer a few questions and we'll recommend your ideal Defender.",
     href: "/help-me-choose",
   },
+  {
+    key: "compare-models",
+    name: "Compare Models",
+    description: "See how the Defender range compares, trim by trim.",
+    href: "/models/defender-110/compare",
+  },
 ];
 
 /**
