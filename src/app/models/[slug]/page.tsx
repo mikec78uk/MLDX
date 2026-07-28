@@ -23,11 +23,5 @@ export default async function ModelOverviewPage({
   const model = getModel(slug);
   if (!model) notFound();
 
-  return (
-    <OverviewSection
-      model={model}
-      accent={brand.colors.accent}
-      brandShortName={brand.shortName}
-    />
-  );
+  return <OverviewSection model={model} accent={brand.colors.accent} />;
 }

@@ -9,7 +9,7 @@ import { ArrowRightIcon } from "@/components/icons";
 import { HeroHotspot } from "@/components/models/HeroHotspot";
 
 /**
- * "Build your <brand>" and "Get a personalised quote" have no real
+ * "Book a test drive" and "Discover finance offers" have no real
  * destinations yet — rendered as real-looking but inert controls, matching
  * the pattern already used for undetermined links elsewhere (sticky nav
  * CTAs, ownership page).
@@ -17,12 +17,10 @@ import { HeroHotspot } from "@/components/models/HeroHotspot";
 export function OverviewHero({
   modelName,
   modelSlug,
-  brandShortName,
   hero,
 }: {
   modelName: string;
   modelSlug: string;
-  brandShortName: string;
   hero: ModelHero;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -116,20 +114,20 @@ export function OverviewHero({
               {hero.financeSummary}
             </p>
           )}
-          <div className="overview-hero-ctas mt-8 flex flex-col items-start gap-4">
+          <div className="overview-hero-ctas mt-8 flex flex-wrap items-center gap-4">
             <button
               type="button"
-              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
+              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
             >
               <ArrowRightIcon />
-              Build your {brandShortName}
+              Book a test drive
             </button>
             <button
               type="button"
-              className="cta-label flex items-center gap-2 text-xs text-white/90 transition-opacity hover:opacity-70"
+              className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-paper)] px-6 py-3.5 text-xs text-[var(--color-ink)] transition-opacity hover:opacity-90"
             >
-              Get a personalised quote
               <ArrowRightIcon />
+              Discover finance offers
             </button>
           </div>
         </div>

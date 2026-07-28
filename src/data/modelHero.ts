@@ -30,14 +30,13 @@ const EMPTY_HERO: ModelHero = { hasData: false };
 const defender110Hero: ModelHero = {
   hasData: true,
   darkOverview: true,
-  backgroundImage: "/models/hero-defender-110.avif",
-  tagline: "The ultimate all-rounder",
+  backgroundImage: "/models/overview/hero-background.png",
+  tagline: "Go Anywhere. Bring Everything.",
   priceFrom: "£64,315",
-  monthlyPayment: "£629",
-  financeSummary:
-    "per month, based on a customer deposit of £5,865.50 and optional final payment of £30,945.00 with 7.9% APR*",
+  monthlyPayment: "£599",
+  financeSummary: "per month PCP, plus deposit and optional final payment*",
   representativeExample:
-    "On the Road Price £74,270.00, Finance Deposit Allowance £3,000.00, Customer Deposit £16,511.00, Total Amount of Credit £54,759.00, Duration of Agreement 49 months, 48 monthly payments of £629.00, Purchase Fee £10.00 (included in the final payment), Optional Final Payment £39,298.00, Total Amount Payable £89,001.00, Representative APR 7.9%, Interest Rate (Fixed) 7.62%, Annual Mileage 10,000 miles.",
+    "Representative Example relates to a Defender 110 26MY D250 X-Dynamic SE. 7.9% APR Representative available on Defender 110 models ordered between 24th July 2026 and 30th September 2026, and registered by 31st March 2027 at participating retailers only. With Land Rover Personal Contract Purchase you have the option at the end of the agreement to: (1) return the vehicle and not pay the Optional Final Payment. If the vehicle has exceeded the permitted maximum mileage a charge per excess mile will apply. In this example if the vehicle has exceeded the permitted maximum mileage of 40,833 miles, a charge of 16.8p (including VAT at 20%) will apply per excess mile. If the vehicle is in good condition (fair wear and tear accepted) and has not exceeded 40,833 miles you will have nothing further to pay. (2) pay the Optional Final Payment to own the vehicle or (3) part exchange the vehicle subject to settlement of your existing credit agreement; new credit agreements are subject to status. Finance Example is based upon an annual mileage of 10,000 miles. Credit is subject to status and only available to UK residents, aged 18 and over. This credit offer is only available through Black Horse Limited trading as Land Rover Financial Services, St William House, Tresillian Terrace, Cardiff CF10 5BH.",
   hotspot: {
     x: 64,
     y: 46,
