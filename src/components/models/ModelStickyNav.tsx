@@ -16,12 +16,6 @@ const SECTIONS: NavSection[] = [
 ];
 
 /**
- * Roughly the Overview hero's own min-height (see OverviewHero.tsx) — past
- * this point the hero is scrolled out of view, so the nav solidifies.
- */
-const SCROLL_THRESHOLD = 560;
-
-/**
  * "Configure" deep-links to the Build & Order section on Overview — a real
  * working anchor, not a placeholder. "In Stock Vehicles" has no inventory
  * tool to link to yet, so it stays a real-looking but inert control,
@@ -47,8 +41,10 @@ export function ModelStickyNav({
 
   useEffect(() => {
     if (!hasTransparentHero) return;
+    // Solidify at the very first pixel of scroll; only transparent again
+    // once back at the very top.
     function onScroll() {
-      setScrolled(window.scrollY > SCROLL_THRESHOLD);
+      setScrolled(window.scrollY > 0);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
