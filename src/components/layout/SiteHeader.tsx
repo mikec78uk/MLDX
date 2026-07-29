@@ -46,7 +46,6 @@ export function SiteHeader() {
     getServerLookupSnapshot,
   );
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const hasTransparentHero = pathname === "/ownership" && lookup?.status !== "found";
@@ -70,7 +69,6 @@ export function SiteHeader() {
     function apply(next: boolean) {
       if (next === isHidden) return;
       isHidden = next;
-      setHidden(next);
       setHeaderHidden(next);
     }
 
@@ -100,11 +98,7 @@ export function SiteHeader() {
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-50 transition-transform duration-300 motion-reduce:transition-none ${
-          hidden ? "-translate-y-full" : "translate-y-0"
-        }`}
-      >
+      <header className="sticky top-0 z-50 translate-y-[var(--header-hidden-shift)] transition-transform duration-300 motion-reduce:transition-none">
         <div
           className={`border-b transition-colors duration-300 ${
             transparent

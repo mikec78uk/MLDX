@@ -63,6 +63,12 @@
    * hide-on-scroll transform, and every page-level sticky bar measure
    * themselves off this one value. See src/lib/header/constants.ts. */
   --header-height: 59px;
+
+  /* Set imperatively (not via React state) by src/lib/header/visibility.ts
+   * whenever the header hides/reveals on scroll, so it and any sticky bar
+   * below it (e.g. ModelStickyNav) read the exact same value and shift in
+   * lockstep — no cross-component render timing to fall out of sync. */
+  --header-hidden-shift: 0px;
 }
 
 @theme inline {

@@ -2,13 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { ChevronIcon, ExternalLinkIcon } from "@/components/icons";
-import {
-  getHeaderHiddenSnapshot,
-  getServerHeaderHiddenSnapshot,
-  subscribeToHeaderHidden,
-} from "@/lib/header/visibility";
 
 interface NavSection {
   path: string;
@@ -64,14 +59,6 @@ export function ModelStickyNav({
   // desktop card picks this up, via lg:-prefixed overrides.
   const transparent = hasTransparentHero && !scrolled;
 
-  // The site header hides on scroll-down; slide up by its height too so
-  // this bar closes the gap instead of leaving a blank strip above it.
-  const headerHidden = useSyncExternalStore(
-    subscribeToHeaderHidden,
-    getHeaderHiddenSnapshot,
-    getServerHeaderHiddenSnapshot,
-  );
-
   const activeLabel =
     SECTIONS.find((section) => pathname === `${basePath}${section.path}`)?.label ?? "Overview";
 
@@ -90,14 +77,10 @@ export function ModelStickyNav({
   }
 
   return (
-    <div
-      className={`sticky top-[var(--header-height)] z-40 transition-transform duration-300 motion-reduce:transition-none ${
-        headerHidden ? "translate-y-[calc(var(--header-height)*-1)]" : "translate-y-0"
-      }`}
-    >
+    <div className="sticky top-[var(--header-height)] z-40 translate-y-[var(--header-hidden-shift)] transition-transform duration-300 motion-reduce:transition-none">
       <div className="lg:px-6 lg:pt-3">
         <div
-          className={`rounded-none px-6 py-3 transition-colors duration-300 lg:rounded-[5px] ${cardClassName}`}
+          className={`relative rounded-none px-6 py-3 transition-colors duration-300 lg:rounded-[5px] ${cardClassName}`}
         >
           {/* Desktop: full tab row, transparent-over-hero on Overview */}
           <nav className="hidden items-center gap-x-8 lg:flex">
@@ -125,10 +108,8 @@ export function ModelStickyNav({
             </button>
           </nav>
 
-          {/* Mobile: compact expandable "{modelName} / {activeLabel}" row.
-              The panel floats over the page (absolute) when expanded,
-              rather than pushing the content below it down. */}
-          <div className="relative lg:hidden">
+          {/* Mobile: compact expandable "{modelName} / {activeLabel}" row */}
+          <div className="lg:hidden">
             <button
               type="button"
               onClick={() => setExpanded((value) => !value)}
@@ -143,42 +124,44 @@ export function ModelStickyNav({
               </span>
               <ChevronIcon direction={expanded ? "up" : "down"} />
             </button>
-
-            {expanded && (
-              <div className="absolute inset-x-0 top-full z-10 flex flex-col gap-y-3 border-t border-[var(--color-border)] bg-[var(--color-paper)] py-3 shadow-[0_8px_24px_rgba(20,20,20,0.12)]">
-                {SECTIONS.map((section) => {
-                  const href = `${basePath}${section.path}`;
-                  const isActive = pathname === href;
-                  return (
-                    <Link
-                      key={section.path}
-                      href={href}
-                      onClick={() => setExpanded(false)}
-                      className={`cta-label text-xs ${
-                        isActive ? "font-semibold text-[var(--color-ink)]" : "text-[var(--color-ink-soft)]"
-                      }`}
-                    >
-                      {section.label}
-                    </Link>
-                  );
-                })}
-                <Link
-                  href={`${basePath}#build-and-order`}
-                  onClick={() => setExpanded(false)}
-                  className="cta-label text-xs text-[var(--color-ink-soft)]"
-                >
-                  Configure
-                </Link>
-                <button
-                  type="button"
-                  className="cta-label flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink-soft)]"
-                >
-                  In Stock Vehicles
-                  <ExternalLinkIcon />
-                </button>
-              </div>
-            )}
           </div>
+
+          {/* Floats over the page (absolute, full width of the card) when
+              expanded, rather than pushing the content below it down. */}
+          {expanded && (
+            <div className="absolute inset-x-0 top-full z-10 flex flex-col gap-y-5 border-t border-[var(--color-border)] bg-[var(--color-paper)] px-6 py-6 shadow-[0_8px_24px_rgba(20,20,20,0.12)] lg:hidden">
+              {SECTIONS.map((section) => {
+                const href = `${basePath}${section.path}`;
+                const isActive = pathname === href;
+                return (
+                  <Link
+                    key={section.path}
+                    href={href}
+                    onClick={() => setExpanded(false)}
+                    className={`cta-label text-xs ${
+                      isActive ? "font-semibold text-[var(--color-ink)]" : "text-[var(--color-ink-soft)]"
+                    }`}
+                  >
+                    {section.label}
+                  </Link>
+                );
+              })}
+              <Link
+                href={`${basePath}#build-and-order`}
+                onClick={() => setExpanded(false)}
+                className="cta-label text-xs text-[var(--color-ink-soft)]"
+              >
+                Configure
+              </Link>
+              <button
+                type="button"
+                className="cta-label flex items-center gap-2 whitespace-nowrap text-xs text-[var(--color-ink-soft)]"
+              >
+                In Stock Vehicles
+                <ExternalLinkIcon />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
