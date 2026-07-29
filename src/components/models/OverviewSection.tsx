@@ -13,6 +13,7 @@ import { TerrainResponseSection } from "@/components/models/TerrainResponseSecti
 import { BuildAndOrderSection } from "@/components/models/BuildAndOrderSection";
 import { OptionalPackSection } from "@/components/models/OptionalPackSection";
 import { MakeItYoursCardGrid } from "@/components/models/MakeItYoursCardGrid";
+import { ScrollReveal } from "@/components/models/ScrollReveal";
 
 export function OverviewSection({
   model,
@@ -45,24 +46,32 @@ export function OverviewSection({
             disclaimer={content.statStrip.disclaimer}
           />
 
-          <TerrainResponseSection modes={content.terrainModes} />
+          <ScrollReveal>
+            <TerrainResponseSection modes={content.terrainModes} />
+          </ScrollReveal>
 
-          <BuildAndOrderSection
-            modelName={model.name}
-            modelSlug={model.slug}
-            variants={variants}
-            colors={content.exteriorColors.colors}
-            defaultColor={content.exteriorColors.defaultColor}
-            galleryCategories={content.buildGalleryCategories}
-          />
+          <ScrollReveal>
+            <BuildAndOrderSection
+              modelName={model.name}
+              modelSlug={model.slug}
+              variants={variants}
+              colors={content.exteriorColors.colors}
+              defaultColor={content.exteriorColors.defaultColor}
+              galleryCategories={content.buildGalleryCategories}
+            />
+          </ScrollReveal>
 
-          <OptionalPackSection modelName={model.name} packs={content.optionalPacks} />
+          <ScrollReveal>
+            <OptionalPackSection modelName={model.name} packs={content.optionalPacks} />
+          </ScrollReveal>
 
           {/* Available Cars carousel hidden here for now — may come back,
               so left in place rather than removed. */}
         </div>
 
-        <MakeItYoursCardGrid cards={content.makeItYoursCards} />
+        <ScrollReveal>
+          <MakeItYoursCardGrid cards={content.makeItYoursCards} />
+        </ScrollReveal>
 
         {hero.representativeExample && (
           <div className="bg-[var(--color-paper)] px-6 py-10">
