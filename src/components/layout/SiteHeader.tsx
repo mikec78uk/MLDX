@@ -12,6 +12,7 @@ import {
 import { setHeaderHidden } from "@/lib/header/visibility";
 import { getNavigation } from "@/data/navigation";
 import { NavigationMenu } from "@/components/layout/NavigationMenu";
+import { DefenderLogo } from "@/components/layout/DefenderLogo";
 import {
   CloseIcon,
   LocationIcon,
@@ -125,11 +126,10 @@ export function SiteHeader() {
 
             <Link
               href="/"
-              className={`font-[family-name:var(--font-display-bold)] text-lg tracking-tight uppercase ${
-                transparent ? "text-white" : "text-[var(--color-ink)]"
-              }`}
+              aria-label={brand.shortName}
+              className={transparent ? "text-white" : "text-[var(--color-ink)]"}
             >
-              {brand.shortName}
+              <DefenderLogo className="h-4 w-auto" />
             </Link>
 
             <div className="flex items-center gap-5">
@@ -161,11 +161,10 @@ export function SiteHeader() {
           <div className="flex w-full items-center justify-between px-6 py-[15px] lg:hidden">
             <Link
               href="/"
-              className={`font-[family-name:var(--font-display-bold)] text-lg tracking-tight uppercase ${
-                transparent ? "text-white" : "text-[var(--color-ink)]"
-              }`}
+              aria-label={brand.shortName}
+              className={transparent ? "text-white" : "text-[var(--color-ink)]"}
             >
-              {brand.shortName}
+              <DefenderLogo className="h-3.5 w-auto" />
             </Link>
 
             <div className="flex items-center gap-5">
