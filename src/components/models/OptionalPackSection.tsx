@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
 import type { OptionalPack } from "@/data/modelOverviewContent";
+import { ArrowRightIcon } from "@/components/icons";
 
 export function OptionalPackSection({
   modelName,
@@ -90,6 +91,7 @@ export function OptionalPackSection({
               type="button"
               className="cta-label mt-6 flex items-center gap-2 whitespace-nowrap border border-[var(--color-ink)] px-6 py-3.5 text-xs transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
             >
+              <ArrowRightIcon />
               Contact Retailer
             </button>
           </div>

@@ -206,7 +206,7 @@ export function BuildAndOrderSection({
             href={`/models/${modelSlug}/compare`}
             className="cta-label flex items-center gap-2 whitespace-nowrap text-xs transition-colors hover:text-[var(--color-ink-soft)]"
           >
-            <ChevronIcon direction="right" className="h-2.5 w-2" />
+            <ArrowRightIcon />
             Compare models
           </Link>
         </div>
