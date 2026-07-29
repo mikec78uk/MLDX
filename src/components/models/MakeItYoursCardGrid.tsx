@@ -10,7 +10,7 @@ export function MakeItYoursCardGrid({ cards }: { cards: MakeItYoursCard[] }) {
   return (
     <div className="bg-[var(--color-border)] py-16">
       <div className="px-6">
-        <h2 className="font-medium text-7xl sm:text-8xl lg:text-9xl">
+        <h2 className="font-light text-7xl sm:text-8xl lg:text-9xl">
           Make it <span className="italic">yours</span>
         </h2>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

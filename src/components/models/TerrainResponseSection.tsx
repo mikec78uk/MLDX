@@ -42,7 +42,7 @@ export function TerrainResponseSection({ modes }: { modes: TerrainMode[] }) {
         {active.hasData ? (
           <>
             <div>
-              <p className="text-2xl sm:text-3xl">{active.title}</p>
+              <p className="text-4xl sm:text-5xl">{active.title}</p>
               <p className="mt-4 max-w-sm text-sm text-[var(--color-ink-soft)]">
                 {active.body}
               </p>
