@@ -42,42 +42,40 @@ export function TerrainResponseSection({ modes }: { modes: TerrainMode[] }) {
         {active.hasData ? (
           <>
             <div>
-              <p className="text-lg">{active.title}</p>
+              <p className="text-2xl sm:text-3xl">{active.title}</p>
               <p className="mt-4 max-w-sm text-sm text-[var(--color-ink-soft)]">
                 {active.body}
               </p>
-            </div>
-            <div className="grid gap-4">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[5px]">
-                <Image
-                  src={withBasePath(active.image)}
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
-              </div>
               {active.readout && (
-                <dl className="grid grid-cols-3 gap-4 text-center">
-                  <div>
+                <dl className="mt-6 max-w-sm space-y-4">
+                  <div className="flex items-center justify-between gap-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Ride height
                     </dt>
-                    <dd className="mt-1 text-sm">{active.readout.rideHeight}</dd>
+                    <dd className="text-lg">{active.readout.rideHeight}</dd>
                   </div>
-                  <div>
+                  <div className="flex items-center justify-between gap-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Throttle
                     </dt>
-                    <dd className="mt-1 text-sm">{active.readout.throttle}</dd>
+                    <dd className="text-lg">{active.readout.throttle}</dd>
                   </div>
-                  <div>
+                  <div className="flex items-center justify-between gap-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Traction
                     </dt>
-                    <dd className="mt-1 text-sm">{active.readout.traction}</dd>
+                    <dd className="text-lg">{active.readout.traction}</dd>
                   </div>
                 </dl>
               )}
+            </div>
+            <div className="relative aspect-[819/532] w-full overflow-hidden rounded-[5px]">
+              <Image
+                src={withBasePath(active.image)}
+                alt=""
+                fill
+                className="object-cover"
+              />
             </div>
           </>
         ) : (
