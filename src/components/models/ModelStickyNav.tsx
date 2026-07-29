@@ -114,7 +114,6 @@ export function ModelStickyNav({
             <Link href={`${basePath}#build-and-order`} className={tabClassName(false)}>
               Configure
             </Link>
-            <div className="flex-1" />
             <button
               type="button"
               className={`cta-label flex items-center gap-2 whitespace-nowrap border-b-2 border-transparent pb-1 text-xs transition-colors ${inactiveTabClassName}`}
