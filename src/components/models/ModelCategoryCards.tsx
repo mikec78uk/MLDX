@@ -5,6 +5,7 @@ import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
 import type { CategoryCard } from "@/data/modelOverviewContent";
 import { ContentTakeoverModal } from "@/components/models/ContentTakeoverModal";
+import { ArrowRightIcon } from "@/components/icons";
 
 /** Each card opens a full-screen takeover — content lands in a later pass. */
 export function ModelCategoryCards({ cards }: { cards: CategoryCard[] }) {
@@ -28,8 +29,9 @@ export function ModelCategoryCards({ cards }: { cards: CategoryCard[] }) {
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-[rgba(20,20,20,0.5)]" aria-hidden />
-            <span className="absolute inset-x-0 bottom-0 p-4 text-left text-2xl text-white">
+            <span className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 p-4 text-left text-2xl text-white">
               {card.label}
+              <ArrowRightIcon />
             </span>
           </button>
         ))}

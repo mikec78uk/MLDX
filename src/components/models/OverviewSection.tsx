@@ -38,7 +38,7 @@ export function OverviewSection({
           hero={hero}
         />
 
-        <div className="flex flex-col gap-16 bg-[var(--color-paper-muted)] py-16">
+        <div className="flex flex-col gap-16 bg-[var(--color-paper)] py-16">
           <ModelCategoryCards cards={content.categoryCards} />
           <ModelStatStrip
             items={content.statStrip.items}
@@ -65,7 +65,7 @@ export function OverviewSection({
         <MakeItYoursCardGrid cards={content.makeItYoursCards} />
 
         {hero.representativeExample && (
-          <div className="bg-[var(--color-paper-muted)] px-6 py-10">
+          <div className="bg-[var(--color-paper)] px-6 py-10">
             <p className="max-w-5xl text-[10px] text-[var(--color-ink-soft)]">
               <strong className="font-semibold text-[var(--color-ink)]">
                 Representative example:
