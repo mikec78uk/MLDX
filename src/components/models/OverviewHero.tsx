@@ -97,7 +97,7 @@ export function OverviewHero({
   return (
     <section
       ref={containerRef}
-      className="relative -mt-[70px] overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)]"
+      className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-paper)] lg:-mt-[70px]"
     >
       {/* Image layer — fixed-aspect stacked block on mobile, full-height overlay on desktop */}
       <div className="relative aspect-[4/5] w-full lg:aspect-auto lg:h-[88vh] lg:min-h-[640px]">

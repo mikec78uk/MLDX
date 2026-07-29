@@ -47,13 +47,13 @@ export function FloatingModelCTA({
     >
       <Link
         href={`${basePath}#build-and-order`}
-        className="cta-label whitespace-nowrap border border-[var(--color-ink)] bg-[var(--color-paper)] px-6 py-3.5 text-xs text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+        className="cta-label flex h-14 items-center whitespace-nowrap border border-[var(--color-ink)] bg-[var(--color-paper)] px-6 text-xs text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
       >
         Configure
       </Link>
       <button
         type="button"
-        className="cta-label whitespace-nowrap border border-white bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
+        className="cta-label flex h-14 items-center whitespace-nowrap border border-white bg-[var(--color-ink)] px-6 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
       >
         <span className="lg:hidden">Test Drive</span>
         <span className="hidden lg:inline">Book A Test Drive</span>

@@ -95,8 +95,10 @@ export function ModelStickyNav({
         headerHidden ? "translate-y-[calc(var(--header-height)*-1)]" : "translate-y-0"
       }`}
     >
-      <div className="px-6 pt-3">
-        <div className={`rounded-[5px] px-6 py-3 transition-colors duration-300 ${cardClassName}`}>
+      <div className="lg:px-6 lg:pt-3">
+        <div
+          className={`rounded-none px-6 py-3 transition-colors duration-300 lg:rounded-[5px] ${cardClassName}`}
+        >
           {/* Desktop: full tab row, transparent-over-hero on Overview */}
           <nav className="hidden items-center gap-x-8 lg:flex">
             <span className="font-[family-name:var(--font-display-bold)] text-base uppercase tracking-tight">
@@ -123,8 +125,10 @@ export function ModelStickyNav({
             </button>
           </nav>
 
-          {/* Mobile: compact expandable "{modelName} / {activeLabel}" row */}
-          <div className="lg:hidden">
+          {/* Mobile: compact expandable "{modelName} / {activeLabel}" row.
+              The panel floats over the page (absolute) when expanded,
+              rather than pushing the content below it down. */}
+          <div className="relative lg:hidden">
             <button
               type="button"
               onClick={() => setExpanded((value) => !value)}
@@ -141,7 +145,7 @@ export function ModelStickyNav({
             </button>
 
             {expanded && (
-              <div className="mt-3 flex flex-col gap-y-3 border-t border-[var(--color-border)] pt-3">
+              <div className="absolute inset-x-0 top-full z-10 flex flex-col gap-y-3 border-t border-[var(--color-border)] bg-[var(--color-paper)] py-3 shadow-[0_8px_24px_rgba(20,20,20,0.12)]">
                 {SECTIONS.map((section) => {
                   const href = `${basePath}${section.path}`;
                   const isActive = pathname === href;
