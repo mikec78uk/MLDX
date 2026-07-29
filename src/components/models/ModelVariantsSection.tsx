@@ -38,7 +38,7 @@ export function ModelVariantsSection({
     variants.variants[0];
 
   return (
-    <section className="bg-[var(--color-paper-muted)]">
+    <section className="bg-[var(--color-paper)]">
       {!variants.hasData ? (
         <div className="px-6 py-16">
           <p className="eyebrow text-xs text-[var(--color-ink-soft)]">Models</p>
@@ -108,7 +108,7 @@ function VariantRowSection({
 
   return (
     <div>
-      <div className="px-6">
+      <div className="bg-[var(--color-paper-muted)] px-6 py-16">
         <p className="eyebrow text-xs text-[var(--color-ink-soft)]">{row.subheading}</p>
         <h3 className="mt-3 text-3xl sm:text-4xl">{row.headline}</h3>
         <p className="mt-3 max-w-lg text-[var(--color-ink-soft)]">{row.body}</p>
@@ -116,7 +116,7 @@ function VariantRowSection({
 
       <div className="mt-10 px-6">
         {rowVariants.length === 1 ? (
-          <div className="mx-auto max-w-xl">
+          <div className="max-w-xl">
             <VariantCard variant={rowVariants[0]} onSeeSpecs={() => onSeeSpecs(rowVariants[0].slug)} />
           </div>
         ) : (
