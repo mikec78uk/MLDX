@@ -45,20 +45,6 @@ export function OverviewSection({
             disclaimer={content.statStrip.disclaimer}
           />
 
-          <div className="px-6">
-            <p className="eyebrow text-xs text-[var(--color-ink-soft)]">
-              Explore in 3D
-            </p>
-            <div className="mt-4">
-              <ModelViewer accent={accent} modelUrl={model.modelUrl} />
-              <p className="mt-3 text-xs text-[var(--color-ink-soft)]">
-                {model.modelUrl
-                  ? "Drag to rotate."
-                  : `Drag to rotate. Placeholder geometry — swap for the real ${model.name} model once 3D assets are supplied.`}
-              </p>
-            </div>
-          </div>
-
           <TerrainResponseSection modes={content.terrainModes} />
 
           <BuildAndOrderSection
@@ -72,9 +58,8 @@ export function OverviewSection({
 
           <OptionalPackSection modelName={model.name} packs={content.optionalPacks} />
 
-          <div className="px-6">
-            <AvailableVehiclesCarousel modelName={model.name} vehicles={vehicles} />
-          </div>
+          {/* Available Cars carousel hidden here for now — may come back,
+              so left in place rather than removed. */}
         </div>
 
         <MakeItYoursCardGrid cards={content.makeItYoursCards} />
