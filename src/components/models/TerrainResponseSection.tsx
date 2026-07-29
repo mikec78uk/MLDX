@@ -21,16 +21,16 @@ export function TerrainResponseSection({ modes }: { modes: TerrainMode[] }) {
         actually changes.
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-6 border-b border-[var(--color-border)] pb-4">
+      <div className="mt-6 flex flex-wrap gap-6">
         {modes.map((mode) => (
           <button
             key={mode.key}
             type="button"
             onClick={() => setActiveKey(mode.key)}
-            className={`cta-label whitespace-nowrap text-xs transition-colors ${
+            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeKey === mode.key
-                ? "text-[var(--color-ink)]"
-                : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                ? "border-[var(--color-ink)] text-[var(--color-ink)]"
+                : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
             }`}
           >
             {mode.label}
@@ -41,13 +41,13 @@ export function TerrainResponseSection({ modes }: { modes: TerrainMode[] }) {
       <div className="mt-6 grid gap-8 rounded-[5px] bg-[var(--color-paper-muted)] p-6 shadow-[0_2px_6px_rgba(0,0,0,0.08)] lg:grid-cols-2 lg:items-center">
         {active.hasData ? (
           <>
-            <div>
+            <div className="max-w-[500px]">
               <p className="text-4xl sm:text-5xl">{active.title}</p>
-              <p className="mt-4 max-w-sm text-sm text-[var(--color-ink-soft)]">
+              <p className="mt-4 text-sm text-[var(--color-ink-soft)]">
                 {active.body}
               </p>
               {active.readout && (
-                <dl className="mt-6 max-w-sm space-y-4">
+                <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between gap-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Ride height

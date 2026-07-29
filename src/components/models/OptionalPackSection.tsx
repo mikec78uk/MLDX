@@ -23,16 +23,16 @@ export function OptionalPackSection({
         Enhance your {modelName} with an optional pack
       </h2>
 
-      <div className="mt-6 flex flex-wrap gap-6 border-b border-[var(--color-border)] pb-4">
+      <div className="mt-6 flex flex-wrap gap-6">
         {packs.map((pack) => (
           <button
             key={pack.key}
             type="button"
             onClick={() => setActiveKey(pack.key)}
-            className={`cta-label whitespace-nowrap text-xs transition-colors ${
+            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeKey === pack.key
-                ? "text-[var(--color-ink)]"
-                : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                ? "border-[var(--color-ink)] text-[var(--color-ink)]"
+                : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
             }`}
           >
             {pack.label}

@@ -83,13 +83,13 @@ export function BuildAndOrderSection({
         </label>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-8 border-b border-[var(--color-border)]">
+      <div className="mt-6 flex flex-wrap gap-8">
         {variants.variants.map((variant) => (
           <button
             key={variant.slug}
             type="button"
             onClick={() => setActiveSlug(variant.slug)}
-            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs transition-colors ${
+            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeSlug === variant.slug
                 ? "border-[var(--color-ink)] text-[var(--color-ink)]"
                 : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
@@ -151,16 +151,16 @@ export function BuildAndOrderSection({
         )}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-6 border-b border-[var(--color-border)] pb-4">
+      <div className="mt-6 flex flex-wrap gap-6">
         {galleryCategories.map((category) => (
           <button
             key={category.key}
             type="button"
             onClick={() => selectCategory(category.key)}
-            className={`cta-label whitespace-nowrap text-xs transition-colors ${
+            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeCategoryKey === category.key
-                ? "text-[var(--color-ink)]"
-                : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                ? "border-[var(--color-ink)] text-[var(--color-ink)]"
+                : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
             }`}
           >
             {category.label}
