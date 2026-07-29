@@ -38,29 +38,29 @@ export function TerrainResponseSection({ modes }: { modes: TerrainMode[] }) {
         ))}
       </div>
 
-      <div className="mt-6 grid gap-8 rounded-[5px] bg-[var(--color-paper-muted)] p-6 shadow-[0_2px_6px_rgba(0,0,0,0.08)] lg:grid-cols-2 lg:items-center">
+      <div className="mt-6 grid gap-10 rounded-[5px] bg-[var(--color-paper-muted)] p-8 shadow-[0_2px_6px_rgba(0,0,0,0.08)] lg:grid-cols-2 lg:items-center lg:p-10">
         {active.hasData ? (
           <>
             <div className="max-w-[500px]">
               <p className="text-4xl sm:text-5xl">{active.title}</p>
-              <p className="mt-4 text-sm text-[var(--color-ink-soft)]">
+              <p className="mt-6 text-sm text-[var(--color-ink-soft)]">
                 {active.body}
               </p>
               {active.readout && (
-                <dl className="mt-6 space-y-4">
-                  <div className="flex items-center justify-between gap-4">
+                <dl className="mt-10 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+                  <div className="flex items-center justify-between gap-4 py-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Ride height
                     </dt>
                     <dd className="text-lg">{active.readout.rideHeight}</dd>
                   </div>
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center justify-between gap-4 py-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Throttle
                     </dt>
                     <dd className="text-lg">{active.readout.throttle}</dd>
                   </div>
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center justify-between gap-4 py-4">
                     <dt className="text-xs text-[var(--color-ink-soft)]">
                       Traction
                     </dt>

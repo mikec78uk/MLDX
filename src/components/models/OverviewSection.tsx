@@ -39,7 +39,7 @@ export function OverviewSection({
           hero={hero}
         />
 
-        <div className="flex flex-col gap-16 bg-[var(--color-paper)] py-16">
+        <div className="flex flex-col gap-24 bg-[var(--color-paper)] py-16">
           <ModelCategoryCards cards={content.categoryCards} />
           <ModelStatStrip
             items={content.statStrip.items}

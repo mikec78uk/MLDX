@@ -41,17 +41,22 @@ export function ModelStatStrip({
       <dl className="grid grid-cols-2 gap-8 sm:grid-cols-4">
         {items.map((item) => (
           <div key={item.label} className="stat-item">
-            <dt className="eyebrow text-xs text-[var(--color-ink-soft)]">
-              {item.label}
-            </dt>
-            <dd className="mt-1 text-4xl">
+            <dd className="flex items-baseline gap-2 text-6xl sm:text-7xl">
+              {item.prefix && (
+                <span className="text-xs text-[var(--color-ink-soft)]">
+                  {item.prefix}
+                </span>
+              )}
               {item.value}
               {item.unit && (
-                <span className="ml-1 text-xs text-[var(--color-ink-soft)]">
+                <span className="text-xs text-[var(--color-ink-soft)]">
                   {item.unit}
                 </span>
               )}
             </dd>
+            <dt className="eyebrow mt-2 text-xs text-[var(--color-ink-soft)]">
+              {item.label}
+            </dt>
           </div>
         ))}
       </dl>

@@ -8,6 +8,8 @@ export interface StatStripItem {
   value: string;
   unit: string;
   label: string;
+  /** "Up to" for figures that vary by trim; omitted where the figure is fixed (e.g. max power). */
+  prefix?: string;
 }
 
 export interface TerrainReadout {
@@ -95,10 +97,10 @@ const defender110Content: ModelOverviewContent = {
   ],
   statStrip: {
     items: [
-      { value: "2,279", unit: "litres", label: "Loadspace" },
-      { value: "7", unit: "", label: "Seats" },
+      { value: "2,279", unit: "litres", label: "Loadspace", prefix: "Up to" },
+      { value: "7", unit: "", label: "Seats", prefix: "Up to" },
       { value: "380", unit: "HP", label: "Maximum power" },
-      { value: "700", unit: "Nm", label: "Maximum torque" },
+      { value: "700", unit: "Nm", label: "Maximum torque", prefix: "Up to" },
     ],
     disclaimer:
       "Figures shown reflect specifications from various models. See the Models page for complete details or visit your local authorised Land Rover Retailer.",
