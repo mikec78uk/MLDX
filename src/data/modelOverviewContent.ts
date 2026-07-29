@@ -90,8 +90,8 @@ const EMPTY: ModelOverviewContent = {
 const defender110Content: ModelOverviewContent = {
   hasData: true,
   categoryCards: [
-    { key: "exterior", label: "Exterior", image: "/models/overview/category-exterior.png" },
-    { key: "interior", label: "Interior", image: "/models/overview/category-interior.png" },
+    { key: "capability", label: "Capability", image: "/models/overview/category-exterior.png" },
+    { key: "design", label: "Design", image: "/models/overview/category-interior.png" },
     { key: "technology", label: "Technology", image: "/models/overview/category-technology.png" },
     { key: "ownership", label: "Ownership", image: "/models/overview/category-ownership.png" },
   ],

@@ -9,12 +9,21 @@ export interface ModelVariant {
   keyFeatures: string[];
 }
 
+/** A headline+subheading+body banner grouping one or more variant cards. */
+export interface VariantRow {
+  headline: string;
+  subheading: string;
+  body: string;
+  variantSlugs: string[];
+}
+
 export interface ModelVariantsData {
   hasData: boolean;
   variants: ModelVariant[];
+  rows: VariantRow[];
 }
 
-const EMPTY: ModelVariantsData = { hasData: false, variants: [] };
+const EMPTY: ModelVariantsData = { hasData: false, variants: [], rows: [] };
 
 /**
  * Variant cards for the model-specific "Models" tab (browsing derivatives of
@@ -128,6 +137,32 @@ const defender110: ModelVariantsData = {
         "Trophy Edition bonnet decal",
         "Illuminated metal treadplates with Trophy Edition branding",
       ],
+    },
+  ],
+  rows: [
+    {
+      headline: "The Essential Defender",
+      subheading: "Defender 110 S",
+      body: "Everything you need to embrace everyday adventures, with unmistakable design, intelligent technology and all-terrain capability as standard.",
+      variantSlugs: ["s"],
+    },
+    {
+      headline: "Capability, Elevated",
+      subheading: "Defender 110 X",
+      body: "The ultimate Defender all-rounder, combining advanced all-terrain technology with exceptional comfort, craftsmanship and refinement.",
+      variantSlugs: ["x-dynamic-se", "x-dynamic-hse", "x"],
+    },
+    {
+      headline: "Make your Mark",
+      subheading: "Defender 110 Vertex",
+      body: "A bold expression of Defender with distinctive detailing, commanding road presence and a more contemporary, performance-inspired attitude.",
+      variantSlugs: ["vertex"],
+    },
+    {
+      headline: "Adventure in Its DNA",
+      subheading: "Defender 110 Trophy Edition",
+      body: "Inspired by Defender's legendary expedition heritage and equipped with purposeful details for those drawn to the road less travelled.",
+      variantSlugs: ["trophy-black", "trophy-yellow"],
     },
   ],
 };

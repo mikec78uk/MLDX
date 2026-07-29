@@ -6,13 +6,14 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/registerPlugins";
 import { withBasePath } from "@/lib/basePath";
 import type { CategoryCard } from "@/data/modelOverviewContent";
+import { getCategoryOverlayContent } from "@/data/categoryOverlayContent";
 import { ContentTakeoverModal } from "@/components/models/ContentTakeoverModal";
 import { ArrowRightIcon } from "@/components/icons";
 
-/** Each card opens a full-screen takeover — content lands in a later pass. */
+/** Each card opens a full-screen takeover with that category's content. */
 export function ModelCategoryCards({ cards }: { cards: CategoryCard[] }) {
   const [openKey, setOpenKey] = useState<string | null>(null);
-  const openCard = cards.find((card) => card.key === openKey);
+  const overlayContent = getCategoryOverlayContent(openKey ?? "");
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -65,7 +66,7 @@ export function ModelCategoryCards({ cards }: { cards: CategoryCard[] }) {
       <ContentTakeoverModal
         open={openKey !== null}
         onClose={() => setOpenKey(null)}
-        title={openCard?.label ?? ""}
+        content={overlayContent}
       />
     </div>
   );
