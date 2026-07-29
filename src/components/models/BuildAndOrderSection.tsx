@@ -60,7 +60,7 @@ export function BuildAndOrderSection({
   }
 
   return (
-    <div className="px-6">
+    <div id="build-and-order" className="px-6">
       <h2 className="cta-label text-3xl sm:text-4xl">Build and Order</h2>
       <p className="mt-3 text-[var(--color-ink-soft)]">
         Choose a Defender. Then make it yours.

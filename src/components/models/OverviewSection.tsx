@@ -33,11 +33,7 @@ export function OverviewSection({
   if (hero.hasData && content.hasData) {
     return (
       <>
-        <OverviewHero
-          modelName={model.name}
-          modelSlug={model.slug}
-          hero={hero}
-        />
+        <OverviewHero modelName={model.name} hero={hero} />
 
         <div className="flex flex-col gap-24 bg-[var(--color-paper)] py-16">
           <ModelCategoryCards cards={content.categoryCards} />
