@@ -115,26 +115,18 @@ function VariantRowSection({
       </div>
 
       <div className="mt-10 px-6">
-        {rowVariants.length === 1 ? (
-          <div className="max-w-xl">
-            <VariantCard variant={rowVariants[0]} onSeeSpecs={() => onSeeSpecs(rowVariants[0].slug)} />
-          </div>
-        ) : (
-          <div
-            className={`flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:grid lg:gap-8 lg:overflow-visible lg:pb-0 ${
-              rowVariants.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
-            }`}
-          >
-            {rowVariants.map((variant) => (
-              <div
-                key={variant.slug}
-                className="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-auto lg:shrink"
-              >
-                <VariantCard variant={variant} onSeeSpecs={() => onSeeSpecs(variant.slug)} />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Always the same 3-column grid regardless of row size, so every
+            card — single, 2-up or 3-up — resolves to the same width. */}
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:pb-0">
+          {rowVariants.map((variant) => (
+            <div
+              key={variant.slug}
+              className="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-auto lg:shrink"
+            >
+              <VariantCard variant={variant} onSeeSpecs={() => onSeeSpecs(variant.slug)} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
