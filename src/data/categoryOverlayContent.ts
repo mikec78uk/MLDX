@@ -16,6 +16,8 @@ export interface OverlaySection {
   cta?: string;
   /** "pair" (2 items) / "three-col" (3 items). */
   items?: OverlaySectionItem[];
+  /** Renders a horizontal rule after this section (before the next one, or the footnote). */
+  dividerAfter?: boolean;
 }
 
 export interface CategoryOverlayContent {
@@ -63,6 +65,7 @@ const capability: CategoryOverlayContent = {
       headline: "Move Mountains",
       body: "Haul everything from trailers to horse boxes, up to 3,500 kg. Advanced Tow Assist takes care of the counter steer. Pull through any challenge with the ability to winch up to 4,536 kg.",
       image: "/models/overview/capability/move-mountains.png",
+      dividerAfter: true,
     },
     {
       layout: "image-text",
@@ -75,6 +78,7 @@ const capability: CategoryOverlayContent = {
       headline: "Wade into Adventure",
       body: "Confidently cross waters with a maximum 900 mm wading depth. Defender's 3D Surround Camera displays water depth while identifying optimum entry and exit points.",
       image: "/models/overview/capability/wade-into-adventure.png",
+      dividerAfter: true,
     },
   ],
   legalFootnote: LEGAL_FOOTNOTE,
@@ -102,6 +106,7 @@ const design: CategoryOverlayContent = {
       headline: "Room for everyone",
       body: "Ultimate versatility. Create a seven-seat set-up with an optional third row. Or make space up front with the addition of a jump seat. Optional new Captain Chairs provide space and versatility for second-row passengers, with aisle access to the third row.",
       image: "/models/overview/design/room-for-everyone.png",
+      dividerAfter: true,
     },
     {
       layout: "text-image",
@@ -127,6 +132,7 @@ const technology: CategoryOverlayContent = {
       headline: "Leave nothing behind",
       body: "Pack everything with a loadspace of up to 2,279 litres behind the first row. Even with the bags piled high, the ClearSight rear view mirror gives you a full view behind. Now available as part of the new Technology Pack.",
       image: "/models/overview/technology/leave-nothing-behind.png",
+      dividerAfter: true,
     },
     {
       layout: "pair",
@@ -142,6 +148,7 @@ const technology: CategoryOverlayContent = {
           image: "/models/overview/technology/breath-of-fresh-air.png",
         },
       ],
+      dividerAfter: true,
     },
     {
       layout: "three-col",
@@ -164,6 +171,7 @@ const technology: CategoryOverlayContent = {
           image: "/models/overview/technology/live-alerts.png",
         },
       ],
+      dividerAfter: true,
     },
   ],
   legalFootnote: LEGAL_FOOTNOTE,
@@ -180,6 +188,7 @@ const ownership: CategoryOverlayContent = {
       body: "Designed to make every journey more enjoyable, InControl is the technological heart of your Land Rover's cabin. Surround yourself with precise environment control, smart navigation, entertainment and security features.",
       image: "/models/overview/ownership/stay-incontrol.png",
       cta: "FIND OUT MORE",
+      dividerAfter: true,
     },
     {
       layout: "pair",
@@ -197,6 +206,7 @@ const ownership: CategoryOverlayContent = {
           cta: "FIND OUT MORE",
         },
       ],
+      dividerAfter: true,
     },
     {
       layout: "image-then-text",
@@ -204,6 +214,7 @@ const ownership: CategoryOverlayContent = {
       body: "Don't delay your drive any longer. We offer Complimentary Driveaway Insurance for new vehicles, with cover beginning the moment you collect your Defender 110 and staying in place for 5 days. Speak to your Retailer for more information.\n\nContinue your insurance with a monthly subscription for access to genuine parts and approved technicians. It's the cover you and your vehicle deserve.\n\nImage is for reference only, rear window comes with privacy glass.",
       image: "/models/overview/ownership/drive-away-insurance.png",
       cta: "FIND OUT MORE",
+      dividerAfter: true,
     },
   ],
   legalFootnote: LEGAL_FOOTNOTE,

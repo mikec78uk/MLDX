@@ -79,9 +79,17 @@ export function ContentTakeoverModal({
               </div>
 
               <div className="flex flex-col gap-16 px-6 py-16">
-                {content.sections.map((section, index) => (
-                  <OverlaySectionBlock key={index} section={section} />
-                ))}
+                {content.sections.flatMap((section, index) => {
+                  const nodes = [
+                    <OverlaySectionBlock key={`section-${index}`} section={section} />,
+                  ];
+                  if (section.dividerAfter) {
+                    nodes.push(
+                      <hr key={`divider-${index}`} className="border-[var(--color-border)]" />,
+                    );
+                  }
+                  return nodes;
+                })}
               </div>
 
               {content.legalFootnote && (
