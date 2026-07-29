@@ -123,7 +123,7 @@ export function OverviewHero({
         />
 
         {/* Desktop: bounded dark card behind the text, overlaid on the image. */}
-        <div className="relative z-10 hidden h-full w-full items-center px-6 lg:flex">
+        <div className="relative z-10 hidden h-full w-full items-end p-[50px] lg:flex">
           <div className="max-w-[506px] rounded-[10px] bg-[rgba(20,20,20,0.5)] p-5">
             {textContent}
           </div>
