@@ -19,6 +19,9 @@ export function ModelStatStrip({
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // `once` rather than reversing on scroll-up: these figures are content,
+        // not decoration, so the reveal must never be able to leave them
+        // invisible once it has played.
         gsap.from(".stat-item", {
           opacity: 0,
           y: 24,
@@ -28,7 +31,7 @@ export function ModelStatStrip({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            once: true,
           },
         });
 
