@@ -19,7 +19,12 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col">
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        {/* `grow` rather than `flex-1`: flex-1's `flex-basis: 0%` would size
+            main from the body's height instead of its own content, which is
+            what let page content overflow the body's box. Basis stays auto
+            here, so main is at least its content height and still stretches
+            to fill a short page. */}
+        <main className="grow">{children}</main>
         <SiteFooter />
         <FloatingChatButton />
       </body>

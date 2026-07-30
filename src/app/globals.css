@@ -85,8 +85,13 @@
   --font-body: var(--font-body);
 }
 
-html,
-body {
+/* Only html is pinned to the viewport — that's what body's `min-h-full`
+ * resolves its percentage against. Giving body height: 100% too capped its
+ * box at one viewport, so page content overflowed it instead of growing it,
+ * which in turn capped the sticky header's containing block: past one
+ * viewport of scrolling the header was dragged off-screen and never came
+ * back. Body's height must stay auto. */
+html {
   height: 100%;
 }
 
