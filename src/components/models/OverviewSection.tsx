@@ -42,10 +42,10 @@ export function OverviewSection({
       <>
         <OverviewHero modelName={model.name} hero={hero} />
 
-        {/* The flex gap is what puts 80px above and below each SectionDivider,
-            so it doubles as the section rhythm — tightened on mobile, where
-            80px of dead space eats most of a viewport. */}
-        <div className="flex flex-col gap-12 bg-[var(--color-paper)] py-16 lg:gap-20">
+        {/* The flex gap is what sets the space above and below each
+            SectionDivider, so it doubles as the section rhythm — scaled back
+            on mobile, where this much dead space eats most of a viewport. */}
+        <div className="flex flex-col gap-16 bg-[var(--color-paper)] py-16 lg:gap-32">
           <ModelCategoryCards cards={content.categoryCards} />
           <ModelStatStrip
             items={content.statStrip.items}
