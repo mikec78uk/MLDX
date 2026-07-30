@@ -64,9 +64,15 @@ export function ModelStatStrip({
 
   return (
     <div className="px-6" ref={containerRef}>
-      <dl className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+      {/* Below sm each figure is its own full-width bordered card, stacked —
+          two per row leaves the longer figures cramped at phone widths. From
+          sm up it's the bare 4-up strip. */}
+      <dl className="grid grid-cols-1 gap-4 sm:grid-cols-4 sm:gap-8">
         {items.map((item, index) => (
-          <div key={item.label} className="stat-item text-center">
+          <div
+            key={item.label}
+            className="stat-item rounded-[5px] border border-[var(--color-border)] px-6 py-8 text-center sm:rounded-none sm:border-0 sm:p-0"
+          >
             <dd className="flex items-baseline justify-center gap-2 text-6xl sm:text-7xl">
               {item.prefix && (
                 <span className="text-xs text-[var(--color-ink-soft)]">

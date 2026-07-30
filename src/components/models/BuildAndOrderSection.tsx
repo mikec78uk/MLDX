@@ -9,11 +9,19 @@ import type { BuildGalleryCategory, ExteriorColor } from "@/data/modelOverviewCo
 import { ArrowRightIcon, ChevronIcon } from "@/components/icons";
 
 /**
- * Mirrors the real Build and Order configurator pattern (model radio, trim
+ * Tab rows wrap on desktop but scroll horizontally on mobile, with a hairline
+ * running under the row: trim names like "Trophy Edition in Deep Sandglow
+ * Yellow" are far too long to wrap into a readable stack at phone widths.
+ */
+const TAB_ROW =
+  "flex overflow-x-auto border-b border-[var(--color-border)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible lg:border-b-0";
+
+/**
+ * Mirrors the real Build and Order configurator pattern (model picker, trim
  * tabs, a main-viewer-plus-thumbnails gallery, an Exterior/Interior/Wheels/
  * Accessories sub-gallery, colour swatches, price + CTAs) rather than a
  * from-scratch layout. "Defender OCTA" is a real-looking but permanently
- * disabled radio — it isn't a model this app has any page/spec content
+ * disabled option — it isn't a model this app has any page/spec content
  * for, only included so the picker matches visually.
  */
 export function BuildAndOrderSection({
@@ -66,7 +74,7 @@ export function BuildAndOrderSection({
         Choose a Defender. Then make it yours.
       </p>
 
-      <div className="mt-8 flex flex-wrap gap-8">
+      <div className="mt-8 hidden flex-wrap gap-8 lg:flex">
         <label className="flex items-center gap-2">
           <input
             type="radio"
@@ -83,13 +91,32 @@ export function BuildAndOrderSection({
         </label>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-8">
+      {/* Mobile gets a dropdown instead of the radio row — it's what the live
+          configurator uses at this width, and two radios plus the model names
+          don't sit on one phone-width line. OCTA stays visible but disabled,
+          same as the desktop radio. */}
+      <div className="relative mt-8 lg:hidden">
+        <select
+          aria-label="Choose a model"
+          defaultValue={modelName}
+          className="w-full appearance-none border border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-4 text-sm font-semibold"
+        >
+          <option>{modelName}</option>
+          <option disabled>Defender OCTA</option>
+        </select>
+        <ChevronIcon
+          direction="down"
+          className="pointer-events-none absolute right-4 top-1/2 h-2 w-3.5 -translate-y-1/2"
+        />
+      </div>
+
+      <div className={`mt-6 gap-8 ${TAB_ROW}`}>
         {variants.variants.map((variant) => (
           <button
             key={variant.slug}
             type="button"
             onClick={() => setActiveSlug(variant.slug)}
-            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
+            className={`cta-label shrink-0 whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeSlug === variant.slug
                 ? "border-[var(--color-ink)] text-[var(--color-ink)]"
                 : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
@@ -101,7 +128,7 @@ export function BuildAndOrderSection({
       </div>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <div>
+        <div className="relative">
           <div className="relative aspect-[753/456] w-full overflow-hidden rounded-[5px] bg-[var(--color-paper-muted)]">
             <Image
               src={withBasePath(images[activeImageIndex])}
@@ -111,7 +138,9 @@ export function BuildAndOrderSection({
             />
           </div>
           {images.length > 1 && (
-            <div className="mt-3 flex items-center justify-center gap-4">
+            /* Overlaid on the photo at phone widths (matching the live
+               configurator), dropping below it once there's room. */
+            <div className="absolute bottom-4 left-4 flex items-center gap-4 rounded-[5px] bg-[var(--color-paper)]/90 px-3 py-2 lg:static lg:mt-3 lg:justify-center lg:bg-transparent lg:px-0 lg:py-0">
               <button
                 type="button"
                 aria-label="Previous photo"
@@ -136,7 +165,7 @@ export function BuildAndOrderSection({
         </div>
 
         {images.length > 1 && (
-          <div className="grid gap-4">
+          <div className="hidden gap-4 lg:grid">
             {images.slice(1, 3).map((image, index) => (
               <button
                 key={image}
@@ -151,13 +180,13 @@ export function BuildAndOrderSection({
         )}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-6">
+      <div className={`mt-6 gap-6 ${TAB_ROW}`}>
         {galleryCategories.map((category) => (
           <button
             key={category.key}
             type="button"
             onClick={() => selectCategory(category.key)}
-            className={`cta-label whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
+            className={`cta-label shrink-0 whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition-colors ${
               activeCategoryKey === category.key
                 ? "border-[var(--color-ink)] text-[var(--color-ink)]"
                 : "border-transparent text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
@@ -168,16 +197,17 @@ export function BuildAndOrderSection({
         ))}
       </div>
 
-      <div className="mt-8 flex flex-wrap items-start justify-between gap-8">
-        <div>
-          <div className="flex flex-wrap gap-3">
+      <div className="mt-8 flex flex-col items-start gap-8 lg:flex-row lg:flex-wrap lg:justify-between">
+        <div className="w-full lg:w-auto">
+          {/* Eight 70px swatches can't wrap tidily on a phone, so they scroll. */}
+          <div className="flex gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
             {colors.map((color) => (
               <button
                 key={color.name}
                 type="button"
                 aria-label={color.name}
                 onClick={() => setActiveColor(color.name)}
-                className={`relative h-[70px] w-[70px] overflow-hidden rounded-[4px] border-2 transition-colors ${
+                className={`relative h-[70px] w-[70px] shrink-0 overflow-hidden rounded-[4px] border-2 transition-colors ${
                   activeColor === color.name
                     ? "border-[var(--color-icon-default,#595959)]"
                     : "border-transparent"
@@ -190,14 +220,14 @@ export function BuildAndOrderSection({
           <p className="mt-3 text-sm font-semibold">{activeColor}</p>
         </div>
 
-        <div className="flex flex-col items-start gap-4">
+        <div className="flex w-full flex-col items-start gap-4 lg:w-auto">
           <div>
             <p className="text-xs text-[var(--color-ink-soft)]">From</p>
             <p className="text-2xl">{active.priceFrom}</p>
           </div>
           <button
             type="button"
-            className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
+            className="cta-label flex w-full items-center justify-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90 lg:w-auto lg:justify-start"
           >
             <ArrowRightIcon />
             Build your own
