@@ -157,8 +157,11 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Mobile (below lg): wordmark left, plain icon row right — no pill, no labels */}
-          <div className="flex w-full items-center justify-between px-6 py-[15px] lg:hidden">
+          {/* Mobile (below lg): wordmark left, plain icon row right — no pill, no labels.
+              Height is pinned to --header-height so it matches the desktop row: every
+              sticky bar below offsets itself by that var, so a shorter row here would
+              leave a visible strip of page background above them. */}
+          <div className="flex w-full min-h-[var(--header-height)] items-center justify-between px-6 py-[15px] lg:hidden">
             <Link
               href="/"
               aria-label={brand.shortName}

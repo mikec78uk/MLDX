@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/registerPlugins";
+import { onHelpMeChooseRestart } from "@/lib/helpMeChoose/restart";
 import { ArrowRightIcon } from "@/components/icons";
 import {
   EMPTY_ANSWERS,
@@ -147,18 +148,23 @@ export function HelpMeChooseFlow() {
     setStepIndex((index) => Math.max(0, index - 1));
   }
 
-  function reset() {
+  const reset = useCallback(() => {
     setAnswers(EMPTY_ANSWERS);
     setStepIndex(0);
     setReturningToResults(false);
     setPhase("question");
-  }
+  }, []);
 
   function editStep(index: number) {
     setStepIndex(index);
     setReturningToResults(true);
     setPhase("question");
   }
+
+  // Picking "Help Me Choose" in the nav while already in the flow can't
+  // remount this component (same route), so the menu signals a restart
+  // instead — see src/lib/helpMeChoose/restart.ts.
+  useEffect(() => onHelpMeChooseRestart(reset), [reset]);
 
   if (phase === "interstitial") {
     return <Interstitial onDone={() => setPhase("recommendation")} />;

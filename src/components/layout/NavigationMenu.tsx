@@ -7,15 +7,33 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/registerPlugins";
 import { withBasePath } from "@/lib/basePath";
-import type { NavLinkItem, NavSection } from "@/data/navigation";
+import { requestHelpMeChooseRestart } from "@/lib/helpMeChoose/restart";
+import type { NavLinkItem, NavModelItem, NavSection } from "@/data/navigation";
 import { ArrowRightIcon, ChevronIcon, ExternalLinkIcon } from "@/components/icons";
+
+/**
+ * Every in-menu destination has to close the menu on click, not just rely on
+ * the pathname-change effect below — picking the page you're already on (a
+ * model you're already viewing, or Help Me Choose from inside the flow)
+ * doesn't change the pathname, so nothing would close. Help Me Choose also
+ * has to restart, since the flow's progress lives in React state that a
+ * same-route navigation leaves untouched.
+ */
+function useMenuNavigate(onClose: () => void) {
+  return function navigate(item: NavLinkItem | NavModelItem) {
+    if (item.href === "/help-me-choose") requestHelpMeChooseRestart();
+    onClose();
+  };
+}
 
 function LinkItemRow({
   item,
   className,
+  onNavigate,
 }: {
   item: NavLinkItem;
   className: string;
+  onNavigate: (item: NavLinkItem) => void;
 }) {
   const content = (
     <>
@@ -26,7 +44,7 @@ function LinkItemRow({
     </>
   );
   return item.href ? (
-    <Link href={item.href} className={className}>
+    <Link href={item.href} className={className} onClick={() => onNavigate(item)}>
       {content}
     </Link>
   ) : (
@@ -59,6 +77,7 @@ export function NavigationMenu({
 }) {
   const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useMenuNavigate(onClose);
 
   const defaultSection = sections[0];
   const defaultModelKey =
@@ -223,7 +242,11 @@ export function NavigationMenu({
                   return (
                     <li key={item.key} className="nav-item-row">
                       {item.href ? (
-                        <Link href={item.href} className={className}>
+                        <Link
+                          href={item.href}
+                          className={className}
+                          onClick={() => navigate(item)}
+                        >
                           {content}
                         </Link>
                       ) : (
@@ -235,39 +258,57 @@ export function NavigationMenu({
                   );
                 }
 
+                // Hovering previews the model in column 3; clicking goes
+                // straight to its page (and closes the menu) rather than
+                // making the customer detour via column 3's Explore button.
+                const rowClassName = `flex w-full items-center gap-4 border p-3 text-left transition-colors ${
+                  activeModelKey === item.key
+                    ? "border-[var(--color-ink)]"
+                    : "border-[var(--color-border)] hover:border-[var(--color-ink)]"
+                }`;
+                const rowContent = (
+                  <>
+                    <span className="relative h-[45px] w-[80px] shrink-0 overflow-hidden bg-[var(--color-paper)]">
+                      <Image src={withBasePath(item.image)} alt="" fill className="object-cover" />
+                    </span>
+                    <span className="flex-1">
+                      <span className="block text-sm">{item.name}</span>
+                      {item.priceLabel && (
+                        <span className="mt-1 block text-xs text-[var(--color-ink-soft)]">
+                          {item.priceLabel}
+                        </span>
+                      )}
+                    </span>
+                    {activeModelKey === item.key && (
+                      <ChevronIcon direction="right" className="h-2 w-3.5 shrink-0" />
+                    )}
+                  </>
+                );
+
                 return (
                   <li key={item.key} className="nav-item-row">
-                    <button
-                      type="button"
-                      onMouseEnter={() => hoverIntent(() => setActiveModelKey(item.key))}
-                      onMouseLeave={cancelHoverIntent}
-                      onFocus={() => setActiveModelKey(item.key)}
-                      className={`flex w-full items-center gap-4 border p-3 text-left transition-colors ${
-                        activeModelKey === item.key
-                          ? "border-[var(--color-ink)]"
-                          : "border-[var(--color-border)] hover:border-[var(--color-ink)]"
-                      }`}
-                    >
-                      <span className="relative h-[45px] w-[80px] shrink-0 overflow-hidden bg-[var(--color-paper)]">
-                        <Image
-                          src={withBasePath(item.image)}
-                          alt=""
-                          fill
-                          className="object-cover"
-                        />
-                      </span>
-                      <span className="flex-1">
-                        <span className="block text-sm">{item.name}</span>
-                        {item.priceLabel && (
-                          <span className="mt-1 block text-xs text-[var(--color-ink-soft)]">
-                            {item.priceLabel}
-                          </span>
-                        )}
-                      </span>
-                      {activeModelKey === item.key && (
-                        <ChevronIcon direction="right" className="h-2 w-3.5 shrink-0" />
-                      )}
-                    </button>
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        onClick={() => navigate(item)}
+                        onMouseEnter={() => hoverIntent(() => setActiveModelKey(item.key))}
+                        onMouseLeave={cancelHoverIntent}
+                        onFocus={() => setActiveModelKey(item.key)}
+                        className={rowClassName}
+                      >
+                        {rowContent}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onMouseEnter={() => hoverIntent(() => setActiveModelKey(item.key))}
+                        onMouseLeave={cancelHoverIntent}
+                        onFocus={() => setActiveModelKey(item.key)}
+                        className={rowClassName}
+                      >
+                        {rowContent}
+                      </button>
+                    )}
                   </li>
                 );
               })}
@@ -280,6 +321,7 @@ export function NavigationMenu({
                 <li key={item.key} className="nav-item-row">
                   <LinkItemRow
                     item={item}
+                    onNavigate={navigate}
                     className="flex items-center gap-2 text-sm text-[var(--color-ink)] transition-opacity hover:opacity-70"
                   />
                 </li>
@@ -314,6 +356,7 @@ export function NavigationMenu({
                 {activeModel.href ? (
                   <Link
                     href={activeModel.href}
+                    onClick={() => navigate(activeModel)}
                     className="cta-label flex items-center gap-2 whitespace-nowrap bg-[var(--color-ink)] px-6 py-3.5 text-xs text-[var(--color-paper)] transition-opacity hover:opacity-90"
                   >
                     <ArrowRightIcon />
@@ -426,7 +469,11 @@ export function NavigationMenu({
                   return (
                     <li key={item.key}>
                       {item.href ? (
-                        <Link href={item.href} className="flex items-center gap-4 px-6 py-4">
+                        <Link
+                          href={item.href}
+                          onClick={() => navigate(item)}
+                          className="flex items-center gap-4 px-6 py-4"
+                        >
                           {row}
                         </Link>
                       ) : (
@@ -444,7 +491,11 @@ export function NavigationMenu({
               <ul className="flex flex-col divide-y divide-[var(--color-border)]">
                 {activeSection.items.map((item) => (
                   <li key={item.key}>
-                    <LinkItemRow item={item} className="flex items-center gap-2 px-6 py-4 text-sm" />
+                    <LinkItemRow
+                      item={item}
+                      onNavigate={navigate}
+                      className="flex items-center gap-2 px-6 py-4 text-sm"
+                    />
                   </li>
                 ))}
               </ul>
