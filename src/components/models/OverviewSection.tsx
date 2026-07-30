@@ -15,6 +15,13 @@ import { OptionalPackSection } from "@/components/models/OptionalPackSection";
 import { MakeItYoursCardGrid } from "@/components/models/MakeItYoursCardGrid";
 import { ScrollReveal } from "@/components/models/ScrollReveal";
 
+/** Centred hairline, deliberately short of full width, marking a section break. */
+function SectionDivider() {
+  return (
+    <hr className="mx-auto w-2/3 border-[var(--color-border)] lg:w-1/2" aria-hidden />
+  );
+}
+
 export function OverviewSection({
   model,
   accent,
@@ -35,16 +42,23 @@ export function OverviewSection({
       <>
         <OverviewHero modelName={model.name} hero={hero} />
 
-        <div className="flex flex-col gap-24 bg-[var(--color-paper)] py-16">
+        {/* The flex gap is what puts 80px above and below each SectionDivider,
+            so it doubles as the section rhythm — tightened on mobile, where
+            80px of dead space eats most of a viewport. */}
+        <div className="flex flex-col gap-12 bg-[var(--color-paper)] py-16 lg:gap-20">
           <ModelCategoryCards cards={content.categoryCards} />
           <ModelStatStrip
             items={content.statStrip.items}
             disclaimer={content.statStrip.disclaimer}
           />
 
+          <SectionDivider />
+
           <ScrollReveal>
             <TerrainResponseSection modes={content.terrainModes} />
           </ScrollReveal>
+
+          <SectionDivider />
 
           <ScrollReveal>
             <BuildAndOrderSection
@@ -56,6 +70,8 @@ export function OverviewSection({
               galleryCategories={content.buildGalleryCategories}
             />
           </ScrollReveal>
+
+          <SectionDivider />
 
           <ScrollReveal>
             <OptionalPackSection modelName={model.name} packs={content.optionalPacks} />
